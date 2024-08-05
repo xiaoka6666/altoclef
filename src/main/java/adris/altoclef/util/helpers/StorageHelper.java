@@ -291,7 +291,7 @@ public class StorageHelper {
                         assert right.getItem().getComponents().get(DataComponentTypes.FOOD) != null;
                         int leftCost = left.getItem().getComponents().get(DataComponentTypes.FOOD).nutrition() * left.getCount(),
                                 rightCost = right.getItem().getComponents().get(DataComponentTypes.FOOD).nutrition() * right.getCount();
-                        return -1 * (leftCost - rightCost);
+                        return leftCost - rightCost;
                     }
 
                     // Just discard the one with the smallest quantity, but this doesn't really matter.

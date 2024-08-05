@@ -135,9 +135,7 @@ public class FoodChain extends SingleTaskChain {
                 !mod.getMLGBucketChain().isChorusFruiting() && !mod.getPlayer().isBlocking()) {
             Item toUse = _cachedPerfectFood.get();
             // Make sure we're not facing a container
-            if (!LookHelper.tryAvoidingInteractable(mod)) {
-                return Float.NEGATIVE_INFINITY;
-            }
+            LookHelper.tryAvoidingInteractable(mod);
             startEat(mod, toUse);
         } else {
             stopEat(mod);

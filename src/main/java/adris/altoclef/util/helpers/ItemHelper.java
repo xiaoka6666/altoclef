@@ -23,6 +23,12 @@ import java.util.*;
  * Helper functions and definitions for useful groupings of items
  */
 public class ItemHelper {
+    public static final Item[] COPPER_BLOCKS = new Item[]{Items.COPPER_BLOCK, Items.EXPOSED_COPPER,
+            Items.WEATHERED_COPPER, Items.OXIDIZED_COPPER, Items.CUT_COPPER, Items.EXPOSED_CUT_COPPER,
+            Items.WEATHERED_CUT_COPPER, Items.OXIDIZED_CUT_COPPER, Items.WAXED_COPPER_BLOCK,
+            Items.WAXED_EXPOSED_COPPER, Items.WAXED_WEATHERED_COPPER, Items.WAXED_OXIDIZED_COPPER,
+            Items.WAXED_CUT_COPPER, Items.WAXED_EXPOSED_CUT_COPPER, Items.WAXED_WEATHERED_CUT_COPPER,
+            Items.WAXED_OXIDIZED_CUT_COPPER};
     public static final Item[] SAPLINGS = new Item[]{Items.OAK_SAPLING, Items.SPRUCE_SAPLING, Items.BIRCH_SAPLING,
             Items.JUNGLE_SAPLING, Items.ACACIA_SAPLING, Items.DARK_OAK_SAPLING, Items.MANGROVE_PROPAGULE,
             Items.CHERRY_SAPLING};
@@ -366,20 +372,17 @@ public class ItemHelper {
     }
 
     public static boolean areShearsEffective(Block b) {
-        return
-                //b.getRegistryEntry().streamTags().anyMatch(t -> t ==
-                // BlockTags.LEAVES); should also work... but is slower
-                b instanceof LeavesBlock
-                        || b == Blocks.COBWEB
-                        || b == Blocks.GRASS_BLOCK
-                        || b == Blocks.TALL_GRASS
-                        || b == Blocks.LILY_PAD
-                        || b == Blocks.FERN
-                        || b == Blocks.DEAD_BUSH
-                        || b == Blocks.VINE
-                        || b == Blocks.TRIPWIRE
-                        || isOfBlockType(b, BlockTags.WOOL)
-                        || b == Blocks.NETHER_SPROUTS;
+        return b instanceof LeavesBlock
+                || b == Blocks.COBWEB
+                || b == Blocks.GRASS_BLOCK
+                || b == Blocks.TALL_GRASS
+                || b == Blocks.LILY_PAD
+                || b == Blocks.FERN
+                || b == Blocks.DEAD_BUSH
+                || b == Blocks.VINE
+                || b == Blocks.TRIPWIRE
+                || isOfBlockType(b, BlockTags.WOOL)
+                || b == Blocks.NETHER_SPROUTS;
     }
 
     public static boolean isOfBlockType(Block b, TagKey<Block> tag) {

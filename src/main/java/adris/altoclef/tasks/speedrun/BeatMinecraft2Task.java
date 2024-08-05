@@ -31,13 +31,13 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.EndPortalFrameBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.CreditsScreen;
-import net.minecraft.enchantment.BindingCurseEnchantment;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.SilverfishEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.EnchantmentTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
@@ -83,7 +83,7 @@ public class BeatMinecraft2Task extends Task {
     private static final double END_PORTAL_BED_SPAWN_RANGE = 8;
     // We don't want curse of binding
     private static final Predicate<ItemStack> _noCurseOfBinding = stack -> {
-        if (stack.getEnchantments().getEnchantments() instanceof BindingCurseEnchantment) {
+        if (stack.getEnchantments().getEnchantments().contains(EnchantmentTags.CURSE)) {
             return false;
         }
         return true;
