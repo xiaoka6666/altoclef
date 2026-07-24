@@ -79,9 +79,9 @@ def getJavaVersion() {
 repositories {
     mavenCentral()
     maven {
-        name = "MiranCZRepo"
-        url = "https://mirancz.github.io/maven/"
-        artifactUrls("https://mirancz.github.io/maven/cabaletta/baritone-unoptimized/${project.name}")
+        name = "xiaoka6666Maven"
+        url = "https://xiaoka6666.github.io/maven/"
+        artifactUrls("https://xiaoka6666.github.io/maven/cabaletta/baritone-unoptimized/${project.name}")
     }
     maven {
         name = 'babbaj-repo'
