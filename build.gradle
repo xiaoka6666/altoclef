@@ -6,6 +6,7 @@ buildscript {
 
     dependencies {
         classpath 'fabric-loom:fabric-loom.gradle.plugin:1.0-SNAPSHOT'
+        classpath 'net.fabricmc:fabric-loom:1.17.+'
     }
 }
 
@@ -16,23 +17,35 @@ plugins {
     id 'xyz.wagyourtail.jvmdowngrader' version '1.2.2'
 }
 
-apply plugin: 'fabric-loom'
-apply plugin: 'com.replaymod.preprocess'
+if (mcVersion >= 26100) {
+    apply plugin: 'net.fabricmc.fabric-loom'
+} else {
+    apply plugin: 'fabric-loom'
+}
+ongapply plugin: 'com.replaymod.preprocess'
 
 preprocess {
     patternAnnotation.set("adris.altoclef.multiversion.Pattern")
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = sourceCompatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = sourceCompatibility
+}
 
 
 
 tasks.withType(JavaCompile).configureEach {
-    options.release = 21
+    if (mcVersion >= 26100) {
+        options.release = 25
+    } else {
+        options.release = 21
+    }
 }
 
-archivesBaseName = project.archives_base_name
+base {
+    archivesName = project.archives_base_name
+}
 version = "${project.name}-${project.mod_version}"
 group = project.maven_group
 
@@ -49,6 +62,7 @@ def mappingsVersions = [
         12006: "1.20.6+build.3",
         12100: "1.21+build.9",
         12101: "1.21.1+build.3",
+        26100: "",  // MC 26.1 不需要 mappings
 ]
 
 def fabricApiVersions = [
@@ -64,10 +78,13 @@ def fabricApiVersions = [
         12006: "0.100.0+1.20.6",
         12100: "0.100.7+1.21",
         12101: "0.110.0+1.21.1",
+        26100: "0.140.3+26.1",
 ]
 
 def getJavaVersion() {
-    if (mcVersion >= 12006) {
+    if (mcVersion >= 26100) {
+        return JavaVersion.VERSION_25;
+    } else if (mcVersion >= 12006) {
         return JavaVersion.VERSION_21;
     } else if (mcVersion >= 11700) {
         return JavaVersion.VERSION_17;
@@ -99,12 +116,15 @@ jvmdg {
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.name}")
-    mappings("net.fabricmc:yarn:${mappingsVersions[mcVersion]}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
+    if (mcVersion < 26100) {
+        mappings("net.fabricmc:yarn:${mappingsVersions[mcVersion]}:v2")
+        modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersions[mcVersion]}")
+    } else {
+        implementation("net.fabricmc:fabric-loader:${project.loader_version}")
+        implementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersions[mcVersion]}")
+    }
     include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.3.5")))
-
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersions[mcVersion]}")
 
     // Jackson JSON
     implementation 'com.fasterxml.jackson.core:jackson-core:2.16.0'
@@ -126,10 +146,18 @@ dependencies {
     // Thank you georgeagostino for fixing my garbage
     if (getProject().hasProperty("altoclef.development")) {
         // Must run build from baritone-plus once
-        modImplementation "baritone-api-fabric:baritone-unoptimized-fabric-${project.name}"
+        if (mcVersion >= 26100) {
+            implementation "baritone-api-fabric:baritone-unoptimized-fabric-${project.name}"
+        } else {
+            modImplementation "baritone-api-fabric:baritone-unoptimized-fabric-${project.name}"
+        }
         include "baritone-api-fabric:baritone-unoptimized-fabric-${project.name}"
     } else {
-        modImplementation "cabaletta:baritone-unoptimized-fabric:${project.name}"
+        if (mcVersion >= 26100) {
+            implementation "cabaletta:baritone-unoptimized-fabric:${project.name}"
+        } else {
+            modImplementation "cabaletta:baritone-unoptimized-fabric:${project.name}"
+        }
         include "cabaletta:baritone-unoptimized-fabric:${project.name}"
     }
     //modImplementation 'baritone-api-fabric:baritone-api-fabric:1.6.3'
@@ -139,19 +167,30 @@ shadowJar {
     configurations = [project.configurations.shadow]
 }
 
-remapJar {
-    dependsOn("shadowJar")
-    input.set(shadowJar.archiveFile)
+if (mcVersion < 26100) {
+    remapJar {
+        dependsOn("shadowJar")
+        input.set(shadowJar.archiveFile)
+    }
+
+    downgradeJar {
+        dependsOn("remapJar")
+        inputFile.set(remapJar.archiveFile)
+    }
+} else {
+    jar {
+        dependsOn("shadowJar")
+        from({
+            shadowJar.archiveFile.map { zipTree(it) }
+        })
+    }
 }
 
-downgradeJar {
-    dependsOn("remapJar")
-    inputFile.set(remapJar.archiveFile)
-}
+def javaTarget = java.targetCompatibility
 
 tasks.register('replaceJar') {
     // do not downgrade java version if we do not need to
-    if (getJavaVersion() == targetCompatibility) {
+    if (getJavaVersion() == javaTarget || mcVersion >= 26100) {
         return
     }
 
@@ -211,11 +250,21 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             // add all the jars that should be included when publishing to maven
-            artifact(remapJar) {
-                builtBy remapJar
+            if (mcVersion >= 26100) {
+                artifact(jar) {
+                    builtBy jar
+                }
+            } else {
+                artifact(remapJar) {
+                    builtBy remapJar
+                }
             }
             artifact(sourcesJar) {
-                builtBy remapSourcesJar
+                if (mcVersion >= 26100) {
+                    builtBy sourcesJar
+                } else {
+                    builtBy remapSourcesJar
+                }
             }
         }
     }

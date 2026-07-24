@@ -1,5 +1,6 @@
 plugins {
     id("fabric-loom") version "1.7-SNAPSHOT" apply false
+    id("net.fabricmc.fabric-loom") version "1.17.+" apply false
     id("com.replaymod.preprocess") version "221276c"
 }
 
@@ -40,4 +41,10 @@ preprocess {
     mc11802.link(mc11800)
     mc11800.link(mc11701, file("versions/mapping-1.18.2-1.17.1.txt"))
     mc11701.link(mc11605, file("versions/mapping-1.17.1-1.16.5.txt"))
+
+    val mc26100 = createNode("26.1", 26100, null)
+    // 注意: 26.1 (unobfuscated) 使用 Mojang 官方映射
+    // link 注释掉以在 Gradle 9.x 中避免 consumable 配置兼容性问题
+    // 26.1 的构建在 build.gradle 中特殊处理
+    // mc26100.link(mc12101, file("versions/mapping-1.21.1-26.1.txt"))
 }
