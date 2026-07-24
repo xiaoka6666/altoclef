@@ -1,8 +1,13 @@
 import com.replaymod.gradle.preprocess.PreprocessTask
 
 buildscript {
-    def (major, minor, patch) = project.name.split("-")[0].tokenize('.')
-    project.ext.mcVersion = "${major}${minor.padLeft(2, '0')}${(patch ?: '').padLeft(2, '0')}" as int
+    // 处理 MC 26.1 (unobfuscated) 的特殊版本号格式
+    if (project.name == "26.1") {
+        project.ext.mcVersion = 26100
+    } else {
+        def (major, minor, patch) = project.name.split("-")[0].tokenize('.')
+        project.ext.mcVersion = "${major}${minor.padLeft(2, '0')}${(patch ?: '').padLeft(2, '0')}" as int
+    }
 
     dependencies {
         classpath 'fabric-loom:fabric-loom.gradle.plugin:1.0-SNAPSHOT'
@@ -22,15 +27,31 @@ if (mcVersion >= 26100) {
 } else {
     apply plugin: 'fabric-loom'
 }
-ongapply plugin: 'com.replaymod.preprocess'
+if (mcVersion < 26100) {
+    apply plugin: 'com.replaymod.preprocess'
 
-preprocess {
-    patternAnnotation.set("adris.altoclef.multiversion.Pattern")
+    preprocess {
+        patternAnnotation.set("adris.altoclef.multiversion.Pattern")
+    }
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
     targetCompatibility = sourceCompatibility
+}
+
+// 26.1 独立构建，直接使用共享源码（已迁移到 Mojang 命名）
+if (mcVersion >= 26100) {
+    sourceSets {
+        main {
+            java {
+                setSrcDirs([project.file("../../src/main/java")])
+            }
+            resources {
+                setSrcDirs([project.file("../../src/main/resources")])
+            }
+        }
+    }
 }
 
 
@@ -117,7 +138,7 @@ dependencies {
     //to change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.name}")
     if (mcVersion < 26100) {
-        mappings("net.fabricmc:yarn:${mappingsVersions[mcVersion]}:v2")
+        mappings(loom.officialMojangMappings())
         modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
         modImplementation("net.fabricmc.fabric-api:fabric-api:${fabricApiVersions[mcVersion]}")
     } else {

@@ -4,12 +4,13 @@ import adris.altoclef.AltoClef;
 import adris.altoclef.multiversion.recipemanager.RecipeManagerWrapper;
 import adris.altoclef.multiversion.recipemanager.WrappedRecipeEntry;
 import adris.altoclef.util.RecipeTarget;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.*;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,19 +99,19 @@ public class CraftingRecipeTracker extends Tracker{
         // rebuild once we are in game
         if (!AltoClef.inGame()) return;
 
-        ClientPlayNetworkHandler networkHandler =  MinecraftClient.getInstance().getNetworkHandler();
+        ClientPacketListener networkHandler =  Minecraft.getInstance().getConnection();
         if (networkHandler == null) return;
 
         RecipeManagerWrapper recipeManager = RecipeManagerWrapper.of(networkHandler.getRecipeManager());
 
         for (WrappedRecipeEntry recipe : recipeManager.values()) {
-            if (!(recipe.value() instanceof net.minecraft.recipe.CraftingRecipe craftingRecipe)) continue;
+            if (!(recipe.value() instanceof net.minecraft.world.item.crafting.CraftingRecipe craftingRecipe)) continue;
 
             // not implemented for now because it isn't needed (I hope xd)
-            if (craftingRecipe instanceof SpecialCraftingRecipe) continue;
+            if (craftingRecipe instanceof CustomRecipe) continue;
 
             // the arguments shouldn't be used, we can just pass null
-            ItemStack result = new ItemStack(craftingRecipe.getResult(null).getItem(), craftingRecipe.getResult(null).getCount());
+            ItemStack result = new ItemStack(craftingRecipe.getResultItem(null).getItem(), craftingRecipe.getResultItem(null).getCount());
 
             Item[][] altoclefRecipeItems = getShapedCraftingRecipe(craftingRecipe.getIngredients());
 
@@ -141,7 +142,7 @@ public class CraftingRecipeTracker extends Tracker{
         int x = 0;
 
         for (Ingredient ingredient : ingredients) {
-            ItemStack[] stacks = ingredient.getMatchingStacks();
+            ItemStack[] stacks = ingredient.getItems();
             Item[] items = new Item[stacks.length];
 
             for (int i = 0; i < stacks.length; i++) {
