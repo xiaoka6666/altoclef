@@ -70,6 +70,9 @@ public class MobDefenseChain extends SingleTaskChain {
     /** S281: s280t re-created the flee task every tick near a hoglin; each restart re-planned from scratch,
      *  the bot stood at one block for 10s and finally fled into lava. Keep the running flee task instead. */
     private CustomBaritoneGoalTask keepRunAway() {
+        // S296: s294t's 70-priority flees (danger/eating/hoglin) had no hold and dropped to idle a tick
+        // later (70->0 x many, skeleton death at hp 6.8). Every flee holds 5s.
+        fleeHoldUntilMs = Math.max(fleeHoldUntilMs, System.currentTimeMillis() + 5000);
         if (runAwayTask instanceof RunAwayFromHostilesTask && !runAwayTask.isFinished()) return runAwayTask;
         return new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
     }
