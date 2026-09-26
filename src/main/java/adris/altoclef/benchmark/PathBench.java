@@ -439,7 +439,7 @@ package adris.altoclef.benchmark;
 //$$                     mc.getServer().execute(() -> {
 //$$                         net.minecraft.server.network.ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayerList().get(0);
 //$$                         sp.stopRiding(); for (int i = 0; i < sp.inventory.size(); i++) if (sp.inventory.getStack(i).getItem() == net.minecraft.item.Items.OAK_BOAT) sp.inventory.setStack(i, net.minecraft.item.ItemStack.EMPTY);
-//$$                         if (variant.equals("boat")) sp.inventory.setStack(8, new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT)); // hotbar: hasBoat only checks slots 0-8
+//$$                         if (variant.equals("boat")) sp.inventory.setStack(20, new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT)); // main inventory: Baritone borrows a hotbar slot
 //$$                     });
 //$$                     Thread.sleep(500);
 //$$                     teleport(mc, start);
@@ -502,7 +502,7 @@ package adris.altoclef.benchmark;
 //$$                             net.minecraft.server.network.ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayerList().get(0);
 //$$                             sp.stopRiding(); sp.setHealth(sp.getMaxHealth()); sp.fallDistance = 0;
 //$$                             for (int i = 0; i < sp.inventory.size(); i++) if (sp.inventory.getStack(i).getItem() == net.minecraft.item.Items.OAK_BOAT) sp.inventory.setStack(i, net.minecraft.item.ItemStack.EMPTY);
-//$$                             if (variant.equals("boat")) sp.inventory.setStack(8, new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT)); // hotbar: hasBoat only checks slots 0-8
+//$$                             if (variant.equals("boat")) sp.inventory.setStack(20, new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT)); // main inventory: Baritone borrows a hotbar slot
 //$$                         });
 //$$                         Thread.sleep(500);
 //$$                         teleport(mc, start);
