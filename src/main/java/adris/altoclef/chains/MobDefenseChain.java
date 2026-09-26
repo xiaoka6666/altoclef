@@ -64,6 +64,13 @@ public class MobDefenseChain extends SingleTaskChain {
     private boolean doingFunkyStuff = false;
     private boolean wasPuttingOutFire = false;
     private CustomBaritoneGoalTask runAwayTask;
+
+    /** S281: s280t re-created the flee task every tick near a hoglin; each restart re-planned from scratch,
+     *  the bot stood at one block for 10s and finally fled into lava. Keep the running flee task instead. */
+    private CustomBaritoneGoalTask keepRunAway() {
+        if (runAwayTask instanceof RunAwayFromHostilesTask && !runAwayTask.isFinished()) return runAwayTask;
+        return new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+    }
     private float prevHealth = 20;
     private boolean needsChangeOnAttack = false;
     private Entity lockedOnEntity = null;
@@ -237,7 +244,7 @@ public class MobDefenseChain extends SingleTaskChain {
         Optional<Entity> universallyDangerous = getUniversallyDangerousMob(mod);
         // S276: a hoglin hits for ~6; waiting until hp<=10 left one or two hits of margin.
         if (universallyDangerous.isPresent() && mod.getPlayer().getHealth() <= 14) {
-            runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+            runAwayTask = keepRunAway();
             setTask(runAwayTask);
             return 70;
         }
@@ -315,7 +322,7 @@ public class MobDefenseChain extends SingleTaskChain {
         // Dodge all mobs cause we boutta die son
         if (isInDanger(mod) && !escapeDragonBreath(mod) && !mod.getFoodChain().isShouldStop()) {
             if (targetEntity == null || WorldHelper.isSurroundedByHostiles()) {
-                runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+                runAwayTask = keepRunAway();
                 setTask(runAwayTask);
                 return 70;
             }
@@ -415,7 +422,7 @@ public class MobDefenseChain extends SingleTaskChain {
                         || nearest instanceof WitchEntity || nearest instanceof PillagerEntity;
                 if (rangedTarget && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
-                    runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+                    runAwayTask = keepRunAway();
                     setTask(runAwayTask);
                     return 80;
                 }
@@ -434,7 +441,7 @@ public class MobDefenseChain extends SingleTaskChain {
                     return 65;
                 } else {
                     // We can't deal with it
-                    runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+                    runAwayTask = keepRunAway();
                     setTask(runAwayTask);
                     return 80;
                 }
