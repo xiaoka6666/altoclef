@@ -269,7 +269,12 @@ public class FoodChain extends SingleTaskChain {
         for (ItemStack stack : mod.getItemStorage().getItemStacksPlayerInventory(true)) {
             if (ItemVer.isFood(stack)) {
                 // Ignore protected items
-                if (!ItemHelper.canThrowAwayStack(mod, stack)) continue;
+                // S306: "protected" means don't throw away, not don't eat. CollectFoodTask protects
+                // BREAD etc., so s303t sat at half a heart, hunger 3, with bread in the hotbar.
+                // Only hold back protected golden apples unless we're in real trouble.
+                if (!ItemHelper.canThrowAwayStack(mod, stack)
+                        && (stack.getItem() == Items.GOLDEN_APPLE || stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE)
+                        && health > 6) continue;
 
                 // Ignore spider eyes
                 if (stack.getItem() == Items.SPIDER_EYE) {
