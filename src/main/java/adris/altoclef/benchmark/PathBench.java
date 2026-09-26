@@ -64,6 +64,8 @@ package adris.altoclef.benchmark;
 //$$         Thread t = new Thread(() -> {
 //$$             try {
 //$$                 if (mode.equalsIgnoreCase("wreck")) wreck(mc, origin, Math.max(1, reps));
+//$$                 else if (mode.equalsIgnoreCase("column")) column(mc, origin, Math.max(1, reps));
+//$$                 else if (mode.equalsIgnoreCase("flow")) flow(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("swim")) swim(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("travel")) for (String m : (opt == null ? "-" : opt).split("[;+]")) travel(mc, origin, m, Math.max(1, reps));
 //$$                 else for (String sweep : (opt == null ? "-" : opt).split("[;+]")) search(mc, origin, sweep, Math.max(1, reps));
@@ -260,6 +262,143 @@ package adris.altoclef.benchmark;
 //$$         }
 //$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=travel mover=%s goalRate=%d/%d avgGoalTicks=%.0f avgFirstMoveTicks=%.1f avgEndDist=%.1f",
 //$$                 mover, ok, n, ok == 0 ? 0 : sumTicks / (double) ok, moved == 0 ? -1 : sumFirst / (double) moved, n == 0 ? 0 : sumEnd / n));
+//$$     }
+//$$
+//$$     // ---- flow --------------------------------------------------------------------------
+//$$
+//$$     /**
+//$$      * Flowing water: (a) a 1x1 waterfall shaft 16 high fed by one source at the top, goal on the ledge
+//$$      * above; (b) a sloped stream running down a staircase, goal at its source end.
+//$$      */
+//$$     private static void flow(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         BaritoneAPI.getSettings().chatDebug.value = true;
+//$$         int by = 120, ox = origin.getX(), oz = origin.getZ(), H = 16;
+//$$         java.util.concurrent.CompletableFuture<Void> built = new java.util.concurrent.CompletableFuture<>();
+//$$         mc.getServer().execute(() -> {
+//$$             net.minecraft.server.world.ServerWorld w = mc.getServer().getOverworld();
+//$$             net.minecraft.block.BlockState G = net.minecraft.block.Blocks.STONE.getDefaultState(), A = net.minecraft.block.Blocks.AIR.getDefaultState();
+//$$             // (a) shaft at x in [-3,3]: stone block with a 1x1 hole, source on top, a 3-wide ledge to step onto
+//$$             for (int x = -3; x <= 3; x++) for (int z = -3; z <= 3; z++) for (int y = by - 1; y <= by + H + 3; y++)
+//$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), (y < by + H && y >= by && (x != 0 || z != 0)) || y == by - 1 || (y == by + H - 1 && z != 0) ? G : A, 2);
+//$$             for (int y = by; y < by + H; y++) w.setBlockState(new BlockPos(ox, y, oz), A, 2);
+//$$             // start area: floor pool 3x3 around the shaft foot, open sideways at z=-1..1, x=-3..-1
+//$$             for (int x = -3; x <= -1; x++) for (int y = by; y <= by + 1; y++) w.setBlockState(new BlockPos(ox + x, y, oz), A, 2);
+//$$             w.setBlockState(new BlockPos(ox, by + H, oz + 1), G, 2);
+//$$             w.setBlockState(new BlockPos(ox, by + H - 1, oz + 1), G, 2);
+//$$             w.setBlockState(new BlockPos(ox, by + H, oz), net.minecraft.block.Blocks.WATER.getDefaultState(), 3);
+//$$             // (b) staircase stream at z+20: 12 steps down along +x, a source at the top step
+//$$             for (int x = -1; x <= 13; x++) for (int z = 18; z <= 22; z++) for (int y = by - 1; y <= by + 16; y++) {
+//$$                 int top = by + 12 - Math.max(0, Math.min(12, x));
+//$$                 boolean wall = z == 18 || z == 22 || x == -1 || x == 13 || y < top;
+//$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), wall && y <= by + 14 ? G : A, 2);
+//$$             }
+//$$             for (int z = 19; z <= 21; z++) w.setBlockState(new BlockPos(ox, by + 12, oz + z), net.minecraft.block.Blocks.WATER.getDefaultState(), 3);
+//$$             built.complete(null);
+//$$         });
+//$$         built.get();
+//$$         Thread.sleep(8000); // let the water spread
+//$$         BlockPos[][] cases = {
+//$$                 {new BlockPos(ox - 2, by, oz), new BlockPos(ox, by + H, oz - 1)},
+//$$                 {new BlockPos(ox + 12, by + 1, oz + 20), new BlockPos(ox, by + 13, oz + 20)},
+//$$         };
+//$$         PrintWriter csv = open("flow_baritone");
+//$$         csv.println("case,rep,result,ticks,endDist");
+//$$         int ok = 0, n = 0;
+//$$         try {
+//$$             for (int ci = 0; ci < cases.length; ci++) for (int r = 0; r < reps; r++) {
+//$$                 BlockPos g = cases[ci][1];
+//$$                 teleport(mc, cases[ci][0]);
+//$$                 long t0 = worldTime(mc), last = -1;
+//$$                 startBaritone(mc, baritone, g);
+//$$                 String result = "TIMEOUT";
+//$$                 while (true) {
+//$$                     Thread.sleep(25);
+//$$                     long el = worldTime(mc) - t0;
+//$$                     if (el == last) continue;
+//$$                     last = el;
+//$$                     if (dist3(mc, g) < 1.5) { result = "GOAL"; break; }
+//$$                     if (mc.player.isDead()) { result = "DIED"; break; }
+//$$                     if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "FLOW c=%d t=%d p=%.1f,%.1f,%.1f d=%.1f", ci, el, mc.player.getX() - ox, mc.player.getY() - by, mc.player.getZ() - oz, dist3(mc, g)));
+//$$                     if (el > 40 && !baritone.getCustomGoalProcess().isActive()) { result = "STOPPED"; break; }
+//$$                     if (el > 20 * 60) break;
+//$$                 }
+//$$                 mc.execute(() -> baritone.getPathingBehavior().cancelEverything());
+//$$                 csv.printf(Locale.ROOT, "%d,%d,%s,%d,%.1f%n", ci, r, result, worldTime(mc) - t0, dist3(mc, g));
+//$$                 csv.flush();
+//$$                 n++;
+//$$                 if (result.equals("GOAL")) ok++;
+//$$                 Thread.sleep(500);
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=flow goalRate=%d/%d", ok, n));
+//$$     }
+//$$
+//$$     // ---- column ------------------------------------------------------------------------
+//$$
+//$$     /**
+//$$      * Roofed water tunnel (no surface to breathe at) 120 long: a magma column at +40 and a soul-sand
+//$$      * column at +80 are the only air. Goal at the far end; without using the columns the bot drowns.
+//$$      */
+//$$     private static void column(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         BaritoneAPI.getSettings().chatDebug.value = true;
+//$$         int L = 120, by = 100, ox = origin.getX(), oz = origin.getZ();
+//$$         java.util.concurrent.CompletableFuture<Void> built = new java.util.concurrent.CompletableFuture<>();
+//$$         mc.getServer().execute(() -> {
+//$$             net.minecraft.server.world.ServerWorld w = mc.getServer().getOverworld();
+//$$             for (int x = -2; x <= L + 2; x++) for (int z = -2; z <= 2; z++) for (int y = by - 1; y <= by + 4; y++) {
+//$$                 boolean wall = x < 0 || x > L || Math.abs(z) > 1 || y < by || y > by + 3;
+//$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), wall ? net.minecraft.block.Blocks.GLASS.getDefaultState() : net.minecraft.block.Blocks.WATER.getDefaultState(), 2);
+//$$             }
+//$$             w.setBlockState(new BlockPos(ox + 40, by - 1, oz), net.minecraft.block.Blocks.MAGMA_BLOCK.getDefaultState(), 3);
+//$$             w.setBlockState(new BlockPos(ox + 80, by - 1, oz), net.minecraft.block.Blocks.SOUL_SAND.getDefaultState(), 3);
+//$$             built.complete(null);
+//$$         });
+//$$         built.get();
+//$$         Thread.sleep(3000);
+//$$         BlockPos start = new BlockPos(ox + 1, by + 1, oz), g = new BlockPos(ox + L - 1, by, oz), mag = new BlockPos(ox + 40, by - 1, oz);
+//$$         Debug.logHarness("PATHBENCH column cells magma=" + mc.world.getBlockState(mag.up(2)).getBlock() + " soul=" + mc.world.getBlockState(mag.add(40, 2, 0)).getBlock());
+//$$         PrintWriter csv = open("column_baritone");
+//$$         csv.println("rep,result,ticks,minAir,minHealth,onMagma,onMagmaUnsneaked,colTicks");
+//$$         int ok = 0, n = 0;
+//$$         try {
+//$$             for (int r = 0; r < reps; r++) {
+//$$                 teleport(mc, start);
+//$$                 mc.execute(() -> { mc.player.setAir(120); mc.player.setHealth(20); });
+//$$                 Thread.sleep(200);
+//$$                 long t0 = worldTime(mc), last = -1;
+//$$                 startBaritone(mc, baritone, g);
+//$$                 int minAir = 300, onMagma = 0, bad = 0, col = 0; float minHp = 20;
+//$$                 String result = "TIMEOUT";
+//$$                 while (true) {
+//$$                     Thread.sleep(25);
+//$$                     long el = worldTime(mc) - t0;
+//$$                     if (el == last) continue;
+//$$                     last = el;
+//$$                     minAir = Math.min(minAir, mc.player.getAir());
+//$$                     minHp = Math.min(minHp, mc.player.getHealth());
+//$$                     if (mc.world.getBlockState(mc.player.getBlockPos().down()).getBlock() == net.minecraft.block.Blocks.MAGMA_BLOCK && mc.player.isOnGround()) { onMagma++; if (!mc.player.isSneaking()) bad++; }
+//$$                     if (mc.world.getBlockState(new BlockPos(mc.player.getCameraPosVec(1))).getBlock() == net.minecraft.block.Blocks.BUBBLE_COLUMN) col++;
+//$$                     if (dist3(mc, g) < 1.5) { result = "GOAL"; break; }
+//$$                     if (mc.player.isDead()) { result = "DIED"; break; }
+//$$                     if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "COLUMN t=%d x=%.1f y=%.1f air=%d hp=%.0f", el, mc.player.getX() - ox, mc.player.getY(), mc.player.getAir(), mc.player.getHealth()));
+//$$                     if (el > 20 * 120) break;
+//$$                 }
+//$$                 mc.execute(() -> baritone.getPathingBehavior().cancelEverything());
+//$$                 csv.printf(Locale.ROOT, "%d,%s,%d,%d,%.0f,%d,%d,%d%n", r, result, worldTime(mc) - t0, minAir, minHp, onMagma, bad, col);
+//$$                 csv.flush();
+//$$                 n++;
+//$$                 if (result.equals("GOAL")) ok++;
+//$$                 if (mc.player.isDead()) { mc.execute(() -> mc.player.requestRespawn()); Thread.sleep(2000); }
+//$$                 Thread.sleep(500);
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=column goalRate=%d/%d", ok, n));
 //$$     }
 //$$
 //$$     // ---- swim --------------------------------------------------------------------------
