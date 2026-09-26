@@ -66,6 +66,7 @@ package adris.altoclef.benchmark;
 //$$                 if (mode.equalsIgnoreCase("wreck")) wreck(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("column")) column(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("flow")) flow(mc, origin, Math.max(1, reps));
+//$$                 else if (mode.equalsIgnoreCase("boat")) boat(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("swim")) swim(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("travel")) for (String m : (opt == null ? "-" : opt).split("[;+]")) travel(mc, origin, m, Math.max(1, reps));
 //$$                 else for (String sweep : (opt == null ? "-" : opt).split("[;+]")) search(mc, origin, sweep, Math.max(1, reps));
@@ -404,6 +405,69 @@ package adris.altoclef.benchmark;
 //$$     // ---- swim --------------------------------------------------------------------------
 //$$
 //$$     /** Glass tank of water high above origin; Baritone must reach 3D goals inside it (floor, mid-depth, surface). */
+//$$     /** 90-block lake between two shores; runs with a boat in the hotbar and without (swim baseline). */
+//$$     private static void boat(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         BaritoneAPI.getSettings().chatDebug.value = true;
+//$$         int L = 90, W = 10, by = 200, ox = origin.getX(), oz = origin.getZ();
+//$$         java.util.concurrent.CompletableFuture<Void> built = new java.util.concurrent.CompletableFuture<>();
+//$$         mc.getServer().execute(() -> {
+//$$             net.minecraft.server.world.ServerWorld w = mc.getServer().getOverworld();
+//$$             for (int x = -11; x <= L + 11; x++) for (int z = -W - 1; z <= W + 1; z++) for (int y = by - 1; y < by + 6; y++) {
+//$$                 boolean wall = x < -10 || x > L + 10 || Math.abs(z) > W || y < by;
+//$$                 boolean land = x < 0 || x > L;
+//$$                 net.minecraft.block.BlockState st = wall ? net.minecraft.block.Blocks.GLASS.getDefaultState()
+//$$                         : y < by + 3 ? (land ? net.minecraft.block.Blocks.STONE.getDefaultState() : net.minecraft.block.Blocks.WATER.getDefaultState())
+//$$                         : net.minecraft.block.Blocks.AIR.getDefaultState();
+//$$                 if (wall && y >= by + 3) st = net.minecraft.block.Blocks.AIR.getDefaultState();
+//$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), st, 2);
+//$$             }
+//$$             built.complete(null);
+//$$         });
+//$$         built.get();
+//$$         Thread.sleep(3000);
+//$$         BlockPos start = new BlockPos(ox - 5, by + 3, oz);
+//$$         BlockPos g = new BlockPos(ox + L + 5, by + 3, oz);
+//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 120);
+//$$         PrintWriter csv = open("boat_baritone");
+//$$         csv.println("mover,variant,rep,result,ticks,endDist");
+//$$         try {
+//$$             for (String variant : new String[]{"boat", "swim"}) {
+//$$                 for (int r = 0; r < reps; r++) {
+//$$                     mc.execute(() -> { for (net.minecraft.entity.Entity e : mc.world.getEntities()) if (e instanceof net.minecraft.entity.vehicle.BoatEntity || e instanceof net.minecraft.entity.ItemEntity) mc.getServer().execute(() -> { net.minecraft.entity.Entity se = mc.getServer().getOverworld().getEntity(e.getUuid()); if (se != null) se.remove(); }); });
+//$$                     mc.getServer().execute(() -> {
+//$$                         net.minecraft.server.network.ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayerList().get(0);
+//$$                         sp.stopRiding(); for (int i = 0; i < sp.inventory.size(); i++) if (sp.inventory.getStack(i).getItem() == net.minecraft.item.Items.OAK_BOAT) sp.inventory.setStack(i, net.minecraft.item.ItemStack.EMPTY);
+//$$                         if (variant.equals("boat")) sp.inventory.insertStack(new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT));
+//$$                     });
+//$$                     Thread.sleep(500);
+//$$                     teleport(mc, start);
+//$$                     long t0 = worldTime(mc);
+//$$                     startBaritone(mc, baritone, g);
+//$$                     double bestD = dist3(mc, g); long bestAt = 0;
+//$$                     String result = "TIMEOUT";
+//$$                     while (true) {
+//$$                         Thread.sleep(25);
+//$$                         long el = worldTime(mc) - t0;
+//$$                         double d = dist3(mc, g);
+//$$                         if (d < 1.5) { result = "GOAL"; break; }
+//$$                         if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "BOAT t=%d pos=%.1f,%.1f,%.1f d=%.1f riding=%s", el, mc.player.getX(), mc.player.getY(), mc.player.getZ(), d, mc.player.hasVehicle()));
+//$$                         if (d < bestD - 1.0) { bestD = d; bestAt = el; }
+//$$                         if (el - bestAt > 600) { result = "STALLED"; break; }
+//$$                         if (el > limitTicks) break;
+//$$                     }
+//$$                     mc.execute(() -> baritone.getPathingBehavior().cancelEverything());
+//$$                     csv.printf(Locale.ROOT, "baritone,%s,%d,%s,%d,%.2f%n", variant, r, result, worldTime(mc) - t0, dist3(mc, g));
+//$$                     csv.flush();
+//$$                     Thread.sleep(1000);
+//$$                 }
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness("PATHBENCH SUMMARY mode=boat");
+//$$     }
+//$$
 //$$     private static void swim(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
 //$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
 //$$         BaritoneAPI.getSettings().chatDebug.value = true;
