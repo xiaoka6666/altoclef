@@ -419,7 +419,9 @@ public class MobDefenseChain extends SingleTaskChain {
                 // Without a real weapon, or once hurt, never chase a ranged mob; break line of sight instead.
                 Entity nearest = toDealWithList.get(0);
                 boolean rangedTarget = nearest instanceof net.minecraft.entity.mob.AbstractSkeletonEntity
-                        || nearest instanceof WitchEntity || nearest instanceof PillagerEntity;
+                        || nearest instanceof WitchEntity || nearest instanceof PillagerEntity
+                        // S284: s283t charged a blaze at hp 6 while on fire and burned to death.
+                        || nearest instanceof net.minecraft.entity.mob.BlazeEntity;
                 if (rangedTarget && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
                     runAwayTask = keepRunAway();
