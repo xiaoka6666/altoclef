@@ -37,6 +37,12 @@ public class CollectBlazeRodsTask extends ResourceTask {
     //private Entity _toKill;
     private BlockPos _foundBlazeSpawner = null;
     private boolean _retreating = false;
+    // S286: s285t sat 5+ min at one block: every unexplored-chunk goal was unreachable
+    // ("couldn't get more than 0.0 blocks" after 60k nodes) and wander failed too. Push out on a heading.
+    private net.minecraft.util.math.Vec3d _searchAnchor;
+    private long _searchAnchorMs;
+    private int _pushDir;
+    private Task _push;
 
     public CollectBlazeRodsTask(int count) {
         super(Items.BLAZE_ROD, count);
@@ -140,6 +146,24 @@ public class CollectBlazeRodsTask extends ResourceTask {
 
         // We need to find our fortress.
         setDebugState("Searching for fortress/Traveling around fortress");
+        long now = System.currentTimeMillis();
+        net.minecraft.util.math.Vec3d here = mod.getPlayer().getPos();
+        if (_push != null && !_push.isFinished() && now - _searchAnchorMs < 45_000) {
+            if (here.distanceTo(_searchAnchor) > 60) { _push = null; _searchAnchor = here; _searchAnchorMs = now; }
+            else return _push;
+        }
+        if (_searchAnchor == null || here.distanceTo(_searchAnchor) > 8) {
+            _searchAnchor = here;
+            _searchAnchorMs = now;
+            _push = null;
+        } else if (now - _searchAnchorMs > 40_000) {
+            int[][] dirs = {{1,0},{0,1},{-1,0},{0,-1}};
+            int[] d = dirs[_pushDir++ % 4];
+            adris.altoclef.tasks.speedrun.testrun2.T2Log.force("S286", "fortress search stuck 40s at " + mod.getPlayer().getBlockPos().toShortString() + " - pushing dir " + d[0] + "," + d[1]);
+            _push = new adris.altoclef.tasks.movement.GoInDirectionXZTask(here, new net.minecraft.util.math.Vec3d(d[0], 0, d[1]), 10);
+            _searchAnchorMs = now;
+            return _push;
+        }
         return _searcher;
     }
 
