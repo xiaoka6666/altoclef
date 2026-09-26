@@ -390,6 +390,9 @@ public class AltoClef implements ModInitializer {
         getClientBaritoneSettings().allowOvershootDiagonalDescend.value = true;
         getClientBaritoneSettings().allowInventory.value = true;
         getClientBaritoneSettings().allowParkour.value = false;
+        // S295: Ostinato sprintJump (on by default since 86b1c6ae) took "Wrong Y coordinate" from ~5 to 650-1800
+        // per run and s294t lost 15 hp to falls on a hilltop. Keep it off until it handles slopes.
+        getClientBaritoneSettings().sprintJump.value = false;
         // s269t/s270t: path computed but never executed; -Dtenorclef.baritoneDebug=true surfaces PathExecutor cancel/pause reasons.
         if (Boolean.getBoolean("tenorclef.baritoneDebug")) getClientBaritoneSettings().chatDebug.value = true;
         getClientBaritoneSettings().allowParkourAscend.value = false;
