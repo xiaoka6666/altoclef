@@ -237,7 +237,11 @@ public final class T2Solve {
         // Critical: if already in GetOutOfWater / WaterBail, do NOT cancelPath or
         // re-nudge swim. cancelPath every tick kept spd≈0 and thrashed S102 forever.
         double spd = speed(mod);
-        if (wet && spd < 0.03 && sameXz > 20 * 3) {
+        // S305: s302t bailed mid-log over and over while chopping a shore tree from shallow water;
+        // hand-mining a log takes >3s. Standing still to break a block with head above water is fine.
+        boolean miningInShallows = mod.getControllerExtras().isBreakingBlock()
+                && !mod.getPlayer().isSubmergedInWater() && mod.getPlayer().getAir() > 200;
+        if (wet && spd < 0.03 && sameXz > 20 * 3 && !miningInShallows) {
             boolean alreadyEscaping = childName.contains("GetOutOfWater")
                     || childName.contains("WaterBail");
             if (alreadyEscaping) {
