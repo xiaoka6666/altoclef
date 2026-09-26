@@ -129,6 +129,7 @@ public class ModernSpeedrunTask extends Task {
     private int goldHelmTicks;
     private int helmGoldHuntTicks;
     private boolean starveHunt;
+    private boolean ironHunt;
     private int starveDoneTicks;
     private boolean helmLatched;
     private Object helmLife = null;
@@ -1659,6 +1660,15 @@ public class ModernSpeedrunTask extends Task {
     }
 
     private Task iron(AltoClef mod) {
+        // S289: s287t mined iron with no food until hun=5 hp=4 and two wolves finished it. IRON had no
+        // food gate (only PORTAL does). Hunt a small stock once hunger drops and nothing is left to eat.
+        int ironHun = mod.getPlayer().getHungerManager().getFoodLevel();
+        if (ironHun <= 12 && food(mod) < 1) ironHunt = true;
+        if (ironHunt && food(mod) >= 20) ironHunt = false;
+        if (ironHunt) {
+            T2History.note("WHY iron: hun=" + ironHun + " no food - hunt first");
+            return new adris.altoclef.tasks.resources.CollectFoodTask(20);
+        }
         // S264: s261t wore out both picks tunnelling E70 offset-walks underground, then spent
         // 25 min offset-walking into solid stone with 11 unsmeltable ore. No pick = get one first.
         if (mod.getItemStorage().getItemCount(Items.WOODEN_PICKAXE) < 1 && mod.getItemStorage().getItemCount(Items.STONE_PICKAXE) < 1
