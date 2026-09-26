@@ -65,6 +65,7 @@ public class MobDefenseChain extends SingleTaskChain {
     private boolean wasPuttingOutFire = false;
     private CustomBaritoneGoalTask runAwayTask;
     private long fleeHoldUntilMs;
+    private String why = "?";
 
     /** S281: s280t re-created the flee task every tick near a hoglin; each restart re-planned from scratch,
      *  the bot stood at one block for 10s and finally fled into lava. Keep the running flee task instead. */
@@ -144,8 +145,15 @@ public class MobDefenseChain extends SingleTaskChain {
 
     @Override
     public float getPriority() {
-        cachedLastPriority = getPriorityInner();
-        cachedLastPriority = S222holdBudget(cachedLastPriority);
+        float before = cachedLastPriority;
+        why = "?";
+        float inner = getPriorityInner();
+        cachedLastPriority = S222holdBudget(inner);
+        // S292: s291t flipped 80<->(<50) every 0.5s under skeleton fire with no logged exit. Name the path.
+        if (before >= 65 && cachedLastPriority < 50) {
+            adris.altoclef.tasks.speedrun.testrun2.T2History.note("S292 mobdef drop " + (int) before + "->" + cachedLastPriority + " inner=" + inner + " why=" + why
+                    + " run=" + (runAwayTask != null) + " hold=" + (fleeHoldUntilMs - System.currentTimeMillis()));
+        }
         prevHealth = AltoClef.getInstance().getPlayer().getHealth();
         return cachedLastPriority;
     }
@@ -300,6 +308,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 || !mod.getMLGBucketChain().doneMLG() || mod.getMLGBucketChain().isChorusFruiting()) {
             killAura.stopShielding(mod);
             stopShielding(mod);
+            why = "eat/mlg eat=" + mod.getFoodChain().needsToEat() + " fall=" + mod.getMLGBucketChain().isFalling(mod);
             return Float.NEGATIVE_INFINITY;
         }
 
@@ -391,6 +400,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 // projectiles, isInDanger) so this only stops optional chasing.
                 long nowMs = System.currentTimeMillis();
                 if (disengageUntilMs > nowMs) {
+                    why = "disengage-cooldown";
                     clearEngagement(mod);
                     return 0;
                 }
@@ -496,6 +506,7 @@ public class MobDefenseChain extends SingleTaskChain {
             mainTask.stop();
             mainTask = null;
         }
+        why = "idle";
         runAwayTask = null;
         return 0;
     }
