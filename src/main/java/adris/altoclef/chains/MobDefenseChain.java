@@ -302,6 +302,14 @@ public class MobDefenseChain extends SingleTaskChain {
             return Float.NEGATIVE_INFINITY;
         }
 
+        // S285: s283t died twice at hp 6-7 holding food: the force field swapped to the weapon and
+        // swung every tick, cancelling each bite. When hurt and eating, let the bite finish and keep fleeing.
+        boolean eatingHurt = mod.getFoodChain().isTryingToEat() && mod.getPlayer().getHealth() <= 10;
+        if (eatingHurt) {
+            runAwayTask = keepRunAway();
+            setTask(runAwayTask);
+            return 70;
+        }
         // Force field
         doForceField(mod);
 
