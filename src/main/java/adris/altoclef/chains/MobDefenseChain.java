@@ -450,6 +450,13 @@ public class MobDefenseChain extends SingleTaskChain {
                     setTask(runAwayTask);
                     return 80;
                 }
+                // S293: s292t flee(80) -> a zombie became nearest -> kill branch nulled the flee -> idle(0),
+                // twice a second while the skeleton kept shooting. While the flee hold runs, keep fleeing.
+                if (System.currentTimeMillis() < fleeHoldUntilMs) {
+                    runAwayTask = keepRunAway();
+                    setTask(runAwayTask);
+                    return 80;
+                }
                 if (canDealWith >= getDangerousnessScore(toDealWithList) || needsChangeOnAttack) {
                     // we just decided to attack, so we should either get it, or hit something before running away again
                     if (!(mainTask instanceof KillEntitiesTask)) {
@@ -478,8 +485,8 @@ public class MobDefenseChain extends SingleTaskChain {
         // running away until we're good.
         // S290: s289t fled a skeleton, lost line of sight a tick later, the flee finished and the run
         // task walked straight back into its arrows (80<->50 flip every second until death). Hold 5s.
-        if (runAwayTask != null && System.currentTimeMillis() < fleeHoldUntilMs) {
-            if (runAwayTask.isFinished()) runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+        if (System.currentTimeMillis() < fleeHoldUntilMs) {
+            if (runAwayTask == null || runAwayTask.isFinished()) runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
             setTask(runAwayTask);
             return 65;
         }
