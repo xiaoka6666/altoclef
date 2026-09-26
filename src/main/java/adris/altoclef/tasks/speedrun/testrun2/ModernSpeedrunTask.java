@@ -2210,6 +2210,9 @@ public class ModernSpeedrunTask extends Task {
                 return null;
             }
             if (gold < 5) {
+                // S300: goldHelmTicks is the CRAFT stall timer. s299t counted the gold hunt too, so the
+                // craft was declared "stalled" 2s after it began and the bot wandered off from its own table.
+                goldHelmTicks = 0;
                 T2Log.warn("E96", "need 5 gold for helm");
                 // Stay high. CollectGoldIngot loves lava-lake ore.
                 // S191: a Y level, not the exact block 12 overhead. That block is usually
@@ -2290,7 +2293,13 @@ public class ModernSpeedrunTask extends Task {
                         + mod.getItemStorage().getItemCount(Items.CRIMSON_PLANKS) + mod.getItemStorage().getItemCount(Items.WARPED_PLANKS);
                 boolean anyTable = false;
                 try { anyTable = mod.getBlockScanner().anyFound(Blocks.CRAFTING_TABLE); } catch (Throwable ignored) {}
-                if (planks >= 4 && !anyTable) {
+                if (anyTable) {
+                    // S300: a placed table is right here (we likely just put it down); craft at it.
+                    T2History.note("WHY E96: table placed nearby — retry helm craft there");
+                    active = null;
+                    return TaskCatalogue.getItemTask(Items.GOLDEN_HELMET, 1);
+                }
+                if (planks >= 4) {
                     T2History.note("WHY E96: no table — craft one from planks");
                     active = null;
                     return TaskCatalogue.getItemTask(Items.CRAFTING_TABLE, 1);
@@ -2303,6 +2312,20 @@ public class ModernSpeedrunTask extends Task {
             return TaskCatalogue.getItemTask(Items.GOLDEN_HELMET, 1);
         }
         goldHelmTicks = 0;
+
+        // S301: pick the crafting table back up after the helm craft. s299t left its only table
+        // behind and later stalled trying to mine nether stems for planks to make another.
+        if (tablePickupTicks < 20 * 20 && mod.getItemStorage().getItemCount(Items.CRAFTING_TABLE) < 1) {
+            java.util.Optional<net.minecraft.util.math.BlockPos> table = java.util.Optional.empty();
+            try {
+                table = mod.getBlockScanner().getNearestBlock(Blocks.CRAFTING_TABLE);
+            } catch (Throwable ignored) {}
+            if (table.isPresent() && table.get().isWithinDistance(mod.getPlayer().getPos(), 8)) {
+                if (tablePickupTicks++ == 0) T2History.note("S301 pick up crafting table at " + table.get().toShortString());
+                return new adris.altoclef.tasks.resources.MineAndCollectTask(Items.CRAFTING_TABLE, 1,
+                        new net.minecraft.block.Block[]{Blocks.CRAFTING_TABLE}, adris.altoclef.util.MiningRequirement.HAND);
+            }
+        }
 
         if (pearls < SpeedrunOpt.PEARLS && gold >= 8 && tradeTicks < TRADE_MAX_TICKS) {
             tradeTicks++;
@@ -2957,6 +2980,8 @@ public class ModernSpeedrunTask extends Task {
     }
 
     /** S221: no golden helmet yet and no table to craft one with in the Nether. */
+    private int tablePickupTicks;
+
     private boolean needsNetherTable(AltoClef mod) {
         return mod.getItemStorage().getItemCount(Items.GOLDEN_HELMET) < 1 && !wearingGold(mod)
                 && mod.getItemStorage().getItemCount(Items.CRAFTING_TABLE) < 1;
