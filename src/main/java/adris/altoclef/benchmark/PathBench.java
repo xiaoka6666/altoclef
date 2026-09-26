@@ -300,7 +300,7 @@ package adris.altoclef.benchmark;
 //$$         Thread.sleep(8000); // let the water spread
 //$$         BlockPos[][] cases = {
 //$$                 {new BlockPos(ox - 2, by, oz), new BlockPos(ox, by + H, oz - 1)},
-//$$                 {new BlockPos(ox + 12, by + 1, oz + 20), new BlockPos(ox, by + 13, oz + 20)},
+//$$                 {new BlockPos(ox + 12, by + 1, oz + 20), new BlockPos(ox, by + 12, oz + 20)},
 //$$         };
 //$$         PrintWriter csv = open("flow_baritone");
 //$$         csv.println("case,rep,result,ticks,endDist");
@@ -319,7 +319,7 @@ package adris.altoclef.benchmark;
 //$$                     last = el;
 //$$                     if (dist3(mc, g) < 1.5) { result = "GOAL"; break; }
 //$$                     if (mc.player.isDead()) { result = "DIED"; break; }
-//$$                     if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "FLOW c=%d t=%d p=%.1f,%.1f,%.1f d=%.1f", ci, el, mc.player.getX() - ox, mc.player.getY() - by, mc.player.getZ() - oz, dist3(mc, g)));
+//$$                     if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "FLOW c=%d t=%d p=%.1f,%.1f,%.1f d=%.1f m=%s", ci, el, mc.player.getX() - ox, mc.player.getY() - by, mc.player.getZ() - oz, dist3(mc, g), flowMove()));
 //$$                     if (el > 40 && !baritone.getCustomGoalProcess().isActive()) { result = "STOPPED"; break; }
 //$$                     if (el > 20 * 60) break;
 //$$                 }
@@ -632,6 +632,14 @@ package adris.altoclef.benchmark;
 //$$         net.minecraft.util.hit.BlockHitResult r = mc.world.rayTrace(new net.minecraft.world.RayTraceContext(eye, new net.minecraft.util.math.Vec3d(b.getX() + 0.5, b.getY() + 0.5, b.getZ() + 0.5),
 //$$                 net.minecraft.world.RayTraceContext.ShapeType.OUTLINE, net.minecraft.world.RayTraceContext.FluidHandling.NONE, mc.player));
 //$$         return r != null && r.getBlockPos().equals(b);
+//$$     }
+//$$
+//$$     private static String flowMove() {
+//$$         baritone.api.pathing.path.IPathExecutor ex = baritone.api.BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().getCurrent();
+//$$         if (ex == null) return "none";
+//$$         int i = Math.min(ex.getPosition(), ex.getPath().movements().size() - 1);
+//$$         baritone.api.pathing.movement.IMovement m = ex.getPath().movements().get(i);
+//$$         return m.getClass().getSimpleName().replace("Movement", "") + m.getSrc().getX() + "," + m.getSrc().getY() + "->" + m.getDest().getX() + "," + m.getDest().getY();
 //$$     }
 //$$
 //$$     private static String curMove() {
