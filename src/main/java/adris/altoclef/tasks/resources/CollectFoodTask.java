@@ -58,7 +58,8 @@ public class CollectFoodTask extends Task {
             Items.GOLDEN_APPLE,
             Items.GOLDEN_CARROT,
             Items.BREAD,
-            Items.BAKED_POTATO
+            Items.BAKED_POTATO,
+            Items.DRIED_KELP
     };
 
     public static final CropTarget[] CROPS = new CropTarget[]{
@@ -73,6 +74,12 @@ public class CollectFoodTask extends Task {
     private Task smeltTask = null;
     // S262: s260t sat on "Cooking..." 40s+ (never reached a furnace, wandered into water).
     private long smeltStartMs, cookBanUntilMs;
+    // S303: s300t looped 7+ min on a cold-ocean island: the furnace needs cobble, the only stone was
+    // under the sea, so every dig-down flooded -> water bail -> retry. After two failed cooks, stop
+    // cooking for 10 min and count raw meat at its raw value so the bot just eats it.
+    private int cookFailures;
+    private static volatile long rawOkUntilMs;
+    private static boolean rawOk() { return System.currentTimeMillis() < rawOkUntilMs; }
     private Task currentResourceTask = null;
 
     public CollectFoodTask(double unitsNeeded) {
@@ -86,7 +93,8 @@ public class CollectFoodTask extends Task {
         for (CookableFoodTarget cookable : COOKABLE_FOODS) {
             if (food.getItem() == cookable.getRaw()) {
                 assert ItemVer.getFoodComponent(cookable.getCooked()) != null;
-                return count * ItemVer.getFoodComponent(cookable.getCooked()).getHunger();
+                Item counted = rawOk() ? cookable.getRaw() : cookable.getCooked();
+                return count * ItemVer.getFoodComponent(counted).getHunger();
             }
         }
 
@@ -117,6 +125,8 @@ public class CollectFoodTask extends Task {
         }
         int potentialBread = (int) (mod.getItemStorage().getItemCount(Items.WHEAT) / 3) + mod.getItemStorage().getItemCount(Items.HAY_BLOCK) * 3;
         potentialFood += Objects.requireNonNull(ItemVer.getFoodComponent( Items.BREAD)).getHunger() * potentialBread;
+        // S302: raw kelp smelts 1:1 into dried kelp (last-resort island food).
+        if (!rawOk()) potentialFood += Objects.requireNonNull(ItemVer.getFoodComponent(Items.DRIED_KELP)).getHunger() * mod.getItemStorage().getItemCount(Items.KELP);
         // Check smelting
         ScreenHandler screen = mod.getPlayer().currentScreenHandler;
         if (screen instanceof SmokerScreenHandler) {
@@ -141,7 +151,7 @@ public class CollectFoodTask extends Task {
             mod.getBehaviour().addProtectedItems(crop.cropItem);
         }
          */
-        mod.getBehaviour().addProtectedItems(Items.HAY_BLOCK, Items.SWEET_BERRIES);
+        mod.getBehaviour().addProtectedItems(Items.HAY_BLOCK, Items.SWEET_BERRIES, Items.KELP);
     }
 
     @Override
@@ -164,6 +174,11 @@ public class CollectFoodTask extends Task {
             Debug.logMessage("S262 cooking timed out after 30s - keeping raw food");
             smeltTask = null;
             cookBanUntilMs = System.currentTimeMillis() + 90_000;
+            if (++cookFailures >= 2) {
+                Debug.logMessage("S303 cooking failed twice - eating raw food for 10 min");
+                cookBanUntilMs = rawOkUntilMs = System.currentTimeMillis() + 600_000;
+                cookFailures = 0;
+            }
         }
         if (smeltTask != null && smeltTask.isActive() && !smeltTask.isFinished()) {
             // TODO: If we don't have cooking materials, cancel.
@@ -209,6 +224,13 @@ public class CollectFoodTask extends Task {
                 return currentResourceTask;
             }
             // Convert raw foods -> cooked foods
+            int kelp = mod.getItemStorage().getItemCount(Items.KELP);
+            if (kelp > 0 && System.currentTimeMillis() >= cookBanUntilMs) {
+                setDebugState("Smelting " + kelp + " kelp");
+                smeltStartMs = System.currentTimeMillis();
+                currentResourceTask = smeltTask = new SmeltInFurnaceTask(new SmeltTarget(new ItemTarget(Items.DRIED_KELP, kelp + mod.getItemStorage().getItemCount(Items.DRIED_KELP)), new ItemTarget(Items.KELP, kelp)));
+                return currentResourceTask;
+            }
 
             if (System.currentTimeMillis() >= cookBanUntilMs) for (CookableFoodTarget cookable : COOKABLE_FOODS) {
                 int rawCount = mod.getItemStorage().getItemCount(cookable.getRaw());
@@ -309,6 +331,16 @@ public class CollectFoodTask extends Task {
             if (berryPickup != null) {
                 setDebugState("Getting sweet berries (no better foods are present)");
                 currentResourceTask = berryPickup;
+                return currentResourceTask;
+            }
+
+            // S302: last resort (e.g. stranded on an island with no animals) -- harvest kelp, then smelt it
+            // into dried kelp once the potential covers what we need (handled in the branch above).
+            Task kelpPickup = pickupBlockTaskOrNull(mod, Blocks.KELP_PLANT, Items.KELP, 64);
+            if (kelpPickup == null) kelpPickup = pickupBlockTaskOrNull(mod, Blocks.KELP, Items.KELP, 64);
+            if (kelpPickup != null) {
+                setDebugState("Harvesting kelp (last-resort food)");
+                currentResourceTask = kelpPickup;
                 return currentResourceTask;
             }
         }
