@@ -66,6 +66,8 @@ public class MobDefenseChain extends SingleTaskChain {
     private CustomBaritoneGoalTask runAwayTask;
     private long fleeHoldUntilMs;
     private String why = "?";
+    private Task pillarTask;
+    private int pillarY;
 
     /** S281: s280t re-created the flee task every tick near a hoglin; each restart re-planned from scratch,
      *  the bot stood at one block for 10s and finally fled into lava. Keep the running flee task instead. */
@@ -255,6 +257,29 @@ public class MobDefenseChain extends SingleTaskChain {
         // Run away if a weird mob is close by.
         Optional<Entity> universallyDangerous = getUniversallyDangerousMob(mod);
         // S276: a hoglin hits for ~6; waiting until hp<=10 left one or two hits of margin.
+        // S297: s296t fled a hoglin on flat netherrack; knockback kept throwing it off the flee path
+        // ("too far from path", "No path found") until it died. Hoglins cannot climb 2 blocks, so pillar up.
+        if (universallyDangerous.isPresent() && (universallyDangerous.get() instanceof HoglinEntity || universallyDangerous.get() instanceof ZoglinEntity)) {
+            int py = mod.getPlayer().getBlockY();
+            boolean blocks = mod.getItemStorage().getItemCount(Items.NETHERRACK, Items.COBBLESTONE, Items.DIRT, Items.BLACKSTONE, Items.BASALT) >= 3;
+            if (pillarTask != null && !pillarTask.isFinished() && py < pillarY) {
+                setTask(pillarTask);
+                return 70;
+            }
+            if (blocks && universallyDangerous.get().distanceTo(mod.getPlayer()) < 7
+                    && mod.getPlayer().getY() - universallyDangerous.get().getY() < 2) {
+                pillarY = py + 3;
+                pillarTask = new adris.altoclef.tasks.movement.GetToYTask(pillarY);
+                adris.altoclef.tasks.speedrun.testrun2.T2History.note("S297 pillar from " + universallyDangerous.get().getType().getTranslationKey() + " y=" + py + "->" + pillarY);
+                setTask(pillarTask);
+                return 70;
+            }
+            // Safely above it: wait instead of walking back down.
+            if (mod.getPlayer().getY() - universallyDangerous.get().getY() >= 2 && universallyDangerous.get().distanceTo(mod.getPlayer()) < 10) {
+                if (!(mainTask instanceof adris.altoclef.tasks.movement.IdleTask)) setTask(new adris.altoclef.tasks.movement.IdleTask());
+                return 70;
+            }
+        }
         if (universallyDangerous.isPresent() && mod.getPlayer().getHealth() <= 14) {
             runAwayTask = keepRunAway();
             setTask(runAwayTask);
