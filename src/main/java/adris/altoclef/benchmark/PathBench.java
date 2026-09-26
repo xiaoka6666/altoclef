@@ -67,6 +67,7 @@ package adris.altoclef.benchmark;
 //$$                 else if (mode.equalsIgnoreCase("column")) column(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("flow")) flow(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("boat")) boat(mc, origin, Math.max(1, reps));
+//$$                 else if (mode.equalsIgnoreCase("cliff")) cliff(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("swim")) swim(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("travel")) for (String m : (opt == null ? "-" : opt).split("[;+]")) travel(mc, origin, m, Math.max(1, reps));
 //$$                 else for (String sweep : (opt == null ? "-" : opt).split("[;+]")) search(mc, origin, sweep, Math.max(1, reps));
@@ -466,6 +467,70 @@ package adris.altoclef.benchmark;
 //$$             csv.close();
 //$$         }
 //$$         Debug.logHarness("PATHBENCH SUMMARY mode=boat");
+//$$     }
+//$$
+//$$     /** Sheer cliffs of several heights: ride a boat off the edge vs no boat (Baritone digs down). hp = health lost. */
+//$$     private static void cliff(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         BaritoneAPI.getSettings().chatDebug.value = true;
+//$$         int by = 150, ox = origin.getX(), oz = origin.getZ();
+//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 90);
+//$$         PrintWriter csv = open("cliff_baritone");
+//$$         csv.println("mover,variant,height,rep,result,ticks,hp");
+//$$         try {
+//$$             for (int H : new int[]{8, 16, 32, 64}) {
+//$$                 java.util.concurrent.CompletableFuture<Void> built = new java.util.concurrent.CompletableFuture<>();
+//$$                 mc.getServer().execute(() -> {
+//$$                     net.minecraft.server.world.ServerWorld w = mc.getServer().getOverworld();
+//$$                     for (int x = -9; x <= 16; x++) for (int z = -4; z <= 4; z++) for (int y = by - 1; y < by + 70; y++) {
+//$$                         boolean floor = y == by - 1, plateau = x <= 0 && y < by + H;
+//$$                         boolean wall = (Math.abs(z) == 4 || x == -9 || x == 16) && y < by + (x <= 0 ? H : 0) + 3;
+//$$                         net.minecraft.block.BlockState st = floor || plateau ? net.minecraft.block.Blocks.STONE.getDefaultState()
+//$$                                 : wall ? net.minecraft.block.Blocks.GLASS.getDefaultState() : net.minecraft.block.Blocks.AIR.getDefaultState();
+//$$                         w.setBlockState(new BlockPos(ox + x, y, oz + z), st, 2);
+//$$                     }
+//$$                     built.complete(null);
+//$$                 });
+//$$                 built.get();
+//$$                 Thread.sleep(2000);
+//$$                 BlockPos start = new BlockPos(ox - 4, by + H, oz);
+//$$                 BlockPos g = new BlockPos(ox + 10, by, oz);
+//$$                 for (String variant : new String[]{"boat", "none"}) {
+//$$                     for (int r = 0; r < reps; r++) {
+//$$                         mc.execute(() -> { for (net.minecraft.entity.Entity e : mc.world.getEntities()) if (e instanceof net.minecraft.entity.vehicle.BoatEntity || e instanceof net.minecraft.entity.ItemEntity) mc.getServer().execute(() -> { net.minecraft.entity.Entity se = mc.getServer().getOverworld().getEntity(e.getUuid()); if (se != null) se.remove(); }); });
+//$$                         mc.getServer().execute(() -> {
+//$$                             net.minecraft.server.network.ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayerList().get(0);
+//$$                             sp.stopRiding(); sp.setHealth(sp.getMaxHealth()); sp.fallDistance = 0;
+//$$                             for (int i = 0; i < sp.inventory.size(); i++) if (sp.inventory.getStack(i).getItem() == net.minecraft.item.Items.OAK_BOAT) sp.inventory.setStack(i, net.minecraft.item.ItemStack.EMPTY);
+//$$                             if (variant.equals("boat")) sp.inventory.insertStack(new net.minecraft.item.ItemStack(net.minecraft.item.Items.OAK_BOAT));
+//$$                         });
+//$$                         Thread.sleep(500);
+//$$                         teleport(mc, start);
+//$$                         Thread.sleep(500);
+//$$                         float hp0 = mc.player.getHealth();
+//$$                         long t0 = worldTime(mc);
+//$$                         startBaritone(mc, baritone, g);
+//$$                         String result = "TIMEOUT";
+//$$                         while (true) {
+//$$                             Thread.sleep(25);
+//$$                             long el = worldTime(mc) - t0;
+//$$                             if (mc.player.isDead() || mc.player.getHealth() <= 0) { result = "DIED"; break; }
+//$$                             if (dist3(mc, g) < 1.5) { result = "GOAL"; break; }
+//$$                             if (el % 40 == 0) Debug.logHarness(String.format(Locale.ROOT, "CLIFF H=%d t=%d pos=%.1f,%.1f,%.1f riding=%s hp=%.1f", H, el, mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.hasVehicle(), mc.player.getHealth()));
+//$$                             if (el > limitTicks) break;
+//$$                         }
+//$$                         mc.execute(() -> baritone.getPathingBehavior().cancelEverything());
+//$$                         csv.printf(Locale.ROOT, "baritone,%s,%d,%d,%s,%d,%.1f%n", variant, H, r, result, worldTime(mc) - t0, hp0 - mc.player.getHealth());
+//$$                         csv.flush();
+//$$                         if (result.equals("DIED")) { mc.execute(() -> mc.player.requestRespawn()); Thread.sleep(3000); }
+//$$                         Thread.sleep(1000);
+//$$                     }
+//$$                 }
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness("PATHBENCH SUMMARY mode=cliff");
 //$$     }
 //$$
 //$$     private static void swim(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
