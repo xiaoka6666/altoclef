@@ -429,7 +429,9 @@ public class MobDefenseChain extends SingleTaskChain {
                 boolean rangedTarget = nearest instanceof net.minecraft.entity.mob.AbstractSkeletonEntity
                         || nearest instanceof WitchEntity || nearest instanceof PillagerEntity
                         // S284: s283t charged a blaze at hp 6 while on fire and burned to death.
-                        || nearest instanceof net.minecraft.entity.mob.BlazeEntity;
+                        || nearest instanceof net.minecraft.entity.mob.BlazeEntity
+                        // S288: s287t punched a creeper at 2:08 (no weapon) from full hp and was blown up.
+                        || nearest instanceof CreeperEntity;
                 if (rangedTarget && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
                     runAwayTask = keepRunAway();
