@@ -1272,7 +1272,13 @@ public class ModernSpeedrunTask extends Task {
         if (waterCooldown > 0) waterCooldown--;
         if (SpeedrunOpt.AVOID_DEEP_WATER && inWater(mod)
                 && waterCooldown <= 0
-                && phase != Phase.END && phase != Phase.NETHER) {
+                && phase != Phase.END && phase != Phase.NETHER
+                // S283: s281t swam 19 min in an ocean: the 20s bail timed out (shore 20+ blocks away), the
+                // 15s cooldown had already expired, so it bailed again at once and the portal builder never got
+                // a tick to fill its empty bucket from the water it was floating in. Let it fill first.
+                && !(phase == Phase.PORTAL && mod.getItemStorage().hasItem(Items.BUCKET)
+                        && !mod.getItemStorage().hasItem(Items.WATER_BUCKET)
+                        && mod.getPlayer().getHealth() > 10)) {
             waterCooldown = 20 * 15;
             T2Log.warn("E10", "submerged — bail once");
             return stick(new WaterBailTask());
