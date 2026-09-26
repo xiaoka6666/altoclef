@@ -198,7 +198,8 @@ public final class T2History {
         try {
             // Magma cubes/slimes are not HostileEntity; s245t died to one while this said mobs=none.
             var list = new java.util.ArrayList<net.minecraft.entity.Entity>();
-            var h = mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.HostileEntity.class);
+            // S282: tracker lookups are by exact class, so HostileEntity.class matched nothing (mobs=none next to a witch).
+            var h = mod.getEntityTracker().getHostiles();
             if (h != null) list.addAll(h);
             var sl = mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.SlimeEntity.class);
             if (sl != null) list.addAll(sl);
