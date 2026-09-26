@@ -64,6 +64,7 @@ public class MobDefenseChain extends SingleTaskChain {
     private boolean doingFunkyStuff = false;
     private boolean wasPuttingOutFire = false;
     private CustomBaritoneGoalTask runAwayTask;
+    private long fleeHoldUntilMs;
 
     /** S281: s280t re-created the flee task every tick near a hoglin; each restart re-planned from scratch,
      *  the bot stood at one block for 10s and finally fled into lava. Keep the running flee task instead. */
@@ -434,6 +435,7 @@ public class MobDefenseChain extends SingleTaskChain {
                         || nearest instanceof CreeperEntity;
                 if (rangedTarget && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
+                    fleeHoldUntilMs = System.currentTimeMillis() + 5000;
                     runAwayTask = keepRunAway();
                     setTask(runAwayTask);
                     return 80;
@@ -464,6 +466,13 @@ public class MobDefenseChain extends SingleTaskChain {
         }
         // By default, if we aren't "immediately" in danger but were running away, keep
         // running away until we're good.
+        // S290: s289t fled a skeleton, lost line of sight a tick later, the flee finished and the run
+        // task walked straight back into its arrows (80<->50 flip every second until death). Hold 5s.
+        if (runAwayTask != null && System.currentTimeMillis() < fleeHoldUntilMs) {
+            if (runAwayTask.isFinished()) runAwayTask = new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
+            setTask(runAwayTask);
+            return 65;
+        }
         if (runAwayTask != null && !runAwayTask.isFinished()) {
             setTask(runAwayTask);
             return cachedLastPriority;
