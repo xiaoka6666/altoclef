@@ -83,6 +83,12 @@ public class CollectBlazeRodsTask extends ResourceTask {
                 // stay away until hp is back to 16.
                 float hp = mod.getPlayer().getHealth();
                 if (hp >= 16) _retreating = false;
+                // S299: s297u latched the retreat at hp 14 with hunger 16 and no food. Health cannot
+                // regen below hunger 18, so it stood still for 40s waiting for hp 16. Only keep the
+                // latch while regen is possible.
+                if (_retreating && mod.getPlayer().getHungerManager().getFoodLevel() < 18 && !mod.getFoodChain().hasFood()) {
+                    _retreating = false;
+                }
                 if (_retreating || hp <= TOO_LITTLE_HEALTH_BLAZE &&
                         (blazes >= TOO_MANY_BLAZES || blazes >= 2 || mod.getPlayer().isOnFire()
                                 || hp <= 6)) {
