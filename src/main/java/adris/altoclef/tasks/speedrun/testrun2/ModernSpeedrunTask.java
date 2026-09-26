@@ -2039,6 +2039,12 @@ public class ModernSpeedrunTask extends Task {
         } else {
             starveDoneTicks = 0;
         }
+        // S287: s286t hunted a cow down a cave at y=32 with hp 10 -> 0.7 while a zombie hit it. When hurt
+        // underground, surface first; the hunt resumes in the open where mobs are visible and burn by day.
+        if (starveHunt && hp <= 10 && mod.getWorld().getLightLevel(net.minecraft.world.LightType.SKY, mod.getPlayer().getBlockPos()) < 8) {
+            T2History.note("WHY portal: hurt underground during food hunt - surface first");
+            return new SurfaceBailTask();
+        }
         if (starveHunt) return new adris.altoclef.tasks.resources.CollectFoodTask(40);
         // S221: helmlatch run: helm craft in the Nether had no table or planks, wandered 45s+
         // and got shot by piglins twice. Carry a table through the portal.
