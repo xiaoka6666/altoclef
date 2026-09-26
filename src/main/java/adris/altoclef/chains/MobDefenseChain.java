@@ -382,6 +382,9 @@ public class MobDefenseChain extends SingleTaskChain {
 
             synchronized (BaritoneHelper.MINECRAFT_LOCK) {
                 for (LivingEntity hostile : hostiles) {
+                    // S304: don't hunt drowned in water - chasing them underwater costs air and time;
+                    // the bot just keeps moving and they fall behind.
+                    if (hostile instanceof DrownedEntity && (hostile.isTouchingWater() || mod.getPlayer().isTouchingWater())) continue;
                     boolean isRangedOrPoisonous = (hostile instanceof SkeletonEntity
                             || hostile instanceof WitchEntity || hostile instanceof PillagerEntity
                             || hostile instanceof PiglinEntity || hostile instanceof StrayEntity
