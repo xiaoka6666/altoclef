@@ -728,6 +728,14 @@ public class ModernSpeedrunTask extends Task {
                 : new TimeoutWanderTask(24);
         wdEscapeTicks = ESCAPE_TICKS;
         wdTicks = 0;
+        // S298: s297u stood still 40s x3 inside CollectGoldIngotTask with no clue which subtask froze.
+        StringBuilder chain = new StringBuilder();
+        for (Task t = active; t != null && chain.length() < 600; t = t.getSub()) {
+            chain.append(" > ").append(t.getClass().getSimpleName());
+            String ds = t.getDebugState();
+            if (ds != null && !ds.isEmpty()) chain.append('[').append(ds).append(']');
+        }
+        T2Log.force("S298", "stall chain" + chain);
         T2Log.warn("S200", "no progress " + (limit / 20) + "s ph=" + phase + " @" + p.toShortString()
                 + " child=" + (active == null ? "-" : active.getClass().getSimpleName())
                 + " -> " + wdEscape.getClass().getSimpleName());
