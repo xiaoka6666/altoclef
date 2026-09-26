@@ -3068,7 +3068,10 @@ public class ModernSpeedrunTask extends Task {
             // E10 never fired while s276t sank and drowned. Only leaving the water resets it.
             if (head) wetStreak++;
             else if (!mod.getPlayer().isTouchingWater()) wetStreak = 0;
-            return wetStreak >= 20;
+            // S291: Ostinato now sprint-swims and dives on purpose; a 1s-submerged bail hijacked its
+            // water paths. Only rescue when air is running out, hp is low, or it has been under 60s.
+            if (wetStreak < 20) return false;
+            return mod.getPlayer().getAir() < 120 || mod.getPlayer().getHealth() <= 8 || wetStreak >= 20 * 60;
         } catch (Throwable t) {
             wetStreak = 0;
             return false;
