@@ -1321,6 +1321,16 @@ public class ModernSpeedrunTask extends Task {
         // S235: s234 flipped CraftInInventory<->Construct x259. The 2x2 craft reports finished
         // for a tick while the table sits in the output slot; the closer grabbed the slot, the
         // craft was interrupted, and S221 asked for the table again. Yield while S221 is unmet.
+        // S294: starveHunt was only set inside portal(), which the closer latch skips. s293t built
+        // with the closer from 4:37 to 27:04 at hun 18 -> 3, food=0, and never hunted. Check it here.
+        if (phase == Phase.PORTAL && !starveHunt && WorldHelper.getCurrentDimension() == Dimension.OVERWORLD) {
+            int hun0 = mod.getPlayer().getHungerManager().getFoodLevel();
+            float hp0 = mod.getPlayer().getHealth();
+            if ((hun0 <= 6 || (hun0 < 18 && hp0 <= 12)) && food(mod) < 1) {
+                starveHunt = true;
+                T2Log.force("S294", "hun=" + hun0 + " hp=" + hp0 + " no food - closer yields to food hunt");
+            }
+        }
         boolean closerYields = starveHunt || needsNetherTable(mod)
                 || (active != null && active != closer && !(active instanceof ConstructNetherPortalBucketTask)
                     && !active.isFinished());
