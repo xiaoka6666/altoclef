@@ -15,9 +15,9 @@ for the Minecraft versions Ostinato is built for:
 
 | Minecraft | Status | Ostinato | Notes |
 | --- | --- | --- | --- |
-| 1.21.4 | Primary | branch `1.21.4` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Anarchy target; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
+| 1.21.4 | Primary | `main` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Anarchy target; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
 | 1.16.1 | Legacy | branch `1.16.1` (`libs/baritone-unoptimized-fabric-1.16.1.jar`) | Legacy pairing |
-| 1.21.11 | Experimental | `main` (built from source) | Not a release target |
+| 1.21.11 | Experimental | branch `1.21.11` (built from source) | Not a release target |
 
 The other versions under `versions/` (1.21.1 down to 1.16.5) are only steps in the source
 preprocessor chain; they are not compiled or released. The complete, version-matched setup is in

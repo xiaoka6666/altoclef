@@ -7,7 +7,7 @@ Portable builds for TenorClef. No machine-specific paths in committed `gradle.pr
 | What you build | JDK | Notes |
 | --- | --- | --- |
 | TenorClef modules (`1.21.4`, `1.21.11`, `1.16.1`) | **JDK 21** | Root Loom build; `jvmdowngrader` lowers bytecode for older MC |
-| Ostinato tip (`main`, MC 1.21.11) | **JDK 21** | Gradle 8.x / Unimined |
+| Ostinato `main` (MC 1.21.4) and `1.21.11` | **JDK 21** | Gradle 8.x / Unimined |
 | Ostinato `1.16.1` branch | **JDK 8** | Gradle **4.9** — do not use JDK 21 for that checkout |
 
 Set `JAVA_HOME` (or your IDE Gradle JVM) to JDK 21 before running TenorClef Gradle.
@@ -88,7 +88,7 @@ gradlew.bat :1.21.11:compileJava
 
 ### 1.21.4 (primary)
 
-Uses the committed `libs/baritone-unoptimized-fabric-1.21.4.jar` (Ostinato branch `1.21.4`, JDK 21, `./gradlew :fabric:build`).
+Uses the committed `libs/baritone-unoptimized-fabric-1.21.4.jar` (Ostinato `main`, JDK 21, `./gradlew :fabric:build`).
 
 ### Other versions
 
@@ -118,7 +118,7 @@ Do not compile while a `runClient` / `@testrun` session is live on the same tree
 On push/PR to `main`, `.github/workflows/gradle.yml`:
 
 1. **1.21.4** (required) — JDK 21, committed `libs/baritone-unoptimized-fabric-1.21.4.jar`, `./gradlew :1.21.4:compileJava` then `:1.21.4:test`.
-2. **1.21.11** (experimental, `continue-on-error`) — JDK 21, checkout + `:fabric:build` of `vexrypt-rgb/Ostinato@main`, stage jars to `../Ostinato/dist` (and `libs/`), then `./gradlew :1.21.11:compileJava` **only if** staging succeeded. Does **not** block merge.
+2. **1.21.11** (experimental, `continue-on-error`) — JDK 21, checkout + `:fabric:build` of `vexrypt-rgb/Ostinato@1.21.11`, stage jars to `../Ostinato/dist` (and `libs/`), then `./gradlew :1.21.11:compileJava` **only if** staging succeeded. Does **not** block merge.
 3. **1.16.1** (required) — JDK 21 for TenorClef Gradle, uses committed `libs/baritone-unoptimized-fabric-1.16.1.jar`, `./gradlew :1.16.1:compileJava`.
 
 `Deploy Javadoc` (`.github/workflows/javadoc-publish.yml`) is also **non-blocking** (`continue-on-error`) — generation/deploy failures must not red `main`.

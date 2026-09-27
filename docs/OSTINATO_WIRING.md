@@ -7,9 +7,9 @@ is built for; never load a jar built for one Minecraft version into another.
 
 | TenorClef module | Ostinato source | Status |
 | --- | --- | --- |
-| `1.21.4` | Ostinato branch `1.21.4`, staged as `libs/baritone-unoptimized-fabric-1.21.4.jar` | Primary; compiles in CI |
+| `1.21.4` | Ostinato `main` (MC 1.21.4), staged as `libs/baritone-unoptimized-fabric-1.21.4.jar` | Primary; compiles in CI |
 | `1.16.1` | Ostinato branch `1.16.1`, staged as `libs/baritone-unoptimized-fabric-1.16.1.jar` | Legacy pairing; compiles in CI |
-| `1.21.11` | Ostinato `main`, Fabric artifact (CI builds it) | Experimental |
+| `1.21.11` | Ostinato branch `1.21.11`, Fabric artifact (CI builds it) | Experimental |
 | `1.21.1` … `1.16.5` | none | Preprocess-only: not compiled, packaged or tested |
 
 The preprocess chain cannot be trimmed (see `settings.gradle.kts`), so the preprocess-only
@@ -24,9 +24,9 @@ Run `gradlew.bat :1.21.4:build` on Windows or `./gradlew :1.21.4:build` on macOS
 To refresh a staged jar, build the matching Ostinato branch and copy its
 `dist/baritone-unoptimized-fabric-*.jar` over the file in `libs/`:
 
-- `1.21.4`: JDK 21, `./gradlew :fabric:build`.
+- `1.21.4`: JDK 21, `main`, `./gradlew :fabric:build`.
 - `1.16.1`: JDK 8, `./gradlew build -Pbaritone.fabric_build`.
-- `1.21.11`: JDK 21, build `main` with `./gradlew :fabric:build`, then place the jar in
+- `1.21.11`: JDK 21, build branch `1.21.11` with `./gradlew :fabric:build`, then place the jar in
   `../Ostinato/dist/` (or `libs/baritone-unoptimized-fabric-ostinato-*.jar`).
 
 ## Tungsten
