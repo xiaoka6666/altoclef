@@ -474,7 +474,13 @@ public class MobDefenseChain extends SingleTaskChain {
                         || nearest instanceof net.minecraft.entity.mob.BlazeEntity
                         // S288: s287t punched a creeper at 2:08 (no weapon) from full hp and was blown up.
                         || nearest instanceof CreeperEntity;
-                if (rangedTarget && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
+                // S312: s308t fled a skeleton inside a dark cave with only a pickaxe (damage<4) and was
+                // shot from 20hp to death; running in a cave never breaks line of sight. Underground,
+                // with any tool and hp>12, close in and kill the skeleton instead.
+                boolean caveSkeleton = nearest instanceof net.minecraft.entity.mob.AbstractSkeletonEntity
+                        && damage >= 2 && mod.getPlayer().getHealth() > 12
+                        && mod.getWorld().getLightLevel(net.minecraft.world.LightType.SKY, mod.getPlayer().getBlockPos()) <= 0;
+                if (rangedTarget && !caveSkeleton && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
                     fleeHoldUntilMs = System.currentTimeMillis() + 5000;
                     runAwayTask = keepRunAway();
