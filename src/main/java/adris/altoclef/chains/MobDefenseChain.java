@@ -385,6 +385,10 @@ public class MobDefenseChain extends SingleTaskChain {
                     // S304: don't hunt drowned in water - chasing them underwater costs air and time;
                     // the bot just keeps moving and they fall behind.
                     if (hostile instanceof DrownedEntity && (hostile.isTouchingWater() || mod.getPlayer().isTouchingWater())) continue;
+                    // S313: s309t wore a gold helm, mob defense still swung at a piglin (pri 65), the
+                    // group turned hostile and shot it from 19hp to death. Piglins are neutral to a
+                    // gold wearer; hitting one is what makes them hostile. Never pick them as targets.
+                    if (hostile instanceof PiglinEntity && mod.getPlayer().getEquippedStack(net.minecraft.entity.EquipmentSlot.HEAD).getItem() == Items.GOLDEN_HELMET) continue;
                     boolean isRangedOrPoisonous = (hostile instanceof SkeletonEntity
                             || hostile instanceof WitchEntity || hostile instanceof PillagerEntity
                             || hostile instanceof PiglinEntity || hostile instanceof StrayEntity
