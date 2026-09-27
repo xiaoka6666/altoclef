@@ -697,8 +697,9 @@ package adris.altoclef.benchmark;
 //$$                 BlockPos g = new BlockPos(ox + offs[gi][0], by + offs[gi][1], oz + offs[gi][2]);
 //$$                 for (int r = 0; r < reps; r++) {
 //$$                     teleport(mc, start);
-//$$                     // every rep starts on a full breath, otherwise results depend on the previous rep
-//$$                     mc.getServer().execute(() -> mc.getServer().getPlayerManager().getPlayerList().forEach(p -> p.setAir(p.getMaxAir())));
+//$$                     // every rep starts on the same breath (full by default), otherwise results depend on the previous rep
+//$$                     int air0 = Integer.getInteger("tenorclef.pathbench.swimAir", 300);
+//$$                     mc.getServer().execute(() -> mc.getServer().getPlayerManager().getPlayerList().forEach(p -> p.setAir(Math.min(air0, p.getMaxAir()))));
 //$$                     Thread.sleep(200);
 //$$                     long t0 = worldTime(mc);
 //$$                     startBaritone(mc, baritone, g);
