@@ -1,5 +1,6 @@
 package adris.altoclef.tasks.resources;
 
+import adris.altoclef.tasks.speedrun.testrun2.T2Log;
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.multiversion.blockpos.BlockPosVer;
@@ -29,6 +30,8 @@ public class CollectBlazeRodsTask extends ResourceTask {
 
     private static final double SPAWNER_BLAZE_RADIUS = 32;
     private static final double TOO_LITTLE_HEALTH_BLAZE = 10;
+    private float _hpSample = 20;
+    private long _hpSampleMs;
     private static final int TOO_MANY_BLAZES = 5;
     private final int _count;
     private final Task _searcher = new SearchChunkForBlockTask(Blocks.NETHER_BRICKS);
@@ -88,6 +91,15 @@ public class CollectBlazeRodsTask extends ResourceTask {
                 // latch while regen is possible.
                 if (_retreating && mod.getPlayer().getHungerManager().getFoodLevel() < 18 && !mod.getFoodChain().hasFood()) {
                     _retreating = false;
+                }
+                // S311: s307t went 20 -> 10.5 -> 6 -> dead in ~13s against 2+ blazes; hp<=10 was too
+                // late. Retreat at 14 with multiple blazes, or on any fast hp drop.
+                long nowMs = System.currentTimeMillis();
+                if (nowMs - _hpSampleMs > 4000) { _hpSample = hp; _hpSampleMs = nowMs; }
+                boolean fastDrop = _hpSample - hp >= 6 && hp <= 14;
+                if (!_retreating && (fastDrop || hp <= 14 && blazes >= 2)) {
+                    T2Log.force("S311", "blaze retreat hp=" + hp + " blazes=" + blazes + " fastDrop=" + fastDrop);
+                    _retreating = true;
                 }
                 if (_retreating || hp <= TOO_LITTLE_HEALTH_BLAZE &&
                         (blazes >= TOO_MANY_BLAZES || blazes >= 2 || mod.getPlayer().isOnFire()
