@@ -10,17 +10,18 @@ the upstream history of this fork.
 
 ## Supported versions
 
-| Minecraft | Status | Movement engine | Notes |
-| --- | --- | --- | --- |
-| 1.21.1 | Primary | Matching Baritone artifact | Verified compile target |
-| 1.21.4 | Anarchy target | Ostinato `1.21.4` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Compiles; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
-| 1.21 | Maintained | Matching Baritone artifact | Build and test before use |
-| 1.21.11 | Experimental | Ostinato `main` | Source port is incomplete; not a release target |
-| 1.16.5 | Legacy | AltoClef-compatible Baritone | Legacy module |
-| 1.16.1 | Legacy | Ostinato `1.16.1` | Requires the legacy Ostinato artifact |
+TenorClef always runs on [Ostinato](https://github.com/vexrypt-rgb/Ostinato), so it is only built
+for the Minecraft versions Ostinato is built for:
 
-The complete, version-matched setup is in [the Ostinato wiring guide](docs/OSTINATO_WIRING.md).
-Older source trees may remain in the repository, but they are not a release promise.
+| Minecraft | Status | Ostinato | Notes |
+| --- | --- | --- | --- |
+| 1.21.4 | Primary | branch `1.21.4` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Anarchy target; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
+| 1.16.1 | Legacy | branch `1.16.1` (`libs/baritone-unoptimized-fabric-1.16.1.jar`) | Legacy pairing |
+| 1.21.11 | Experimental | `main` (built from source) | Not a release target |
+
+The other versions under `versions/` (1.21.1 down to 1.16.5) are only steps in the source
+preprocessor chain; they are not compiled or released. The complete, version-matched setup is in
+[the Ostinato wiring guide](docs/OSTINATO_WIRING.md).
 
 ## Install
 
@@ -41,13 +42,13 @@ AltoClef jar.
 TenorClef uses Java 21 for the current modern modules. On Windows run:
 
 ```bat
-gradlew.bat :1.21.1:build
+gradlew.bat :1.21.4:build
 ```
 
 On macOS or Linux run:
 
 ```sh
-./gradlew :1.21.1:build
+./gradlew :1.21.4:build
 ```
 
 For a version that depends on a local Ostinato build, follow the wiring guide first.
@@ -55,10 +56,11 @@ The initial Gradle configuration can take a while because Minecraft is remapped.
 
 ## Movement backends
 
-The stable modern targets resolve a matching Baritone artifact. Ostinato supplies the
-AltoClef-compatible engine for the 1.16.1 pairing and is the engine being developed
-for the experimental 1.21.11 port. On the modern targets, Tungsten is an optional
-travel backend; mining, building, and inventory operations use Baritone processes.
+Every build uses Ostinato, the AltoClef-compatible Baritone fork. On the modern targets,
+Tungsten is an optional travel backend; mining, building, and inventory operations use
+Ostinato's Baritone processes. Ostinato also carries the encrypted `#swarm` link for
+multi-bot groups, including coordinated region builds (`#swarm build`); see Ostinato's
+`docs/REGION_BUILD.md`.
 
 When using an Ostinato-enabled pairing, its `movementBackend` setting selects
 `baritone`, `tungsten`, or `auto`; `auto` falls back to Baritone when Tungsten is not

@@ -41,11 +41,20 @@ Directories probed:
 - **Hard fail** if missing (no Maven fallback for 1.16.1).
 - **Tungsten is not attached** on this module.
 
-### 1.21 / 1.21.1 / 1.21.11
+### 1.21.4 (`mcVersion == 12104`)
 
-- Prefer newest non-1.16.1 jar from `../Ostinato/dist` (else `libs/`).
-- Fallback: Maven `cabaletta:baritone-unoptimized-fabric:<mc>` (or `-Paltoclef.development` local flatDir).
-- Escape hatch: `-Paltoclef.forceMiranczBaritone`.
+- Requires `libs/baritone-unoptimized-fabric-1.21.4.jar` (Ostinato branch `1.21.4`). **Hard fail** if missing.
+
+### 1.21.11
+
+- Newest non-1.16.1, non-1.21.4 jar from `../Ostinato/dist` (else `libs/`). No Maven fallback.
+
+### Everything else (1.21.1 … 1.16.5)
+
+- Preprocess-only: not compiled or packaged. Upstream `cabaletta:baritone-unoptimized-fabric:<mc>` is `modCompileOnly`, only for the preprocessor's type resolution.
+
+### Tungsten (1.21.x)
+
 - **Tungsten optional:** `libs/tungsten*.jar` or `vendor/tungsten/build/libs`; if absent, log and Baritone-only travel.
 
 See also existing `docs/OSTINATO_WIRING.md`.
