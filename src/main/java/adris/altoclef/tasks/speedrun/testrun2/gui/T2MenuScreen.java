@@ -86,3 +86,95 @@ public class T2MenuScreen extends Screen {
     public T2MenuScreen() {
         super(titleText());
     }
+
+    public static void open() {
+        pendingOpen = 0;
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc == null) return;
+        Runnable show = () -> {
+            try {
+                if (mc.currentScreen instanceof T2MenuScreen) return;
+                T2MenuScreen screen = new T2MenuScreen();
+                try {
+                    mc.getClass().getMethod("openScreen", Screen.class).invoke(mc, screen);
+                } catch (NoSuchMethodException e) {
+                    mc.getClass().getMethod("setScreen", Screen.class).invoke(mc, screen);
+                }
+                Debug.logMessage("T2MENU opened");
+            } catch (Throwable t) {
+                Debug.logWarning("T2MENU open: " + t.getClass().getSimpleName() + " " + t.getMessage());
+            }
+        };
+        try {
+            mc.execute(show);
+        } catch (Throwable t) {
+            show.run();
+        }
+    }
+
+    /** Chat closes the screen after the command. Wait it out. */
+    public static void openSoon() {
+        pendingOpen = 12;
+        Debug.logMessage("T2MENU queued");
+    }
+
+    public static void poll() {
+        if (pendingOpen <= 0) return;
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc == null) return;
+        if (mc.currentScreen != null) {
+            String n = mc.currentScreen.getClass().getSimpleName();
+            if (n.contains("Chat") || n.contains("Command")) return;
+            if (mc.currentScreen instanceof T2MenuScreen) {
+                pendingOpen = 0;
+                return;
+            }
+        }
+        pendingOpen--;
+        if (pendingOpen <= 0) open();
+    }
+
+    private static Text titleText() {
+        try {
+            return (Text) Text.class.getMethod("literal", String.class).invoke(null, "TenorClef");
+        } catch (Throwable t) {
+            try {
+                return (Text) Class.forName("net.minecraft.text.LiteralText")
+                        .getConstructor(String.class).newInstance("TenorClef");
+            } catch (Throwable t2) {
+                throw new IllegalStateException(t2);
+            }
+        }
+    }
+
+    private String[][] tabLeft() {
+        if (tab == 1) return TAB_LINK_L;
+        if (tab == 2) return TAB_MEDIA_L;
+        if (tab == 3) return TAB_AGENT_L;
+        if (tab == 4) return new String[0][];
+        return TAB_TASKS_L;
+    }
+
+    private String[][] tabRight() {
+        if (tab == 1) return TAB_LINK_R;
+        if (tab == 2) return TAB_MEDIA_R;
+        if (tab == 3) return TAB_AGENT_R;
+        if (tab == 4) return new String[0][];
+        return TAB_TASKS_R;
+    }
+
+    private void layout() {
+        int pw = Math.min(560, Math.max(420, this.width - 32));
+        int ph = Math.min(tab == 3 ? 292 : 268, this.height - 16);
+        if (ph < 200) ph = Math.max(188, this.height - 16);
+        px0 = (this.width - pw) / 2;
+        py0 = (this.height - ph) / 2;
+        px1 = px0 + pw;
+        py1 = py0 + ph;
+        headerB = py0 + 28;
+        footerT = py1 - 24;
+        sideR = px0 + (pw >= 500 ? 118 : 100);
+        contentX = sideR + 10;
+        contentY = headerB + 8;
+        contentW = px1 - contentX - 10;
+    }
