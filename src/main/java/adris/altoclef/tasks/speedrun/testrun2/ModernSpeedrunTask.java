@@ -2405,15 +2405,24 @@ public class ModernSpeedrunTask extends Task {
         // S277: the fixed +8,+6 offset walked s276t into a lake bed (dest y=56 under water) and it
         // drowned. Try the four rotations and take the first whose surface column is not water.
         int[][] offs = {{8, 6}, {-6, 8}, {-8, -6}, {6, -8}};
-        BlockPos dest = here.add(8, 0, 6);
+        // S316: s312t was at y=59 on a lake bed; every rotation was wet so it fell back to +8,+6 at
+        // y=59 underwater. That GetToBlock fought the surfacing path each tick until it drowned.
+        // Aim at the dry surface block, and when nothing is dry (or we're submerged) bail to air.
+        BlockPos dest = null;
         for (int[] o : offs) {
             BlockPos c = here.add(o[0], 0, o[1]);
             try {
                 BlockPos top = mod.getWorld().getTopPosition(net.minecraft.world.Heightmap.Type.MOTION_BLOCKING, c);
                 if (!mod.getWorld().getFluidState(top.down()).isEmpty() || !mod.getWorld().getFluidState(c).isEmpty()) continue;
-            } catch (Throwable ignored) {}
-            dest = c;
+                dest = top.getY() - here.getY() <= 6 ? top : c;
+            } catch (Throwable ignored) {
+                dest = c;
+            }
             break;
+        }
+        if (dest == null || mod.getPlayer().isSubmergedInWater()) {
+            T2History.note("S316 E99: no dry walk-off tile - water bail");
+            return new WaterBailTask();
         }
         T2History.note("WHY E99: GetToBlock " + dest.getX() + "," + dest.getZ());
         try {
