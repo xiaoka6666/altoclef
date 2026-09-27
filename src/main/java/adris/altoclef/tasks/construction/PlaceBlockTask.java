@@ -135,6 +135,14 @@ public class PlaceBlockTask extends Task implements ITaskRequiresGrounded {
         }
 
 
+        // S352: never start the builder with nothing to place — the schematic falls back to
+        // COBBLESTONE and Baritone then walks around trying to place a block we don't have.
+        if (getMaterialCount(mod) <= 0) {
+            setDebugState("No block to place in inventory.");
+            mod.getClientBaritone().getBuilderProcess().onLostControl();
+            return null;
+        }
+
         // Place block
         if (tryingAlternativeWay()) {
             setDebugState("Alternative way: Trying to go above block to place block.");
