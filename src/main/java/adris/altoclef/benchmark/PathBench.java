@@ -278,7 +278,7 @@ package adris.altoclef.benchmark;
 //$$
 //$$     /**
 //$$      * Flowing water: (a) a 1x1 waterfall shaft 16 high fed by one source at the top, goal on the ledge
-//$$      * above; (b) a sloped stream running down a staircase, goal at its source end.
+//$$      * above; (b) a sloped stream running down a staircase, goal at its source end; (c) the same staircase dry.
 //$$      */
 //$$     private static void flow(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
 //$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
@@ -304,6 +304,12 @@ package adris.altoclef.benchmark;
 //$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), wall && y <= by + 14 ? G : A, 2);
 //$$             }
 //$$             for (int z = 19; z <= 21; z++) w.setBlockState(new BlockPos(ox, by + 12, oz + z), net.minecraft.block.Blocks.WATER.getDefaultState(), 3);
+//$$             // (c) the same staircase dry at z+30: the walking baseline for (b)
+//$$             for (int x = -1; x <= 13; x++) for (int z = 28; z <= 32; z++) for (int y = by - 1; y <= by + 16; y++) {
+//$$                 int top = by + 12 - Math.max(0, Math.min(12, x));
+//$$                 boolean wall = z == 28 || z == 32 || x == -1 || x == 13 || y < top;
+//$$                 w.setBlockState(new BlockPos(ox + x, y, oz + z), wall && y <= by + 14 ? G : A, 2);
+//$$             }
 //$$             built.complete(null);
 //$$         });
 //$$         built.get();
@@ -311,6 +317,7 @@ package adris.altoclef.benchmark;
 //$$         BlockPos[][] cases = {
 //$$                 {new BlockPos(ox - 2, by, oz), new BlockPos(ox, by + H, oz - 1)},
 //$$                 {new BlockPos(ox + 12, by + 1, oz + 20), new BlockPos(ox, by + 12, oz + 20)},
+//$$                 {new BlockPos(ox + 12, by + 1, oz + 30), new BlockPos(ox, by + 12, oz + 30)},
 //$$         };
 //$$         PrintWriter csv = open("flow_baritone");
 //$$         csv.println("case,rep,result,ticks,endDist");
