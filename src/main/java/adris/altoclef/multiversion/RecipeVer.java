@@ -13,7 +13,11 @@ public class RecipeVer {
 
     public static ItemStack getOutput(Recipe<?> recipe, World world) {
         //#if MC >= 11904
+        //#if MC >= 12102
+        //$$ return ItemStack.EMPTY;
+        //#else
         return recipe.getResult(world.getRegistryManager());
+        //#endif
         //#else
         //$$ return recipe.getOutput();
         //#endif
@@ -21,7 +25,11 @@ public class RecipeVer {
 
     public static List<Ingredient> getIngredients(Recipe<?> recipe) {
         //#if MC >= 11605
+        //#if MC >= 12102
+        //$$ return List.of();
+        //#else
         return recipe.getIngredients();
+        //#endif
         //#else
         //$$ return recipe.getPreviewInputs();
         //#endif

@@ -54,6 +54,7 @@ def mappingsVersions = [
         12006: "1.20.6+build.3",
         12100: "1.21+build.9",
         12101: "1.21.1+build.3",
+        12104: "1.21.4+build.8",
         12111: "1.21.11+build.3",
 ]
 
@@ -71,6 +72,7 @@ def fabricApiVersions = [
         12006: "0.100.0+1.20.6",
         12100: "0.100.7+1.21",
         12101: "0.110.0+1.21.1",
+        12104: "0.119.2+1.21.4",
         12111: "0.140.0+1.21.11",
 ]
 
@@ -79,6 +81,7 @@ def loaderVersions = [
         11605: project.loader_version,
         12100: project.loader_version,
         12101: project.loader_version,
+        12104: "0.16.10",
         12111: "0.18.3",
 ]
 
@@ -189,6 +192,18 @@ dependencies {
         // mod (fabric.mod.json present) alongside altoclef. If a bundled release jar is
         // ever required, do it as a separate packaging step with a Loom-produced
         // artifact, not by including a flat file here.
+    } else if (mcVersion == 12104) {
+        // 1.21.4 uses Ostinato branch 1.21.4 (anarchy-server target).
+        def jars1214 = []
+        ostinatoSearchDirs.each { dir ->
+            if (dir.exists()) dir.eachFileMatch(~/baritone-unoptimized-fabric-.*1\.21\.4.*\.jar/) { f -> jars1214 << f }
+        }
+        jars1214 = jars1214.unique { it.absolutePath }.sort { -it.lastModified() }
+        if (jars1214.isEmpty()) {
+            throw new GradleException("Missing Ostinato 1.21.4 Baritone jar. Build Ostinato branch 1.21.4 and place it as libs/baritone-unoptimized-fabric-1.21.4.jar (see docs/OSTINATO_WIRING.md).")
+        }
+        println "[altoclef] Ostinato Baritone for ${project.name}: ${jars1214[0].name}"
+        modImplementation files(jars1214[0])
     } else {
         // Only 1.21.11 can use main's matching Ostinato artifact. 1.21 and 1.21.1
         // must resolve their matching Baritone artifact instead of a 1.21.11 jar.
@@ -196,7 +211,7 @@ dependencies {
         [ostinatoDist, ostinatoDistInTree].each { dir ->
             if (dir.exists()) {
                 dir.eachFileMatch(~/baritone-unoptimized-fabric-.*\.jar/) { f ->
-                    if (!f.name.contains("1.16.1") && !f.name.contains("ostinato-1.16")) {
+                    if (!f.name.contains("1.16.1") && !f.name.contains("ostinato-1.16") && !f.name.contains("1.21.4")) {
                         ostinatoJars << f
                     }
                 }
@@ -205,12 +220,12 @@ dependencies {
         ostinatoJars = ostinatoJars.unique { it.absolutePath }.sort { -it.lastModified() }
         if (ostinatoJars.isEmpty() && ostinatoLibs.exists()) {
             ostinatoLibs.eachFileMatch(~/baritone-unoptimized-fabric-ostinato.*\.jar/) { f ->
-                if (!f.name.contains("1.16.1")) ostinatoJars << f
+                if (!f.name.contains("1.16.1") && !f.name.contains("1.21.4")) ostinatoJars << f
             }
             // Also accept any non-1.16.1 unoptimized fabric jar staged into libs/ by CI.
             if (ostinatoJars.isEmpty()) {
                 ostinatoLibs.eachFileMatch(~/baritone-unoptimized-fabric-.*\.jar/) { f ->
-                    if (!f.name.contains("1.16.1") && !f.name.contains("ostinato-1.16")) {
+                    if (!f.name.contains("1.16.1") && !f.name.contains("ostinato-1.16") && !f.name.contains("1.21.4")) {
                         ostinatoJars << f
                     }
                 }

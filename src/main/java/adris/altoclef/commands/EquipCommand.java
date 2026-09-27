@@ -10,7 +10,7 @@ import adris.altoclef.commandsystem.exception.RuntimeCommandException;
 import adris.altoclef.tasks.misc.EquipArmorTask;
 import adris.altoclef.util.ItemTarget;
 import adris.altoclef.util.helpers.ItemHelper;
-//#if MC < 12111
+//#if MC < 12102
 import net.minecraft.item.Equipment;
 //#endif
 import net.minecraft.item.Item;
@@ -51,7 +51,7 @@ public class EquipCommand extends Command {
 
 
     private static boolean canBeEquipped(Item item) {
-        //#if MC < 12111
+        //#if MC < 12102
         return item instanceof Equipment;
         //#else
         //$$ return item == Items.SHIELD || ItemHelper.getArmorSlot(item) != null;

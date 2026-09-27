@@ -140,7 +140,11 @@ public class CraftGenericWithRecipeBooksTask extends Task implements ITaskUsesCr
                 ClientPlayerEntity player = MinecraftClient.getInstance().player;
                 assert player != null;
                 // Click the recipe to send it
+                //#if MC >= 12102
+                //$$ // recipe-book clicks need a NetworkRecipeId on 1.21.2+; the recipe map is empty there
+                //#else
                 mod.getController().clickRecipe(player.currentScreenHandler.syncId, recipeToSend.get().asRecipe(), true);
+                //#endif
                 mod.getSlotHandler().registerSlotAction();
             }
         }

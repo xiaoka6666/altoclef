@@ -10,6 +10,7 @@ a 1.21 or 1.21.1 client.
 | TenorClef module | Ostinato source | Status |
 | --- | --- | --- |
 | `1.21.1` | Matching published Baritone artifact | Primary supported pairing |
+| `1.21.4` | Ostinato branch `1.21.4`, staged as `libs/baritone-unoptimized-fabric-1.21.4.jar` | Anarchy-server target; compiles |
 | `1.21` | Matching published Baritone artifact | Maintained pairing |
 | `1.21.11` | `main`, Fabric artifact | Experimental; source port does not compile yet |
 | `1.16.1` | branch `1.16.1`, Fabric artifact | Legacy pairing |

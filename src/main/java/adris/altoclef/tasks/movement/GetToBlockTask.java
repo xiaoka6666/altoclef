@@ -84,8 +84,8 @@ public class GetToBlockTask extends CustomBaritoneGoalTask implements ITaskRequi
             return null;
         }
         if (legStartMs == 0) {
-            boolean standable = world.getBlockState(_position).getMaterial().isReplaceable()
-                    && world.getBlockState(_position.up()).getMaterial().isReplaceable();
+            boolean standable = world.getBlockState(_position).isReplaceable()
+                    && world.getBlockState(_position.up()).isReplaceable();
             legTungsten = primary && !tungstenGaveUp && !isPortal && standable
                     && adris.altoclef.movement.MoverStats.preferTungsten();
             legStartMs = System.currentTimeMillis();

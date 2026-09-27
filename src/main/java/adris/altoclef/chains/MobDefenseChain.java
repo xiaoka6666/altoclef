@@ -250,7 +250,13 @@ public class MobDefenseChain extends SingleTaskChain {
             if ((!mod.getFoodChain().needsToEat() || mod.getPlayer().getHealth() < 9)
                     && hasShield(mod)
                     && !mod.getEntityTracker().entityFound(PotionEntity.class)
-                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(offhandItem)
+                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(
+                    //#if MC >= 12102
+                    //$$ new net.minecraft.item.ItemStack(offhandItem)
+                    //#else
+                    offhandItem
+                    //#endif
+                    )
                     && mod.getClientBaritone().getPathingBehavior().isSafeToCancel()
                     && blowingUp.getClientFuseTime(blowingUp.getFuseSpeed()) > 0.5) {
                 LookHelper.lookAt(mod, blowingUp.getEyePos());
@@ -271,7 +277,13 @@ public class MobDefenseChain extends SingleTaskChain {
             // Block projectiles with shield
             if (mod.getModSettings().isDodgeProjectiles()
                     && hasShield(mod)
-                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(offhandItem)
+                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(
+                    //#if MC >= 12102
+                    //$$ new net.minecraft.item.ItemStack(offhandItem)
+                    //#else
+                    offhandItem
+                    //#endif
+                    )
                     && mod.getClientBaritone().getPathingBehavior().isSafeToCancel()
                     && !mod.getEntityTracker().entityFound(PotionEntity.class) && isProjectileClose(mod)) {
                 ItemStack shieldSlot = StorageHelper.getItemStackInSlot(PlayerSlot.OFFHAND_SLOT);

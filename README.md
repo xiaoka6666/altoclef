@@ -13,6 +13,7 @@ the upstream history of this fork.
 | Minecraft | Status | Movement engine | Notes |
 | --- | --- | --- | --- |
 | 1.21.1 | Primary | Matching Baritone artifact | Verified compile target |
+| 1.21.4 | Anarchy target | Ostinato `1.21.4` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Compiles; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
 | 1.21 | Maintained | Matching Baritone artifact | Build and test before use |
 | 1.21.11 | Experimental | Ostinato `main` | Source port is incomplete; not a release target |
 | 1.16.5 | Legacy | AltoClef-compatible Baritone | Legacy module |

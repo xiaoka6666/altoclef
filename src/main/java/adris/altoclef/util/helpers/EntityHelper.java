@@ -73,7 +73,11 @@ public class EntityHelper {
         // Copied logic from `PlayerEntity.applyDamage`
         DamageSourceWrapper source = DamageSourceWrapper.of(src);
 
+        //#if MC >= 12102
+        //$$ if (player.isInvulnerable() || player.isSpectator())
+        //#else
         if (player.isInvulnerableTo(src))
+        //#endif
             return 0;
 
         // Armor Base
