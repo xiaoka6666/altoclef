@@ -697,6 +697,9 @@ package adris.altoclef.benchmark;
 //$$                 BlockPos g = new BlockPos(ox + offs[gi][0], by + offs[gi][1], oz + offs[gi][2]);
 //$$                 for (int r = 0; r < reps; r++) {
 //$$                     teleport(mc, start);
+//$$                     // every rep starts on a full breath, otherwise results depend on the previous rep
+//$$                     mc.getServer().execute(() -> mc.getServer().getPlayerManager().getPlayerList().forEach(p -> p.setAir(p.getMaxAir())));
+//$$                     Thread.sleep(200);
 //$$                     long t0 = worldTime(mc);
 //$$                     startBaritone(mc, baritone, g);
 //$$                     double startD = dist3(mc, g), bestD = startD; long bestAt = 0, firstMove = -1;
