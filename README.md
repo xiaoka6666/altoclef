@@ -13,6 +13,7 @@ the upstream history of this fork.
 | Minecraft | Status | Movement engine | Notes |
 | --- | --- | --- | --- |
 | 1.21.1 | Primary | Matching Baritone artifact | Verified compile target |
+| 1.21.4 | Anarchy target | Ostinato `1.21.4` (`libs/baritone-unoptimized-fabric-1.21.4.jar`) | Compiles; vanilla recipe-book crafting disabled (1.21.2+ servers do not sync recipes) |
 | 1.21 | Maintained | Matching Baritone artifact | Build and test before use |
 | 1.21.11 | Experimental | Ostinato `main` | Source port is incomplete; not a release target |
 | 1.16.5 | Legacy | AltoClef-compatible Baritone | Legacy module |
@@ -61,8 +62,29 @@ travel backend; mining, building, and inventory operations use Baritone processe
 
 When using an Ostinato-enabled pairing, its `movementBackend` setting selects
 `baritone`, `tungsten`, or `auto`; `auto` falls back to Baritone when Tungsten is not
-installed. See [Ostinato's README](https://github.com/vexrypt-rgb/Ostinato) for
+installed. The 1.16.1 pairing also has an experimental physics-driven `kinematicTravel`
+controller, plus `pitfallAvoidance`. See [Ostinato's README](https://github.com/vexrypt-rgb/Ostinato) for
 backend details.
+
+## Benchmarking movement
+
+The in-game `@pathbench` command measures the pathfinder and the movement layer:
+
+- `@pathbench search [-|setting=a,b] [reps]` times path searches, optionally sweeping a setting.
+- `@pathbench travel [baritone|tungsten|kinematic] [reps]` runs end-to-end trials over a fixed
+  set of goals and records reached/stalled and ticks per goal.
+
+Results are written as CSV to `run/pathbench/`. Latest 1.16.1 travel runs (16 goals; baritone and kinematic × 3 reps, physics × 1; kinematic from a later run):
+
+| Mover | Goals reached | Avg ticks (reached goals) |
+| --- | --- | --- |
+| Baritone | 48/48 | 418 |
+| Kinematic (experimental) | 46/48 | 456 |
+| Physics search (experimental, `physicsTravel`) | 15/16 | 401 |
+
+The averages only cover goals each mover reached. The bench origin moves between runs, so
+compare runs taken together; Baritone's misses here include all three tries at one goal
+where it stops 3 blocks short. Single-rep runs are noisy; re-run with 3 reps before drawing conclusions.
 
 ## Project guides
 

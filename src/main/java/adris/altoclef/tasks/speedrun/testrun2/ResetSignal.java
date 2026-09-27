@@ -65,7 +65,7 @@ public final class ResetSignal {
                 try {
                     if (mc.world == null) return;
                     T2Log.force("S188", "reroll: leaving world (queued Save-and-Quit disconnect)");
-                    //#if MC >= 12111
+                    //#if MC >= 12105
                     //$$ mc.world.disconnect(net.minecraft.text.Text.empty());
                     //$$ mc.disconnect(new TitleScreen(), false);
                     //#else

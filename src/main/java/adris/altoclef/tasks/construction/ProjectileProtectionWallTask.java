@@ -186,16 +186,28 @@ public class ProjectileProtectionWallTask extends Task implements ITaskRequiresG
     }
 	
 	public void interact(BlockHitResult blockHitResult, Hand hand) {
+        //#if MC >= 12102
+        //$$ boolean wasSneaking = false;
+        //#else
         boolean wasSneaking = mod.getPlayer().input.sneaking;
         mod.getPlayer().input.sneaking = false;
+        //#endif
 
         ActionResult result = mod.getController().interactBlock(mod.getPlayer(),hand, blockHitResult);
 
+        //#if MC >= 12102
+        //$$ if (result instanceof ActionResult.Success success && success.swingSource() == ActionResult.SwingSource.CLIENT) {
+        //#else
         if (result.shouldSwingHand()) {
+        //#endif
             mod.getPlayer().swingHand(hand);
         }
 
+        //#if MC >= 12102
+        //$$
+        //#else
         mod.getPlayer().input.sneaking = wasSneaking;
+        //#endif
     }
 
 	public boolean canPlace(BlockPos blockPos, boolean checkEntities) {

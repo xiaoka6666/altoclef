@@ -103,6 +103,9 @@ public class CraftingRecipeTracker extends Tracker{
         ClientPlayNetworkHandler networkHandler =  MinecraftClient.getInstance().getNetworkHandler();
         if (networkHandler == null) return;
 
+        //#if MC >= 12102
+        //$$ // 1.21.2+: servers no longer sync recipes to the client; altoclef's own recipe catalogue is used instead.
+        //#else
         RecipeManagerWrapper recipeManager = RecipeManagerWrapper.of(networkHandler.getRecipeManager());
 
         for (WrappedRecipeEntry recipe : recipeManager.values()) {
@@ -128,6 +131,7 @@ public class CraftingRecipeTracker extends Tracker{
 
             recipeResultMap.put(altoclefRecipe, result);
         }
+        //#endif
 
         itemRecipeMap.replaceAll((k,v) -> Collections.unmodifiableList(v));
 
@@ -142,7 +146,11 @@ public class CraftingRecipeTracker extends Tracker{
         int x = 0;
 
         for (Ingredient ingredient : ingredients) {
+                //#if MC >= 12102
+                //$$ ItemStack[] stacks = new ItemStack[0];
+                //#else
                 ItemStack[] stacks = ingredient.getMatchingStacks();
+                //#endif
             Item[] items = new Item[stacks.length];
 
             for (int i = 0; i < stacks.length; i++) {

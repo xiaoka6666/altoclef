@@ -175,7 +175,11 @@ public class SlotHandler {
                             || item instanceof OnAStickItem
                             || item == Items.COMPASS
                             || item instanceof EmptyMapItem
+                            //#if MC >= 12102
+                            //$$ || adris.altoclef.util.helpers.ItemHelper.getArmorSlot(item) != null
+                            //#else
                             || item instanceof Equipment
+                            //#endif
                             || item == Items.LEAD
                             || item == Items.SHIELD;
                 }

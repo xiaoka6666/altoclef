@@ -68,12 +68,26 @@ public class PathFinder {
 	private static final double minimumImprovement = -500;
 	private static Optional<List<BlockNode>> blockPath = Optional.empty();
 	protected static final double MIN_DIST_PATH = 1.8;
+	// Search knobs, overridable with -Dtungsten.tune.<name>=<value> for the PathBench tuner.
+	private static double tune(String k, double d) {
+		String v = System.getProperty("tungsten.tune." + k);
+		try { return v == null ? d : Double.parseDouble(v); } catch (NumberFormatException e) { return d; }
+	}
+	private static final double T_XZ = tune("xz", 1.3);
+	private static final double T_DIST = tune("dist", 2.8);
+	private static final double T_BN = tune("bn", 40);
+	private static final double T_DEDUPE = tune("dedupe", 0.294);
+	private static final double T_DROP = tune("drop", 1.5);
+	// Plan-while-walking: hand the path found so far to the executor every T_WINDOW block nodes
+	// and keep searching from its end, instead of planning the whole route before moving.
+	private static final boolean WINDOWED = Boolean.getBoolean("tungsten.windowed");
+	private static final int T_WINDOW = (int) tune("window", 4);
 	protected static AtomicInteger NEXT_CLOSEST_BLOCKNODE_IDX = new AtomicInteger(1);
 	protected static AtomicInteger numNodesConsidered = new AtomicInteger(0);
 	
 	/** Max search time before emitting bestSoFar and continuing. Default: 112s (normal goto).
 	 *  Set lower (e.g. 2000) for follow-entity to get fast partial paths. */
-	public long searchTimeoutMs = 112000L;
+	public long searchTimeoutMs = Long.getLong("tungsten.searchTimeoutMs", 112000L);
 	/** Minimum path length (nodes) required before a timeout partial-path can be emitted.
 	 *  Default: 46 (~2.3s). Set lower (e.g. 5) for follow-entity close-range. */
 	public int minPathSizeForTimeout = 46;
@@ -124,7 +138,7 @@ public class PathFinder {
                 }
                 search(world, target, player);
             } catch(Exception e) {
-                e.printStackTrace();
+                System.err.println("[PathFinder] search crashed: " + e); for (StackTraceElement st : e.getStackTrace()) System.err.println("  at " + st);
             }
 
             active.set(false);
@@ -140,6 +154,17 @@ public class PathFinder {
         thread.start();
     }
 	
+	// Rejects simulated states that touch or hover over lava/fire at any point of the move.
+	private boolean isInHazard(Node n, WorldView world) {
+		if (Boolean.getBoolean("tungsten.noHazard")) return false;
+		Agent a = n.agent;
+		if (a.isInLava()) return true;
+		net.minecraft.util.math.Box b = a.box;
+		return BlockStateChecker.isNearHazard(world, b.minX, b.minY, b.minZ, b.maxX, b.maxY, b.maxZ, 0.0);
+	}
+
+	private static final int[] REJ = new int[7];
+
 	private boolean checkForFallDamage(Node n, WorldView world) {
 		if (TungstenModDataContainer.ignoreFallDamage) return false;
 		if (BlockStateChecker.isAnyWater(world.getBlockState(n.agent.getBlockPos()))) return false;
@@ -218,6 +243,8 @@ public class PathFinder {
 	    openSet = new BinaryHeapOpenSet();
 	    openSet.insert(this.start);
 	    closed.clear();
+	    java.util.Arrays.fill(REJ, 0);
+	    int commitIdx = NEXT_CLOSEST_BLOCKNODE_IDX.get();
 	    dbgLoggedFirstChildren.set(false);
 	    dbgLoggedZeroDisp.set(false);
 
@@ -238,12 +265,35 @@ public class PathFinder {
 	        
             // Search for a path without fall damage
             if (checkForFallDamage(next, world)) {
+            	REJ[5]++;
             	continue;
             }
 	
 	        if (shouldSkipNode(next, target, closed, blockPath, world)) {
+	        	REJ[6]++;
 //	        	Debug.logMessage("Skipped");
 	            continue;
+	        }
+
+	        if (WINDOWED && blockPath.isPresent()) {
+	        	int idx = NEXT_CLOSEST_BLOCKNODE_IDX.get();
+	        	if (idx < commitIdx) commitIdx = idx; // block path was replaced
+	        	boolean execHungry = !TungstenModDataContainer.EXECUTOR.isRunning()
+	        			|| TungstenModDataContainer.EXECUTOR.getPath().size() - TungstenModDataContainer.EXECUTOR.getCurrentTick() < 40;
+	        	if (next.agent.onGround && idx >= commitIdx + T_WINDOW && idx < blockPath.get().size() - 1 && execHungry) {
+	        		List<Node> prefix = constructPath(next);
+	        		if (prefix.size() > 3) {
+	        			executePath(prefix);
+	        			commitIdx = idx;
+	        			this.start = initializeStartNode(next, target);
+	        			bestHeuristicSoFar = initializeBestHeuristics(this.start);
+	        			clearParentsForBestSoFar(this.start);
+	        			openSet = new BinaryHeapOpenSet();
+	        			openSet.insert(this.start);
+	        			closed.clear();
+	        			continue;
+	        		}
+	        	}
 	        }
 
 	
@@ -367,7 +417,10 @@ public class PathFinder {
 	    } else if (openSet.isEmpty()) {
 	        TungstenMod.LOG.info("[PathFinder] Ran out of nodes, trying partial path...");
 	        Debug.logMessage("[PathFinder] openSet empty â€” nodesConsidered=" + numNodesConsidered.get()
-	        	+ " start=" + (this.start == null ? "null" : this.start.agent.getPos()));
+	        	+ " start=" + (this.start == null ? "null" : this.start.agent.getPos())
+	        	+ " rej[tooClose,filter,fall,hazard,accepted,popFall,popSkip]=" + java.util.Arrays.toString(REJ)
+	        	+ " bnIdx=" + NEXT_CLOSEST_BLOCKNODE_IDX.get() + "/" + (blockPath.isPresent() ? blockPath.get().size() : -1)
+	        	+ (blockPath.isPresent() ? " nextBN=" + blockPath.get().get(Math.min(Math.max(NEXT_CLOSEST_BLOCKNODE_IDX.get(),0), blockPath.get().size()-1)).getPos(true) : ""));
 	        // Instead of giving up, emit bestSoFar partial path
 	        Optional<List<Node>> partial = PathFinder.bestSoFar(false, 0, this.start, TARGET);
 	        if (partial.isPresent() && partial.get().size() >= 2) {
@@ -512,7 +565,7 @@ public class PathFinder {
 	}
 	
 	private static double computeHeuristic(Vec3d position, boolean onGround, Vec3d target, Vec3d realTarget) {
-		double xzMultiplier = 1.3;
+		double xzMultiplier = T_XZ;
 	    double dx = (position.x - target.x)*xzMultiplier;
 	    double dy = 0;
 	    if (target.y != Double.MIN_VALUE) {
@@ -520,8 +573,8 @@ public class PathFinder {
 		    if (!onGround || dy < 1.6 && dy > -1.6) dy = 0;
 	    }
 	    double dz = (position.z - target.z)*xzMultiplier;
-	    return (Math.sqrt(dx * dx + dy * dy + dz * dz) * 2.8
-	    		 + (((blockPath.isPresent() ? blockPath.get().size() - NEXT_CLOSEST_BLOCKNODE_IDX.get() : 0)) * 40)
+	    return (Math.sqrt(dx * dx + dy * dy + dz * dz) * T_DIST
+	    		 + (((blockPath.isPresent() ? blockPath.get().size() - NEXT_CLOSEST_BLOCKNODE_IDX.get() : 0)) * T_BN)
 	    		+ (DistanceCalculator.getEuclideanDistance(position, realTarget) * 0.2)
 	    		);
 	}
@@ -837,9 +890,12 @@ public class PathFinder {
 
     	if (nextBlockNode.isDoingLongJump(world)) return child.agent.getBlockPos().getY() < nextBlockNode.getBlockPos().getY()-1;
 
-    	if (isSmallBlock) return child.agent.getPos().getY() < (nextBlockNode.getPos(true).getY()-1);
+    	// Measure against the lower of the last/next BlockNode: on uphill segments the next node
+    	// can sit 2+ blocks above the agent, which used to reject every reachable child.
+    	double refY = Math.min(nextBlockNode.getPos(true).getY(), lastBlockNode.getPos(true).getY());
+    	if (isSmallBlock) return child.agent.getPos().getY() < (refY - 1);
 
-    	return child.agent.getPos().getY() < (nextBlockNode.getPos(true).getY() - 1.5);
+    	return child.agent.getPos().getY() < (refY - T_DROP);
 //    	return false;
     }
 
@@ -932,14 +988,17 @@ public class PathFinder {
 					double distance = other.agent.getPos().distanceTo(cp);
 					boolean otherClimbing = validClimbing.get(vi);
 					if ((otherClimbing && childClimbing && distance < 0.03)
-							|| (!otherClimbing && !childClimbing && distance < 0.294)
+							|| (!otherClimbing && !childClimbing && distance < T_DEDUPE)
 							|| (isSmallBlock && distance < 0.2)) {
 						tooClose = true;
 						break;
 					}
 				}
-				if (tooClose) continue;
-				if (filterChidren(child, lastBlockNode, nextBlockNode, isSmallBlock, world) || checkForFallDamage(child, world)) continue;
+				if (tooClose) { REJ[0]++; continue; }
+				if (filterChidren(child, lastBlockNode, nextBlockNode, isSmallBlock, world)) { REJ[1]++; continue; }
+				if (checkForFallDamage(child, world)) { REJ[2]++; continue; }
+				if (isInHazard(child, world)) { REJ[3]++; continue; }
+				REJ[4]++;
 				validChildren.add(child);
 				validClimbing.add(childClimbing);
 			}

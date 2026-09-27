@@ -1,0 +1,2 @@
+{ "schemaVersion": 1, "id": "elytrabench", "version": "1", "name": "ElytraBench", "environment": "client",
+  "entrypoints": { "client": ["bench.ElytraBench"] }, "depends": { "fabricloader": "*" } }

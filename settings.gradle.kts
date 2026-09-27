@@ -56,6 +56,7 @@ rootProject.buildFileName = "root.gradle.kts"
 // javap-verify before building, longer runs between builds) over trimming the graph.
 val versions = listOf(
     "1.21.11",
+    "1.21.4",
     "1.21.1",
     "1.21",
     "1.20.6",

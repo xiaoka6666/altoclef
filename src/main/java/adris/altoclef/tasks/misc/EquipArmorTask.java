@@ -118,9 +118,9 @@ public class EquipArmorTask extends Task {
                                 StorageHelper.closeScreen();
                             }
                         }
-                        Slot toMove = PlayerSlot.getEquipSlot(item.getSlotType());
+                        Slot toMove = PlayerSlot.getEquipSlot(adris.altoclef.util.helpers.ItemHelper.getArmorSlot(item));
                         if (toMove == null) {
-                            Debug.logWarning("Invalid armor equip slot for item " + item.getTranslationKey() + ": " + item.getSlotType());
+                            Debug.logWarning("Invalid armor equip slot for item " + item.getTranslationKey() + ": " + adris.altoclef.util.helpers.ItemHelper.getArmorSlot(item));
                         }
                         return new MoveItemToSlotFromInventoryTask(targetArmor, toMove);
                     }

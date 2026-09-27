@@ -150,7 +150,7 @@ public class StorageHelper {
             if (!slot.isSlotInPlayerInventory())
                 continue;
             ItemStack stack = getItemStackInSlot(slot);
-            //#if MC < 12111
+            //#if MC < 12102
             if (stack.getItem() instanceof ToolItem) {
             //#else
             //$$ if (ItemHelper.isTool(stack.getItem())) {
@@ -158,7 +158,7 @@ public class StorageHelper {
                 if (stack.getItem().getDefaultStack().isSuitableFor(state)) {
                     if (shouldSaveStack(mod,  state.getBlock(), stack)) continue;
 
-                    //#if MC < 12111
+                    //#if MC < 12102
                     double speed = ToolSet.calculateSpeedVsBlock(stack, state);
                     //#else
                     //$$ double speed = stack.getMiningSpeedMultiplier(state);
@@ -235,7 +235,7 @@ public class StorageHelper {
         }
 
         // Try throwing away lower tier tools
-        //#if MC < 12111
+        //#if MC < 12102
         final HashMap<Class, Integer> bestMaterials = new HashMap<>();
         final HashMap<Class, Slot> bestToolSlot = new HashMap<>();
         //#else
@@ -250,7 +250,7 @@ public class StorageHelper {
 
             Item item = stack.getItem();
 
-            //#if MC < 12111
+            //#if MC < 12102
             if (!(item instanceof ToolItem tool)) continue;
 
             Class clazz = tool.getClass();
@@ -319,7 +319,7 @@ public class StorageHelper {
                 return possibleSlots.stream().min((leftSlot, rightSlot) -> {
                     ItemStack left = StorageHelper.getItemStackInSlot(leftSlot),
                             right = StorageHelper.getItemStackInSlot(rightSlot);
-                    //#if MC < 12111
+                    //#if MC < 12102
                     boolean leftIsTool = left.getItem() instanceof ToolItem;
                     boolean rightIsTool = right.getItem() instanceof ToolItem;
                     // Prioritize tools over materials.
@@ -464,7 +464,7 @@ public class StorageHelper {
         ClientPlayerEntity player = AltoClef.getInstance().getPlayer();
 
         for (Item item : any) {
-            //#if MC < 12111
+            //#if MC < 12102
             if (item instanceof ArmorItem armor) {
                 ItemStack equippedStack = player.getEquippedStack(armor.getSlotType());
                 if (equippedStack.getItem().equals(item))
