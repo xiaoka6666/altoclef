@@ -799,6 +799,9 @@ package adris.altoclef.benchmark;
 //$$             Thread.sleep(25);
 //$$             if (mc.player != null && mc.player.squaredDistanceTo(p.getX() + 0.5, p.getY(), p.getZ() + 0.5) < 1.0) break;
 //$$         }
+//$$         // Each run starts fresh: no process (low-air surfacing) carried over from the last one.
+//$$         for (int i = 0; i < 40 && mc.player != null && mc.player.getAir() < mc.player.getMaxAir(); i++) Thread.sleep(25);
+//$$         mc.execute(() -> BaritoneAPI.getProvider().getPrimaryBaritone().getPathingBehavior().cancelEverything());
 //$$         Thread.sleep(50);
 //$$     }
 //$$
