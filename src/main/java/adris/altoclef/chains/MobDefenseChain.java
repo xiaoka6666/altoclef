@@ -49,6 +49,7 @@ import java.util.function.Predicate;
 // TODO: Optimise shielding against spiders and skeletons
 
 public class MobDefenseChain extends SingleTaskChain {
+    private long perchSinceMs;
     private static final double DANGER_KEEP_DISTANCE = 30;
     private static final double CREEPER_KEEP_DISTANCE = 10;
     private static final double ARROW_KEEP_DISTANCE_HORIZONTAL = 2;
@@ -275,11 +276,19 @@ public class MobDefenseChain extends SingleTaskChain {
                 return 70;
             }
             // Safely above it: wait instead of walking back down.
-            if (mod.getPlayer().getY() - universallyDangerous.get().getY() >= 2 && universallyDangerous.get().distanceTo(mod.getPlayer()) < 10) {
+            // S317: s313t idled on a hoglin pillar for 3.5 minutes in the open until a ghast killed it.
+            // Cap the perch wait at 20s and never wait while a ghast is around.
+            long nowMs = System.currentTimeMillis();
+            if (perchSinceMs == 0) perchSinceMs = nowMs;
+            boolean ghast = !mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.GhastEntity.class).isEmpty();
+            if ((nowMs - perchSinceMs > 20_000 || ghast) && perchSinceMs > 0) {
+                if (nowMs - perchSinceMs < 20_300) adris.altoclef.tasks.speedrun.testrun2.T2History.note("S317 perch wait over ghast=" + ghast);
+            } else if (mod.getPlayer().getY() - universallyDangerous.get().getY() >= 2 && universallyDangerous.get().distanceTo(mod.getPlayer()) < 10) {
                 if (!(mainTask instanceof adris.altoclef.tasks.movement.IdleTask)) setTask(new adris.altoclef.tasks.movement.IdleTask());
                 return 70;
             }
         }
+        if (!universallyDangerous.isPresent() || !(universallyDangerous.get() instanceof HoglinEntity || universallyDangerous.get() instanceof ZoglinEntity)) perchSinceMs = 0;
         if (universallyDangerous.isPresent() && mod.getPlayer().getHealth() <= 14) {
             runAwayTask = keepRunAway();
             setTask(runAwayTask);
