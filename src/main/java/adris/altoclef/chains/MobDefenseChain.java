@@ -533,6 +533,18 @@ public class MobDefenseChain extends SingleTaskChain {
                     canDealWith = Math.max(canDealWith, toDealWithList.size());
                 }
 
+                // S346: s345o fled (RunAwayFromHostiles) for 20s while a spider chewed it from hp 10 to 2 and
+                // killed it. Spiders outrun the player; running is futile. A spider in reach: turn and kill it.
+                Entity closeSpider = toDealWithList.stream().filter(e -> e instanceof SpiderEntity && e.isAlive()
+                        && e.squaredDistanceTo(mod.getPlayer()) < 16).findFirst().orElse(null);
+                if (closeSpider != null && damage > 0) {
+                    runAwayTask = null;
+                    fleeHoldUntilMs = 0;
+                    lockedOnEntity = closeSpider;
+                    setTask(scopedKillTask(mod, closeSpider));
+                    return 80;
+                }
+
                 // S280: s279t chased a skeleton bare-handed (pick=0, no sword) from hp 19 to death in 15s.
                 // Without a real weapon, or once hurt, never chase a ranged mob; break line of sight instead.
                 Entity nearest = toDealWithList.get(0);
