@@ -71,6 +71,8 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
 - 3-rep check: baritone 48/48 at avg 418 ticks; kinematic 29/34 at avg 293. The kinematic run stopped after 34 trials, probably because the bench script timed out.
   - Kinematic misses are all long goals (about 100 blocks): goal 10 (0, 96) failed all 3 reps, and goals 9 and 11 failed once each (STALLED or STOPPED).
   - Top priority: fix those stalls. Kinematic is roughly 30% faster when it works.
+- Stall fix (later): the stalls were the hitbox drifting ~0.3 off the path line and snagging a leaf/grass block in the next column; Baritone couldn't free it either. Now when stuck the controller walks back onto the line (twice) before handing back, and `syncPosition` no longer skips an ascend while standing on the floor below. 3 reps: kinematic 46/48 at avg 456 (both misses on goal 12). Reverting the sync part alone gave 43/48.
+- The bench origin moves between runs, so short-goal times vary by 2x between runs; compare per-goal only within one run.
 
 **Priority order**
 1. Rebench kinematic vs baritone on the current 1.16.1 jar, with nothing else running. Find why the kinematic controller fails the goals it fails; look at handbacks and the airborne-landing checks in `rollout`. Fix them until kinematic reaches baritone's success rate while staying faster. Update the README tables (TenorClef "Benchmarking movement"). Update the results artifact if you have access; it's a claude.ai page, so ask the user for the link.
