@@ -45,10 +45,10 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
   - Air-management tuning gave no gain and was reverted.
 - Physics pathfinder framework: `baritone/pathing/physics/PhysicsPathfinder.java` on 1.16.1.
   - It runs A* over `PlayerSim` states, with 16 yaws × {sprint, sprint+jump, walk} + idle, each held for 2 ticks. It returns a tick-by-tick key list.
-  - It isn't wired in or tested yet.
+  - `ClientWorld` (a PlayerSim.World adapter over the client world) and `PhysicsTravel` (an executor that plans about 6 land movements ahead and re-plans on more than 0.1 drift) are wired into `PathExecutor` behind the `physicsTravel` setting. Bench it with `pathbench travel physics`.
+  - First bench (1 rep): physics reached 16/16 goals at avg 426 ticks; baritone reached 16/16 at 357. It needs tuning: the node budget, the action set, the heuristic, and why plans fail.
   - Next steps:
-    (a) Write a `PlayerSim.World` adapter over the client world.
-    (b) Add an executor that replays the plan and re-plans whenever the real position drifts more than 0.1 from the simulated one.
+    (a), (b), (d): done.
     (c) Use Baritone's block path as the heuristic corridor, planning to a waypoint about 8 blocks ahead.
     (d) Add a `physicsTravel` setting and a `pathbench travel physics` mode.
     (e) Add swim/sneak inputs.
