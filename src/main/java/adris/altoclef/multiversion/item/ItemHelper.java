@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.Item;
-//#if MC < 12111
+//#if MC < 12102
 import net.minecraft.item.MiningToolItem;
 import net.minecraft.item.PickaxeItem;
 //#endif

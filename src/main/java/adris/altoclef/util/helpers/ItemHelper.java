@@ -402,7 +402,13 @@ public class ItemHelper {
 
     private static Map<Item, Integer> getFuelTimeMap() {
         if (fuelTimeMap == null) {
+            //#if MC >= 12102
+            //$$ fuelTimeMap = new java.util.HashMap<>();
+            //$$ net.minecraft.item.FuelRegistry fuels = net.minecraft.client.MinecraftClient.getInstance().world != null ? net.minecraft.client.MinecraftClient.getInstance().world.getFuelRegistry() : null;
+            //$$ if (fuels != null) for (Item it : fuels.getFuelItems()) fuelTimeMap.put(it, fuels.getFuelTicks(new net.minecraft.item.ItemStack(it)));
+            //#else
             fuelTimeMap = AbstractFurnaceBlockEntity.createFuelTimeMap();
+            //#endif
         }
         return fuelTimeMap;
     }
@@ -434,7 +440,7 @@ public class ItemHelper {
 
     /** Replaces instanceof ToolItem (deleted in 1.21.11). */
     public static boolean isTool(net.minecraft.item.Item item) {
-        //#if MC < 12111
+        //#if MC < 12102
         return item instanceof net.minecraft.item.ToolItem;
         //#else
         //$$ return item != null && item.getComponents().contains(net.minecraft.component.DataComponentTypes.TOOL);
@@ -443,7 +449,7 @@ public class ItemHelper {
 
     /** Attack damage this item adds; works without SwordItem/MiningToolItem on 1.21.11. */
     public static float meleeDamageOf(net.minecraft.item.Item item) {
-        //#if MC >= 12111
+        //#if MC >= 12102
         //$$ return attributeSum(item, "attack_damage");
         //#else
         if (item instanceof net.minecraft.item.SwordItem sword) {
@@ -457,7 +463,7 @@ public class ItemHelper {
     }
 
     public static float meleeDps(net.minecraft.item.Item item) {
-        //#if MC >= 12111
+        //#if MC >= 12102
         //$$ float damage = 1.0f + attributeSum(item, "attack_damage");
         //$$ float speed = 4.0f + attributeSum(item, "attack_speed");
         //$$ if (speed <= 0) return 0;
@@ -477,7 +483,7 @@ public class ItemHelper {
         if (item == null) {
             return null;
         }
-        //#if MC >= 12111
+        //#if MC >= 12102
         //$$ var equippable = item.getComponents().get(net.minecraft.component.DataComponentTypes.EQUIPPABLE);
         //$$ return equippable == null ? null : equippable.slot();
         //#else
@@ -501,7 +507,7 @@ public class ItemHelper {
     //#endif
 
     public static double toolQuality(net.minecraft.item.Item item) {
-        //#if MC >= 12111
+        //#if MC >= 12102
         //$$ net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(item);
         //$$ if (stack.isIn(net.minecraft.registry.tag.ItemTags.SWORDS)) {
         //$$     return meleeDps(item);
@@ -525,7 +531,7 @@ public class ItemHelper {
         //#endif
     }
 
-    //#if MC >= 12111
+    //#if MC >= 12102
     //$$ private static float attributeSum(net.minecraft.item.Item item, String path) {
     //$$     if (item == null) return 0;
     //$$     try {

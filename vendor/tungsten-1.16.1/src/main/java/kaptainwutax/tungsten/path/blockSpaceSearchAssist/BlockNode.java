@@ -399,8 +399,11 @@ public class BlockNode {
 
 
 		// Specific block checks
-		if (childState.isOf(Blocks.LAVA))
+		if (!Boolean.getBoolean("tungsten.noHazard")) {
+		if (BlockStateChecker.isHazard(childState) || BlockStateChecker.isHazard(childBelowState)
+				|| BlockStateChecker.isHazard(childAboveState))
 			return true;
+		} else if (childState.isOf(Blocks.LAVA)) return true;
 		if (childBelowBlock instanceof LilyPadBlock)
 			return true;
 		if (childBelowBlock instanceof CarpetBlock)

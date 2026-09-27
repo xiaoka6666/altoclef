@@ -1,0 +1,19 @@
+plugins { id 'fabric-loom' version '1.15.5' }
+repositories { mavenCentral(); maven { url "https://babbaj.github.io/maven/" } }
+dependencies {
+    minecraft "com.mojang:minecraft:1.21.11"
+    mappings "net.fabricmc:yarn:1.21.11+build.3:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.18.3"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.140.0+1.21.11"
+    modImplementation files(System.getProperty("ostinatoJar") ?: "../../../../Ostinato/dist/baritone-unoptimized-fabric-ostinato-1.21.11.jar")
+    implementation "dev.babbaj:nether-pathfinder:1.6"
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(21) } }
+loom {
+    runs {
+        client {
+            programArgs "--quickPlaySingleplayer", "bench"
+            vmArgs "-Dtenorclef.pathbench.exit=true"
+        }
+    }
+}

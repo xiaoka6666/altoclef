@@ -9,7 +9,11 @@ public class BlockTagVer {
 
     public static boolean isWool(Block block) {
         //#if MC >= 11802
+        //#if MC >= 12102
+        //$$ return block.getDefaultState().isIn(BlockTags.WOOL);
+        //#else
         return Registries.BLOCK.getKey(block).map(e -> Registries.BLOCK.entryOf(e).streamTags().anyMatch(t -> t == BlockTags.WOOL)).orElse(false);
+        //#endif
         //#else
         //$$ return BlockTags.WOOL.contains(block);
         //#endif

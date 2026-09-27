@@ -26,7 +26,11 @@ public class RecipeManagerWrapper {
 
     //#if MC>12001
     public Collection<WrappedRecipeEntry> values() {
+        //#if MC >= 12102
+        //$$ return java.util.Collections.emptySet();
+        //#else
         return recipeManager.values().stream().map(r -> new WrappedRecipeEntry(r.id(),r.value())).collect(Collectors.toSet());
+        //#endif
     }
     //#else
     //$$ public Collection<WrappedRecipeEntry> values() {

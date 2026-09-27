@@ -110,7 +110,13 @@ public class MLGBucketFallChain extends SingleTaskChain implements ITaskOverride
             lastMLG = null;
         }
         if (mod.getPlayer().hasStatusEffect(StatusEffects.LEVITATION) &&
-                !mod.getPlayer().getItemCooldownManager().isCoolingDown(Items.CHORUS_FRUIT) &&
+                !mod.getPlayer().getItemCooldownManager().isCoolingDown(
+                //#if MC >= 12102
+                //$$ new net.minecraft.item.ItemStack(Items.CHORUS_FRUIT)
+                //#else
+                Items.CHORUS_FRUIT
+                //#endif
+                ) &&
                 mod.getPlayer().getActiveStatusEffects().get(StatusEffects.LEVITATION).getDuration() <= 70 &&
                 mod.getItemStorage().hasItemInventoryOnly(Items.CHORUS_FRUIT) &&
                 !mod.getItemStorage().hasItemInventoryOnly(Items.WATER_BUCKET)) {

@@ -1,23 +1,23 @@
 package adris.altoclef.multiversion;
 
-//#if MC < 12111
+//#if MC < 12102
 import net.minecraft.item.ToolItem;
 //#endif
 import net.minecraft.item.ToolMaterial;
-//#if MC < 12111
+//#if MC < 12102
 import net.minecraft.item.ToolMaterials;
 //#endif
 
 public class ToolMaterialVer {
 
-    //#if MC < 12111
+    //#if MC < 12102
     public static int getMiningLevel(ToolItem item) {
         return getMiningLevel(item.getMaterial());
     }
     //#endif
 
     public static int getMiningLevel(ToolMaterial material) {
-        //#if MC < 12111
+        //#if MC < 12102
         if (material.equals(ToolMaterials.WOOD) || material.equals(ToolMaterials.GOLD)) {
             return 0;
         } else if (material.equals(ToolMaterials.STONE)) {

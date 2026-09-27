@@ -62,13 +62,13 @@ public class BlockSpacePathFinder {
 	
 	private static Optional<List<BlockNode>> search(WorldView world, Vec3d target, boolean generateDeep, PlayerEntity player) {
 		if (!world.getBlockState(player.getBlockPos()).isAir() && BlockShapeChecker.getShapeVolume(player.getBlockPos(), world) != 0 && BlockShapeChecker.getBlockHeight(player.getBlockPos(), world) > 0.5) {
-			return search(world, new BlockNode(player.getBlockPos().up(), new Goal((int) target.x, (int) target.y, (int) target.z), player, world), target, player);
+			return search(world, new BlockNode(player.getBlockPos().up(), new Goal(net.minecraft.util.math.MathHelper.floor(target.x), net.minecraft.util.math.MathHelper.floor(target.y), net.minecraft.util.math.MathHelper.floor(target.z)), player, world), target, player);
 		}
-		return search(world, new BlockNode(player.getBlockPos(), new Goal((int) target.x, (int) target.y, (int) target.z), player, world), target, player);
+		return search(world, new BlockNode(player.getBlockPos(), new Goal(net.minecraft.util.math.MathHelper.floor(target.x), net.minecraft.util.math.MathHelper.floor(target.y), net.minecraft.util.math.MathHelper.floor(target.z)), player, world), target, player);
 	}
 	
 	private static Optional<List<BlockNode>> search(WorldView world, BlockNode start, Vec3d target, boolean generateDeep, PlayerEntity player) {
-		Goal goal = new Goal((int) target.x, (int) target.y, (int) target.z);
+		Goal goal = new Goal(net.minecraft.util.math.MathHelper.floor(target.x), net.minecraft.util.math.MathHelper.floor(target.y), net.minecraft.util.math.MathHelper.floor(target.z));
 		boolean failing = true;
         int numNodes = 0;
         int timeCheckInterval = 1 << 6;
@@ -178,7 +178,7 @@ public class BlockSpacePathFinder {
 	    double dx = (position.x - target.x)*xzMultiplier;
 	    double dy = 0;
 	    double dz = (position.z - target.z)*xzMultiplier;
-	    if (BlockStateChecker.isAnyWater(world.getBlockState(new BlockPos((int) position.x, (int) position.y, (int) position.z)))) {
+	    if (BlockStateChecker.isAnyWater(world.getBlockState(new BlockPos(net.minecraft.util.math.MathHelper.floor(position.x), net.minecraft.util.math.MathHelper.floor(position.y), net.minecraft.util.math.MathHelper.floor(position.z))))) {
 	    	dy = (position.y - target.y)*1.8;
 	    } else if (DistanceCalculator.getHorizontalManhattanDistance(position, target) < 32) {
 	    	dy = (position.y - target.y)*1.5;
@@ -237,6 +237,22 @@ public class BlockSpacePathFinder {
         return node.getPos().squaredDistanceTo(target) < 1.0D && !failing;
     }
 	
+	/**
+	 * Build a block path from externally supplied feet positions (e.g. a Baritone path), start to end.
+	 * Runs through the same string-pulling as a native search result.
+	 */
+	public static Optional<List<BlockNode>> fromWaypoints(WorldView world, List<net.minecraft.util.math.BlockPos> waypoints, Vec3d target, PlayerEntity player) {
+		if (waypoints == null || waypoints.size() < 2) return Optional.empty();
+		Goal goal = new Goal(net.minecraft.util.math.MathHelper.floor(target.x), net.minecraft.util.math.MathHelper.floor(target.y), net.minecraft.util.math.MathHelper.floor(target.z));
+		BlockNode prev = null;
+		for (net.minecraft.util.math.BlockPos bp : waypoints) {
+			BlockNode n = new BlockNode(bp.getX(), bp.getY(), bp.getZ(), goal, prev, 0, player);
+			prev = n;
+		}
+		List<BlockNode> path = generatePath(prev, world);
+		return path.size() > 1 ? Optional.of(path) : Optional.empty();
+	}
+
 	private static List<BlockNode> generatePath(BlockNode node, WorldView world) {
 		BlockNode n = node;
 		List<BlockNode> path = new ArrayList<>();

@@ -20,6 +20,7 @@ subprojects {
 // NullPointerException at PreprocessPlugin.apply(PreprocessPlugin.kt:60) — verified.
 preprocess {
     val mc12111 = createNode("1.21.11", 12111, "yarn")
+    val mc12104 = createNode("1.21.4", 12104, "yarn")
     val mc12101 = createNode("1.21.1", 12101, "yarn")
     val mc12100 = createNode("1.21", 12100, "yarn")
     val mc12006 = createNode("1.20.6", 12006, "yarn")
@@ -34,7 +35,8 @@ preprocess {
     val mc11605 = createNode("1.16.5", 11605, "yarn")
     val mc11601 = createNode("1.16.1", 11601, "yarn")
 
-    mc12111.link(mc12101)
+    mc12111.link(mc12104)
+    mc12104.link(mc12101)
     mc12101.link(mc12100)
     mc12100.link(mc12006)
     mc12006.link(mc12005)
