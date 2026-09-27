@@ -1342,6 +1342,13 @@ public class ModernSpeedrunTask extends Task {
         boolean closerYields = starveHunt || needsNetherTable(mod)
                 || (active != null && active != closer && !(active instanceof ConstructNetherPortalBucketTask)
                     && !active.isFinished());
+        // S307: s304t idled 45s+ with child "-" after the table craft: the latch kept handing back
+        // a closer that had finished while it yielded. A finished closer is dead; drop it.
+        if (closer != null && closer.isFinished()) {
+            T2Log.force("S307", "closer finished while latched - dropping it");
+            closer = null;
+            usedCloser = false;
+        }
         if (usedCloser && closer != null && phase == Phase.PORTAL && !closerYields) {
             // S240: record the closer as the live child. Leaving a finished Craft/HolePillar in
             // `active` made T2Brain log it every other tick: fake FLIP x100 lines in s240t.
@@ -2988,7 +2995,7 @@ public class ModernSpeedrunTask extends Task {
     }
 
     private Task startCloser(AltoClef mod) {
-        if (closer == null) {
+        if (closer == null || closer.isFinished()) {
             T2Log.warn("E40", "closer=ConstructNetherPortalBucketTask");
             closer = new ConstructNetherPortalBucketTask();
         }
