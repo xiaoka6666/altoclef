@@ -46,7 +46,11 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
 - Physics pathfinder framework: `baritone/pathing/physics/PhysicsPathfinder.java` on 1.16.1.
   - It runs A* over `PlayerSim` states, with 16 yaws × {sprint, sprint+jump, walk} + idle, each held for 2 ticks. It returns a tick-by-tick key list.
   - `ClientWorld` (a PlayerSim.World adapter over the client world) and `PhysicsTravel` (an executor that plans about 6 land movements ahead and re-plans on more than 0.1 drift) are wired into `PathExecutor` behind the `physicsTravel` setting. Bench it with `pathbench travel physics`.
-  - First bench (1 rep): physics reached 16/16 goals at avg 426 ticks; baritone reached 16/16 at 357. It needs tuning: the node budget, the action set, the heuristic, and why plans fail.
+  - First bench (1 rep): physics reached 16/16 goals at avg 426 ticks; baritone reached 16/16 at 357. It needs tuning. Measured with temporary logging:
+    - About 10% of plans fail (budget 1500 nodes). Each failure hands back to Baritone for 20 ticks.
+    - About 50% of replans are drift (real vs predicted position differs by more than 0.1 after one tick). The likely cause is that the look rotation lands a tick late, so the sim ticks with a yaw the player doesn't have yet. Fix that first: predict with the player's current yaw, or set the rotation directly before the tick.
+    - Average plan time is 13 ms, with spikes up to 130 ms.
+    - Tried and worse: drift 0.25 with cooldown 5 and radius 0.5 (14/16, 454 ticks); weighted A* at 1.5 (16/16, 495 ticks).
   - Next steps:
     (a), (b), (d): done.
     (c) Use Baritone's block path as the heuristic corridor, planning to a waypoint about 8 blocks ahead.
