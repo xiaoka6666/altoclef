@@ -87,6 +87,7 @@ public class ConstructNetherPortalBucketTask extends Task {
     private final TimerGame lavaSearchTimer = new TimerGame(5);
     private final TimerGame lavaStallTimer = new TimerGame(40);
     private BlockPos lavaStallAnchor = null;
+    private int lavaRelocateCount;
     private Task lavaRelocate;
     private Task lowHpClimb;
     private Task lakeWander;
@@ -377,7 +378,12 @@ public class ConstructNetherPortalBucketTask extends Task {
                     lavaStallAnchor = null;
                     portalOrigin = null;
                     currentDestroyTarget = null;
-                    lavaRelocate = new TimeoutWanderTask(20);
+                    // S337: s336o relocated 20 blocks every 40s for 10+ min across an ocean with no lava in view;
+                    // each hop re-searched the same empty water. Grow the hop with repeated stalls (in water, faster).
+                    lavaRelocateCount++;
+                    float hop = Math.min(200, 20 + 30 * lavaRelocateCount * (mod.getPlayer().isTouchingWater() ? 2 : 1));
+                    Debug.logWarning("[S337] relocate #" + lavaRelocateCount + " hop=" + hop + " wet=" + mod.getPlayer().isTouchingWater());
+                    lavaRelocate = new TimeoutWanderTask(hop);
                     return lavaRelocate;
                 }
                 // S314: s310t swung between 232,61,193 (lava target) and 233,61,188 (failed water bail)
