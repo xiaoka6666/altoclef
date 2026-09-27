@@ -33,7 +33,7 @@ preprocessor chain; they are not compiled or released. The complete, version-mat
 4. Start a single-player test world first. Include the game version, TenorClef and
    Ostinato versions, mod list, and `latest.log` when reporting a problem.
 
-No release jar is currently available if the Releases page is empty. In that case,
+Each release lists the matching Ostinato jar in its notes (see [CHANGELOG.md](CHANGELOG.md)). If the Releases page is empty,
 build from source using the instructions below rather than downloading an upstream
 AltoClef jar.
 
