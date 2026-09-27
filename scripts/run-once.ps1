@@ -40,7 +40,7 @@ param(
   [int]$TimeoutSec = 600,
   [int]$MaxRunSec = 0,
   [string]$Command = 'testrun2',
-  [string]$Mover = 'baritone'
+  [string]$Mover = 'ostinato'
 )
 
 $ErrorActionPreference = 'Continue'
