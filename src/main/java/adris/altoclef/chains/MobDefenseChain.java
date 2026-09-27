@@ -318,7 +318,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 doingFunkyStuff = true;
                 runAwayTask = new RunAwayFromCreepersTask(CREEPER_KEEP_DISTANCE);
                 setTask(runAwayTask);
-                return 50 + blowingUp.getClientFuseTime(1) * 50;
+                return 55 + blowingUp.getClientFuseTime(1) * 50;
             }
         }
         synchronized (BaritoneHelper.MINECRAFT_LOCK) {
@@ -706,13 +706,15 @@ public class MobDefenseChain extends SingleTaskChain {
             List<CreeperEntity> creepers = mod.getEntityTracker().getTrackedEntities(CreeperEntity.class);
             for (CreeperEntity creeper : creepers) {
                 if (creeper == null) continue;
-                if (creeper.getClientFuseTime(1) < 0.001) continue;
+                // S321: s318t let a creeper walk up (17 -> 0 blocks in 7s) and only fled once the fuse lit, 1s before
+                // the blast. Treat any creeper within 4.5 blocks as the threat so the run-away starts pre-fuse.
+                if (creeper.getClientFuseTime(1) < 0.001 && creeper.squaredDistanceTo(mod.getPlayer()) > 4.5 * 4.5) continue;
 
                 // We want to pick the closest creeper, but FIRST pick creepers about to blow
                 // At max fuse, the cost goes to basically zero.
                 double safety = getCreeperSafety(mod.getPlayer().getPos(), creeper);
                 if (safety < worstSafety) {
-                    target = creeper;
+                    target = creeper;                    worstSafety = safety;
                 }
             }
         } catch (ConcurrentModificationException | ArrayIndexOutOfBoundsException | NullPointerException e) {
