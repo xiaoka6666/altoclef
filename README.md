@@ -142,3 +142,14 @@ installed mods, and attach a relevant log or reproduction steps.
 TenorClef is licensed under the [MIT License](LICENSE). Releases which bundle
 or depend on Ostinato must preserve Ostinato's LGPL-3.0 notices and provide a
 way to obtain its corresponding source. See [LICENSING.md](LICENSING.md).
+
+## Vibe coding / AI use
+
+Large parts of this repository were written or edited with AI assistants
+(Claude, Grok, and similar). That is vibe coding: a person set the
+direction; a model produced a lot of the text. A green CI run or a
+commit message is not proof that a human understood every line.
+
+Read the diff before you run or merge it. Do not treat this as audited
+software. File bugs. Do not assume the model already considered your
+case.
