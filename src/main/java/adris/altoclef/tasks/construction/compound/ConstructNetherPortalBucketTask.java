@@ -333,7 +333,10 @@ public class ConstructNetherPortalBucketTask extends Task {
                 setDebugState("(timeout: Looking for lava lake)");
                 // S318: a fresh TimeoutWanderTask every tick restarted the wander before it went
                 // anywhere; s314t jittered around -485,64,690 for 10 minutes. Reuse one.
-                if (lakeWander == null || lakeWander.isFinished()) lakeWander = new TimeoutWanderTask(60);
+                boolean wanderDone;
+                try { wanderDone = lakeWander == null || lakeWander.isFinished(); }
+                catch (NullPointerException npe) { wanderDone = false; } // not started yet: no origin
+                if (wanderDone) lakeWander = new TimeoutWanderTask(60);
                 return lakeWander;
             }
         }
