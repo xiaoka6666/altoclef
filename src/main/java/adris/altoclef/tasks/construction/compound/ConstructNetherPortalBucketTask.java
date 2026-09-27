@@ -383,6 +383,13 @@ public class ConstructNetherPortalBucketTask extends Task {
                     lavaRelocateCount++;
                     float hop = Math.min(200, 20 + 30 * lavaRelocateCount * (mod.getPlayer().isTouchingWater() ? 2 : 1));
                     Debug.logWarning("[S337] relocate #" + lavaRelocateCount + " hop=" + hop + " wet=" + mod.getPlayer().isTouchingWater());
+                    // S338: s337o stalled beside a y=10 lava lake and the relocation wander walked into it.
+                    // Underground, climb to the surface instead of wandering among the lava.
+                    if (here.getY() < 45) {
+                        Debug.logWarning("[S338] relocate underground y=" + here.getY() + " - surfacing instead of wandering");
+                        lavaRelocate = new adris.altoclef.tasks.speedrun.testrun2.SurfaceBailTask();
+                        return lavaRelocate;
+                    }
                     lavaRelocate = new TimeoutWanderTask(hop);
                     return lavaRelocate;
                 }
