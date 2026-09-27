@@ -834,8 +834,26 @@ public class ModernSpeedrunTask extends Task {
                 + SpawnScout.SPAWN_LOOT_RADIUS + " blocks (reroll #" + SpawnScout.rerolls() + ")");
     }
 
+    // S328 (owner: bot swims past salmon in reach without hitting). Fish were only hunted inside
+    // CollectFoodTask. While in water, hit any cod/salmon in reach at full attack charge without
+    // touching the current task or rotation; the drop is picked up on the way.
+    private void swimFishSwipe(AltoClef mod) {
+        try {
+            var p = mod.getPlayer();
+            if (p == null || !p.isTouchingWater() || p.getAttackCooldownProgress(0f) < 0.9f) return;
+            for (var e : mod.getWorld().getEntitiesByClass(net.minecraft.entity.passive.FishEntity.class,
+                    p.getBoundingBox().expand(3.5), f -> f.isAlive()
+                            && (f instanceof net.minecraft.entity.passive.CodEntity || f instanceof net.minecraft.entity.passive.SalmonEntity))) {
+                if (!p.canSee(e) || !mod.getControllerExtras().inRange(e)) continue;
+                mod.getControllerExtras().attack(e);
+                return;
+            }
+        } catch (Throwable ignored) {}
+    }
+
     private Task onTickInner(AltoClef mod) {
         statusTicks++;
+        swimFishSwipe(mod);
         // S161: shared bail cooldown. It has to be driven from here because the whole point
         // of a give-up is that SurfaceBailTask stops being ticked.
         SurfaceBailTask.tickShared();
