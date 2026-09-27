@@ -78,11 +78,12 @@ Results are written as CSV to `run/pathbench/`. Latest 1.16.1 travel run (16 goa
 
 | Mover | Goals reached | Avg ticks (reached goals) |
 | --- | --- | --- |
-| Baritone | 46/48 | 438 |
-| Kinematic (experimental) | 42/48 | 431 |
+| Baritone | 43/48 | 373 |
+| Kinematic (experimental) | 47/48 | 418 |
 
-The averages only cover goals each mover reached, so the main difference is reliability
-(Kinematic missed 6, Baritone 2).
+The averages only cover goals each mover reached. The bench origin moves between runs, so
+compare runs taken together; Baritone's misses here include all three tries at one goal
+where it stops 3 blocks short.
 
 ## Project guides
 
