@@ -209,6 +209,9 @@ package adris.altoclef.benchmark;
 //$$         String goalSel = System.getProperty("tenorclef.pathbench.goals", "").trim();
 //$$         java.util.Set<Integer> only = new java.util.HashSet<>();
 //$$         if (!goalSel.isEmpty()) for (String x : goalSel.split(",")) only.add(Integer.parseInt(x.trim()));
+//$$         // "ostinato": Baritone's custom goal with movementBackend=tungsten (Ostinato's own Tungsten bridge).
+//$$         boolean viaCustom = mover.equals("baritone") || mover.equals("ostinato");
+//$$         BaritoneAPI.getSettings().movementBackend.value = mover.equals("ostinato") ? "tungsten" : "baritone";
 //$$         PrintWriter csv = open("travel_" + mover);
 //$$         csv.println("mover,goal,dx,dz,dist,rep,result,ticks,endDist,firstMoveTicks");
 //$$         int ok = 0, n = 0, moved = 0; long sumTicks = 0, sumFirst = 0; double sumEnd = 0;
@@ -233,12 +236,12 @@ package adris.altoclef.benchmark;
 //$$                         if (d < bestD - 1.0) { bestD = d; bestAt = el; }
 //$$                         if (stallTicks > 0 && el - bestAt > stallTicks) { result = "STALLED"; break; }
 //$$                         if (Math.abs(d - lastD) > 0.3) { lastD = d; lastMoveAt = el; }
-//$$                         if (!mover.equals("baritone") && idleTicks > 0 && firstMove >= 0 && el - lastMoveAt > idleTicks && el - lastReq > idleTicks && el < limitTicks) {
+//$$                         if (!viaCustom && idleTicks > 0 && firstMove >= 0 && el - lastMoveAt > idleTicks && el - lastReq > idleTicks && el < limitTicks) {
 //$$                             TungstenMovement.cancel(); Thread.sleep(100);
 //$$                             if (mover.equals("guided")) startGuided(mc, baritone, g); else TungstenMovement.requestPathTo(g);
 //$$                             lastReq = el; lastMoveAt = el; continue;
 //$$                         }
-//$$                         boolean active = !mover.equals("baritone") ? TungstenMovement.isPathing() : baritone.getCustomGoalProcess().isActive();
+//$$                         boolean active = !viaCustom ? TungstenMovement.isPathing() : baritone.getCustomGoalProcess().isActive();
 //$$                         if (!active && el - lastReq > 40) {
 //$$                             if (mover.equals("tungsten") && el < limitTicks) { TungstenMovement.requestPathTo(g); lastReq = el; continue; }
 //$$                             if (mover.equals("guided") && el < limitTicks) { startGuided(mc, baritone, g); lastReq = el; continue; }
@@ -246,7 +249,7 @@ package adris.altoclef.benchmark;
 //$$                         }
 //$$                         if (el > limitTicks) break;
 //$$                     }
-//$$                     if (!mover.equals("baritone")) TungstenMovement.cancel();
+//$$                     if (!viaCustom) TungstenMovement.cancel();
 //$$                     else mc.execute(() -> baritone.getPathingBehavior().cancelEverything());
 //$$                     long ticks = worldTime(mc) - t0;
 //$$                     double end = dist(mc, g);
@@ -261,6 +264,7 @@ package adris.altoclef.benchmark;
 //$$                 }
 //$$             }
 //$$         } finally {
+//$$             BaritoneAPI.getSettings().movementBackend.value = "baritone";
 //$$             csv.close();
 //$$         }
 //$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=travel mover=%s goalRate=%d/%d avgGoalTicks=%.0f avgFirstMoveTicks=%.1f avgEndDist=%.1f",
