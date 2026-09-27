@@ -88,6 +88,23 @@ public class ConstructNetherPortalBucketTask extends Task {
     private final TimerGame lavaStallTimer = new TimerGame(40);
     private BlockPos lavaStallAnchor = null;
     private int lavaRelocateCount;
+    // S337: s336o relocated 20 blocks every 40s for 10+ min across an ocean with no lava in view;
+    // each hop re-searched the same empty water. Grow the hop with repeated stalls (in water, faster).
+    // S338: s337o stalled beside a y=10 lava lake and the relocation wander walked into it.
+    // Underground, climb to the surface instead of wandering among the lava.
+    private Task relocateLava(AltoClef mod, BlockPos here) {
+        lavaRelocateCount++;
+        boolean wet = mod.getPlayer().isTouchingWater();
+        if (here.getY() < 45) {
+            Debug.logWarning("[S338] relocate #" + lavaRelocateCount + " underground y=" + here.getY() + " - surfacing instead of wandering");
+            lavaRelocate = new adris.altoclef.tasks.speedrun.testrun2.SurfaceBailTask();
+            return lavaRelocate;
+        }
+        float hop = Math.min(200, 20 + 30 * lavaRelocateCount * (wet ? 2 : 1));
+        Debug.logWarning("[S337] relocate #" + lavaRelocateCount + " hop=" + hop + " wet=" + wet);
+        lavaRelocate = new TimeoutWanderTask(hop);
+        return lavaRelocate;
+    }
     private Task lavaRelocate;
     private Task lowHpClimb;
     private Task lakeWander;
@@ -378,20 +395,7 @@ public class ConstructNetherPortalBucketTask extends Task {
                     lavaStallAnchor = null;
                     portalOrigin = null;
                     currentDestroyTarget = null;
-                    // S337: s336o relocated 20 blocks every 40s for 10+ min across an ocean with no lava in view;
-                    // each hop re-searched the same empty water. Grow the hop with repeated stalls (in water, faster).
-                    lavaRelocateCount++;
-                    float hop = Math.min(200, 20 + 30 * lavaRelocateCount * (mod.getPlayer().isTouchingWater() ? 2 : 1));
-                    Debug.logWarning("[S337] relocate #" + lavaRelocateCount + " hop=" + hop + " wet=" + mod.getPlayer().isTouchingWater());
-                    // S338: s337o stalled beside a y=10 lava lake and the relocation wander walked into it.
-                    // Underground, climb to the surface instead of wandering among the lava.
-                    if (here.getY() < 45) {
-                        Debug.logWarning("[S338] relocate underground y=" + here.getY() + " - surfacing instead of wandering");
-                        lavaRelocate = new adris.altoclef.tasks.speedrun.testrun2.SurfaceBailTask();
-                        return lavaRelocate;
-                    }
-                    lavaRelocate = new TimeoutWanderTask(hop);
-                    return lavaRelocate;
+                    return relocateLava(mod, here);
                 }
                 // S314: s310t swung between 232,61,193 (lava target) and 233,61,188 (failed water bail)
                 // 5 blocks apart, resetting a 4-block anchor, until a drowned killed it. Use 10.
@@ -411,8 +415,7 @@ public class ConstructNetherPortalBucketTask extends Task {
                     lavaStallAnchor = null;
                     portalOrigin = null;
                     currentDestroyTarget = null;
-                    lavaRelocate = new TimeoutWanderTask(20);
-                    return lavaRelocate;
+                    return relocateLava(mod, here);
                 }
                 // S315: s311t chased cave lava down to y=30 at 9.5hp with no food; a skeleton and an
                 // 8-block drop killed it. Don't hunt lava underground while hurt - climb out first.
