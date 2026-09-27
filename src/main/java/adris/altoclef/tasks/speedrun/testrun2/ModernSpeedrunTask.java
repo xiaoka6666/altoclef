@@ -1688,6 +1688,14 @@ public class ModernSpeedrunTask extends Task {
     }
 
     private Task iron(AltoClef mod) {
+        // S323: s321t chased a cave skeleton during IRON with only a stone pickaxe and was shot from 16hp;
+        // the S320 sword only came in PORTAL. Craft it as soon as IRON starts (same 30s give-up).
+        if (portalSwordTicks < 600 && mod.getItemStorage().getItemCount(Items.STONE_SWORD, Items.IRON_SWORD) < 1
+                && mod.getItemStorage().getItemCount(Items.COBBLESTONE, Items.BLACKSTONE) >= 2
+                && (mod.getItemStorage().getItemCount(Items.STICK) >= 1 || totalPlanks(mod) >= 2 || totalLogs(mod) >= 1)) {
+            if (portalSwordTicks++ == 0) T2Log.force("S323", "craft stone sword at IRON start");
+            return TaskCatalogue.getItemTask(Items.STONE_SWORD, 1);
+        }
         // S289: s287t mined iron with no food until hun=5 hp=4 and two wolves finished it. IRON had no
         // food gate (only PORTAL does). Hunt a small stock once hunger drops and nothing is left to eat.
         int ironHun = mod.getPlayer().getHungerManager().getFoodLevel();
