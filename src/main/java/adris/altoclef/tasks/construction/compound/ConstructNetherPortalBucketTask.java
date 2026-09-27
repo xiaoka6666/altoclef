@@ -89,6 +89,7 @@ public class ConstructNetherPortalBucketTask extends Task {
     private BlockPos lavaStallAnchor = null;
     private Task lavaRelocate;
     private Task lowHpClimb;
+    private Task lakeWander;
     private final MovementProgressChecker progressChecker = new MovementProgressChecker();
     private final TimeoutWanderTask wanderTask = new TimeoutWanderTask(5);
     // Stored here to cache lava blacklist
@@ -330,7 +331,10 @@ public class ConstructNetherPortalBucketTask extends Task {
 
             if (!foundSpot) {
                 setDebugState("(timeout: Looking for lava lake)");
-                return new TimeoutWanderTask();
+                // S318: a fresh TimeoutWanderTask every tick restarted the wander before it went
+                // anywhere; s314t jittered around -485,64,690 for 10 minutes. Reuse one.
+                if (lakeWander == null || lakeWander.isFinished()) lakeWander = new TimeoutWanderTask(60);
+                return lakeWander;
             }
         }
 
