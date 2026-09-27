@@ -69,6 +69,7 @@ package adris.altoclef.benchmark;
 //$$                 else if (mode.equalsIgnoreCase("boat")) boat(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("cliff")) cliff(mc, origin, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("swim")) swim(mc, origin, Math.max(1, reps));
+//$$                 else if (mode.equalsIgnoreCase("elytra")) elytra(mc, origin, opt, Math.max(1, reps));
 //$$                 else if (mode.equalsIgnoreCase("travel")) for (String m : (opt == null ? "-" : opt).split("[;+]")) travel(mc, origin, m, Math.max(1, reps));
 //$$                 else for (String sweep : (opt == null ? "-" : opt).split("[;+]")) search(mc, origin, sweep, Math.max(1, reps));
 //$$             } catch (Throwable e) {
@@ -531,6 +532,136 @@ package adris.altoclef.benchmark;
 //$$             csv.close();
 //$$         }
 //$$         Debug.logHarness("PATHBENCH SUMMARY mode=cliff");
+//$$     }
+//$$
+//$$     /**
+//$$      * Elytra: from the air at height with an elytra, Baritone's elytra process flies to far goals.
+//$$      * opt "glide" gives no rockets and starts higher with nearer goals (pure glide descent).
+//$$      */
+//$$     private static void elytra(MinecraftClient mc, BlockPos origin, String opt, int reps) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         if ("osc".equalsIgnoreCase(opt)) { elytraOsc(mc, origin); return; }
+//$$         boolean glide = "glide".equalsIgnoreCase(opt);
+//$$         int ox = origin.getX(), oz = origin.getZ(), sy = glide ? 250 : 200;
+//$$         int[][] offs = glide ? new int[][]{{300, 0}, {0, -250}, {-200, 200}} : new int[][]{{1000, 0}, {0, -1000}, {-700, 700}, {1500, 800}};
+//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 180);
+//$$         PrintWriter csv = open(glide ? "elytra_glide" : "elytra");
+//$$         csv.println("goal,dx,dz,dist,rep,result,ticks,endDist,rockets,hp,minHp");
+//$$         int ok = 0, n = 0;
+//$$         try {
+//$$             for (int gi = 0; gi < offs.length; gi++) {
+//$$                 int gx = ox + offs[gi][0], gz = oz + offs[gi][1];
+//$$                 for (int r = 0; r < reps; r++) {
+//$$                     mc.submit(() -> baritone.getPathingBehavior().cancelEverything()).get();
+//$$                     java.util.UUID id = mc.player.getUuid();
+//$$                     mc.getServer().submit(() -> {
+//$$                         ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayer(id);
+//$$                         if (sp == null) return;
+//$$                         sp.inventory.clear();
+//$$                         sp.equipStack(net.minecraft.entity.EquipmentSlot.CHEST, new net.minecraft.item.ItemStack(net.minecraft.item.Items.ELYTRA));
+//$$                         if (!glide) sp.inventory.setStack(0, new net.minecraft.item.ItemStack(net.minecraft.item.Items.FIREWORK_ROCKET, 64));
+//$$                         sp.getHungerManager().setFoodLevel(20);
+//$$                         sp.setHealth(sp.getMaxHealth());
+//$$                         sp.fallDistance = 0;
+//$$                         sp.setVelocity(0, 0, 0);
+//$$                     }).get();
+//$$                     teleport(mc, new BlockPos(ox, sy, oz));
+//$$                     Thread.sleep(300);
+//$$                     teleport(mc, new BlockPos(ox, sy, oz));
+//$$                     int rockets0 = mc.player.inventory.count(net.minecraft.item.Items.FIREWORK_ROCKET);
+//$$                     long t0 = worldTime(mc);
+//$$                     mc.submit(() -> baritone.getElytraProcess().pathTo(new GoalXZ(gx, gz))).get();
+//$$                     String result = "TIMEOUT";
+//$$                     float minHp = mc.player.getHealth();
+//$$                     long lastLog = -1;
+//$$                     while (true) {
+//$$                         Thread.sleep(25);
+//$$                         long el = worldTime(mc) - t0;
+//$$                         if (mc.player == null || mc.player.isDead()) { result = "DIED"; break; }
+//$$                         minHp = Math.min(minHp, mc.player.getHealth());
+//$$                         double hd = Math.hypot(mc.player.getX() - gx - 0.5, mc.player.getZ() - gz - 0.5);
+//$$                         if (el / 10 != lastLog) {
+//$$                             lastLog = el / 10;
+//$$                             Debug.logHarness(String.format(Locale.ROOT, "ELYTRA t=%d pos=%.0f,%.0f,%.0f d=%.0f fly=%s hp=%.1f vy=%.2f act=%s ctl=%s", el, mc.player.getX(), mc.player.getY(), mc.player.getZ(), hd, mc.player.isFallFlying(), mc.player.getHealth(), mc.player.getVelocity().y, baritone.getElytraProcess().isActive(), baritone.getPathingControlManager().mostRecentInControl().map(pr -> pr.displayName()).orElse("-")));
+//$$                         }
+//$$                         if (!baritone.getElytraProcess().isActive() && el > 40) { result = hd < 48 ? "LANDED" : "STOPPED"; break; }
+//$$                         if (el > limitTicks) break;
+//$$                     }
+//$$                     mc.submit(() -> baritone.getPathingBehavior().cancelEverything()).get();
+//$$                     long ticks = worldTime(mc) - t0;
+//$$                     boolean alive = mc.player != null && !mc.player.isDead();
+//$$                     int used = alive ? rockets0 - mc.player.inventory.count(net.minecraft.item.Items.FIREWORK_ROCKET) : 0;
+//$$                     double endD = alive ? Math.hypot(mc.player.getX() - gx - 0.5, mc.player.getZ() - gz - 0.5) : -1;
+//$$                     csv.printf(Locale.ROOT, "%d,%d,%d,%d,%d,%s,%d,%.1f,%d,%.1f,%.1f%n", gi, offs[gi][0], offs[gi][1],
+//$$                             (int) Math.hypot(offs[gi][0], offs[gi][1]), r, result, ticks, endD, used, alive ? mc.player.getHealth() : 0f, minHp);
+//$$                     csv.flush();
+//$$                     n++;
+//$$                     if (result.equals("LANDED")) ok++;
+//$$                     if (result.equals("DIED")) { mc.execute(() -> mc.player.requestRespawn()); Thread.sleep(3000); }
+//$$                 }
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=elytra%s landRate=%d/%d", glide ? "_glide" : "", ok, n));
+//$$     }
+//$$
+//$$     /**
+//$$      * Pitch oscillation, no Baritone, no rockets: deployed at y=250 flying +x, dive at +D until
+//$$      * vy < -0.5 after a dive of 15 blocks, climb at -C until vy <= 0. Logs every apex (cycle top);
+//$$      * a technique that sustains flight would show apex heights that don't fall.
+//$$      */
+//$$     private static void elytraOsc(MinecraftClient mc, BlockPos origin) throws Exception {
+//$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
+//$$         int[][] variants = {{40, 40}, {10, 20}, {30, 50}};
+//$$         PrintWriter csv = open("elytra_osc");
+//$$         csv.println("dive,climb,apex,ticks,x,y,speed");
+//$$         try {
+//$$             for (int[] v : variants) {
+//$$                 mc.submit(() -> baritone.getPathingBehavior().cancelEverything()).get();
+//$$                 if (mc.player.isDead()) { mc.execute(() -> mc.player.requestRespawn()); Thread.sleep(3000); }
+//$$                 java.util.UUID id = mc.player.getUuid();
+//$$                 mc.getServer().submit(() -> {
+//$$                     ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayer(id);
+//$$                     if (sp == null) return;
+//$$                     sp.inventory.clear();
+//$$                     sp.equipStack(net.minecraft.entity.EquipmentSlot.CHEST, new net.minecraft.item.ItemStack(net.minecraft.item.Items.ELYTRA));
+//$$                     sp.setHealth(sp.getMaxHealth());
+//$$                     sp.fallDistance = 0;
+//$$                 }).get();
+//$$                 teleport(mc, new BlockPos(origin.getX(), 250, origin.getZ()));
+//$$                 Thread.sleep(300);
+//$$                 teleport(mc, new BlockPos(origin.getX(), 250, origin.getZ()));
+//$$                 mc.getServer().submit(() -> {
+//$$                     ServerPlayerEntity sp = mc.getServer().getPlayerManager().getPlayer(id);
+//$$                     if (sp != null) sp.startFallFlying();
+//$$                 }).get();
+//$$                 long t0 = worldTime(mc), last = -1;
+//$$                 boolean diving = true;
+//$$                 double diveTop = 250;
+//$$                 int apex = 0;
+//$$                 while (worldTime(mc) - t0 < 20L * 90 && mc.player != null && !mc.player.isDead() && mc.player.getY() > 100) {
+//$$                     long t = worldTime(mc);
+//$$                     if (t == last) { Thread.sleep(5); continue; }
+//$$                     last = t;
+//$$                     double vy = mc.player.getVelocity().y, y = mc.player.getY();
+//$$                     if (diving && y < diveTop - 15 && vy < -0.5) diving = false;
+//$$                     else if (!diving && vy <= 0 && t - t0 > 5) {
+//$$                         diving = true;
+//$$                         diveTop = y;
+//$$                         double sp = Math.hypot(mc.player.getVelocity().x, mc.player.getVelocity().z);
+//$$                         csv.printf(Locale.ROOT, "%d,%d,%d,%d,%.1f,%.2f,%.3f%n", v[0], -v[1], apex++, t - t0, mc.player.getX() - origin.getX(), y, sp);
+//$$                     }
+//$$                     float pitch = diving ? v[0] : -v[1];
+//$$                     mc.submit(() -> { mc.player.yaw = -90; mc.player.pitch = pitch; }).get();
+//$$                 }
+//$$                 Debug.logHarness(String.format(Locale.ROOT, "ELYTRAOSC %d/-%d end t=%d x=%.0f y=%.1f fly=%s", v[0], v[1], worldTime(mc) - t0, mc.player.getX() - origin.getX(), mc.player.getY(), mc.player.isFallFlying()));
+//$$                 csv.flush();
+//$$             }
+//$$         } finally {
+//$$             csv.close();
+//$$         }
+//$$         Debug.logHarness("PATHBENCH SUMMARY mode=elytra_osc");
 //$$     }
 //$$
 //$$     private static void swim(MinecraftClient mc, BlockPos origin, int reps) throws Exception {
