@@ -210,8 +210,10 @@ package adris.altoclef.benchmark;
 //$$         java.util.Set<Integer> only = new java.util.HashSet<>();
 //$$         if (!goalSel.isEmpty()) for (String x : goalSel.split(",")) only.add(Integer.parseInt(x.trim()));
 //$$         // "ostinato": Baritone's custom goal with movementBackend=tungsten (Ostinato's own Tungsten bridge).
-//$$         boolean viaCustom = mover.equals("baritone") || mover.equals("ostinato");
+//$$         // "kinematic": Baritone's path driven by Ostinato's physics look-ahead controller.
+//$$         boolean viaCustom = mover.equals("baritone") || mover.equals("ostinato") || mover.equals("kinematic");
 //$$         BaritoneAPI.getSettings().movementBackend.value = mover.equals("ostinato") ? "tungsten" : "baritone";
+//$$         BaritoneAPI.getSettings().kinematicTravel.value = mover.equals("kinematic");
 //$$         PrintWriter csv = open("travel_" + mover);
 //$$         csv.println("mover,goal,dx,dz,dist,rep,result,ticks,endDist,firstMoveTicks");
 //$$         int ok = 0, n = 0, moved = 0; long sumTicks = 0, sumFirst = 0; double sumEnd = 0;
@@ -265,6 +267,7 @@ package adris.altoclef.benchmark;
 //$$             }
 //$$         } finally {
 //$$             BaritoneAPI.getSettings().movementBackend.value = "baritone";
+//$$             BaritoneAPI.getSettings().kinematicTravel.value = false;
 //$$             csv.close();
 //$$         }
 //$$         Debug.logHarness(String.format(Locale.ROOT, "PATHBENCH SUMMARY mode=travel mover=%s goalRate=%d/%d avgGoalTicks=%.0f avgFirstMoveTicks=%.1f avgEndDist=%.1f",
