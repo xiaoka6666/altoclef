@@ -68,7 +68,9 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
 **Latest (sprint fix)**
 - `PlayerSim` now keeps sprinting until forward input stops or the player hits a wall, as vanilla does. Before, it stopped sprinting whenever the sprint key was up.
 - Travel bench, 1 rep each: kinematic 16/16 at 293 ticks (380 before the fix), physics 15/16 at 401, baritone 16/16 at 357.
-- Kinematic is now clearly the fastest mover. Confirm with 3 reps.
+- 3-rep check: baritone 48/48 at avg 418 ticks; kinematic 29/34 at avg 293. The kinematic run stopped after 34 trials, probably because the bench script timed out.
+  - Kinematic misses are all long goals (about 100 blocks): goal 10 (0, 96) failed all 3 reps, and goals 9 and 11 failed once each (STALLED or STOPPED).
+  - Top priority: fix those stalls. Kinematic is roughly 30% faster when it works.
 
 **Priority order**
 1. Rebench kinematic vs baritone on the current 1.16.1 jar, with nothing else running. Find why the kinematic controller fails the goals it fails; look at handbacks and the airborne-landing checks in `rollout`. Fix them until kinematic reaches baritone's success rate while staying faster. Update the README tables (TenorClef "Benchmarking movement"). Update the results artifact if you have access; it's a claude.ai page, so ask the user for the link.
