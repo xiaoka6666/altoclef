@@ -1452,6 +1452,14 @@ public class ModernSpeedrunTask extends Task {
             int bk = mod.getItemStorage().getItemCount(Items.BUCKET, Items.WATER_BUCKET, Items.LAVA_BUCKET);
             if (bk < 2 && mod.getItemStorage().getItemCount(Items.IRON_INGOT) < Math.max(0, 2 - bk) * 3 + 2) return Phase.IRON;
         }
+        // S341: s340o lost both buckets at 13:07 (fall, E116 drop) with iron=1 and sat 24 min in PORTAL with a
+        // null child until it starved. With no bucket at all and <3 iron, PORTAL cannot proceed: go mine iron.
+        if (phase == Phase.PORTAL && mod.getItemStorage().getItemCount(Items.IRON_PICKAXE) >= 1
+                && mod.getItemStorage().getItemCount(Items.BUCKET, Items.WATER_BUCKET, Items.LAVA_BUCKET) == 0
+                && mod.getItemStorage().getItemCount(Items.IRON_INGOT) < 3) {
+            T2History.note("WHY iron: S341 PORTAL with 0 buckets iron=" + mod.getItemStorage().getItemCount(Items.IRON_INGOT));
+            return Phase.IRON;
+        }
         if (mod.getItemStorage().getItemCount(Items.IRON_PICKAXE) >= 1 || (skipIronPick && hasMiningPick(mod))) {
             return Phase.PORTAL;
         }
