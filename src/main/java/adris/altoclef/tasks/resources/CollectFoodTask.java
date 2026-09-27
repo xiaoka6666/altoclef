@@ -50,7 +50,10 @@ public class CollectFoodTask extends Task {
             new CookableFoodTarget("porkchop", PigEntity.class),
             new CookableFoodTarget("chicken", ChickenEntity.class),
             new CookableFoodTarget("mutton", SheepEntity.class),
-            new CookableFoodTarget("rabbit", RabbitEntity.class)
+            new CookableFoodTarget("rabbit", RabbitEntity.class),
+            // S308: fish count too (island / ocean spawns with no land animals). Scored lower below.
+            new CookableFoodTargetFish("cod", CodEntity.class),
+            new CookableFoodTargetFish("salmon", SalmonEntity.class)
     };
 
     public static final Item[] ITEMS_TO_PICK_UP = new Item[]{
@@ -312,7 +315,8 @@ public class CollectFoodTask extends Task {
                 double sqDistance = nearest.get().squaredDistanceTo(mod.getPlayer());
                 double score = (double) 100 * hungerPerformance / (sqDistance);
                 if (cookable.isFish()) {
-                    score = 0;
+                    // S308: swimming after fish is slow; only pick them when no land animal scores higher.
+                    score *= 0.3;
                 }
                 if (score > bestScore) {
                     bestScore = score;
