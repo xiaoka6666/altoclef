@@ -48,8 +48,10 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
   - `ClientWorld` (a PlayerSim.World adapter over the client world) and `PhysicsTravel` (an executor that plans about 6 land movements ahead and re-plans on more than 0.1 drift) are wired into `PathExecutor` behind the `physicsTravel` setting. Bench it with `pathbench travel physics`.
   - First bench (1 rep): physics reached 16/16 goals at avg 426 ticks; baritone reached 16/16 at 357. It needs tuning. Measured with temporary logging:
     - About 10% of plans fail (budget 1500 nodes). Each failure hands back to Baritone for 20 ticks.
-    - About 50% of replans are drift (real vs predicted position differs by more than 0.1 after one tick). The likely cause is that the look rotation lands a tick late, so the sim ticks with a yaw the player doesn't have yet. Fix that first: predict with the player's current yaw, or set the rotation directly before the tick.
+    - About 50% of replans are drift (real vs predicted position differs by more than 0.1 after one tick). The likely cause is that the look rotation lands a tick late, so the sim ticks with a yaw the player doesn't have yet. That turned out not to be the cause; see below.
     - Average plan time is 13 ms, with spikes up to 130 ms.
+    - Fixed: the drift came from vanilla's 10-tick held-jump cooldown, which PlayerSim didn't model. With it, physics reached 15/16 goals at avg 375 ticks (baritone 357) and drift replans halved.
+    - Remaining drift is about 0.2 horizontally on the first airborne tick after a jump, which looks like a sprint-jump boost mismatch. Check sprint-cancel-on-collision in `PlayerSim.tick`.
     - Tried and worse: drift 0.25 with cooldown 5 and radius 0.5 (14/16, 454 ticks); weighted A* at 1.5 (16/16, 495 ticks).
   - Next steps:
     (a), (b), (d): done.
