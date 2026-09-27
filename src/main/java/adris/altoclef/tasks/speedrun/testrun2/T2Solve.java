@@ -241,7 +241,9 @@ public final class T2Solve {
         // hand-mining a log takes >3s. Standing still to break a block with head above water is fine.
         boolean miningInShallows = mod.getControllerExtras().isBreakingBlock()
                 && !mod.getPlayer().isSubmergedInWater() && mod.getPlayer().getAir() > 200;
-        if (wet && spd < 0.03 && sameXz > 20 * 3 && !miningInShallows) {
+        boolean fishing = System.currentTimeMillis() < adris.altoclef.tasks.resources.CollectFoodTask.fishingUntilMs
+                && mod.getPlayer().getAir() > 150;
+        if (wet && spd < 0.03 && sameXz > 20 * 3 && !miningInShallows && !fishing) {
             boolean alreadyEscaping = childName.contains("GetOutOfWater")
                     || childName.contains("WaterBail");
             if (alreadyEscaping) {

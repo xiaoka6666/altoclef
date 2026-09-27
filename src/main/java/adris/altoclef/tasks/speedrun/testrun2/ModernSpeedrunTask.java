@@ -1282,6 +1282,9 @@ public class ModernSpeedrunTask extends Task {
         if (SpeedrunOpt.AVOID_DEEP_WATER && inWater(mod)
                 && waterCooldown <= 0
                 && phase != Phase.END && phase != Phase.NETHER
+                // S310: don't yank the bot out of the water mid fish-hunt while it has air.
+                && !(System.currentTimeMillis() < adris.altoclef.tasks.resources.CollectFoodTask.fishingUntilMs
+                        && mod.getPlayer().getAir() > 150)
                 // S283: s281t swam 19 min in an ocean: the 20s bail timed out (shore 20+ blocks away), the
                 // 15s cooldown had already expired, so it bailed again at once and the portal builder never got
                 // a tick to fill its empty bucket from the water it was floating in. Let it fill first.
