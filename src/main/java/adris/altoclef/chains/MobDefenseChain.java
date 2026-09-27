@@ -79,6 +79,22 @@ public class MobDefenseChain extends SingleTaskChain {
         if (runAwayTask instanceof RunAwayFromHostilesTask && !runAwayTask.isFinished()) return runAwayTask;
         return new RunAwayFromHostilesTask(DANGER_KEEP_DISTANCE, true);
     }
+    private long fleeStreakStartMs;
+    private long fleeStreakLastMs;
+    /** S334: true once a 70-flee has run 30s without a 2s break; logs why once. Resets after 10s off. */
+    private boolean fleeStreakTooLong(String why) {
+        long now = System.currentTimeMillis();
+        if (now - fleeStreakLastMs > 2000) fleeStreakStartMs = now;
+        if (now - fleeStreakStartMs > 30_000) {
+            if (now - fleeStreakLastMs < 2000 && fleeStreakStartMs > 0 && now - fleeStreakStartMs < 30_100)
+                adris.altoclef.tasks.speedrun.testrun2.T2History.note("S334 flee streak 30s capped why=" + why);
+            if (now - fleeStreakStartMs > 40_000) fleeStreakStartMs = now; // 10s off, then may flee again
+            fleeStreakLastMs = now;
+            return now - fleeStreakStartMs > 30_000 || now - fleeStreakStartMs < 0;
+        }
+        fleeStreakLastMs = now;
+        return false;
+    }
     private float prevHealth = 20;
     private boolean needsChangeOnAttack = false;
     private Entity lockedOnEntity = null;
@@ -289,7 +305,7 @@ public class MobDefenseChain extends SingleTaskChain {
             }
         }
         if (!universallyDangerous.isPresent() || !(universallyDangerous.get() instanceof HoglinEntity || universallyDangerous.get() instanceof ZoglinEntity)) perchSinceMs = 0;
-        if (universallyDangerous.isPresent() && mod.getPlayer().getHealth() <= 14) {
+        if (universallyDangerous.isPresent() && mod.getPlayer().getHealth() <= 14 && !fleeStreakTooLong("danger " + universallyDangerous.get().getType().getTranslationKey())) {
             runAwayTask = keepRunAway();
             setTask(runAwayTask);
             return 70;
@@ -370,7 +386,10 @@ public class MobDefenseChain extends SingleTaskChain {
 
         // S285: s283t died twice at hp 6-7 holding food: the force field swapped to the weapon and
         // swung every tick, cancelling each bite. When hurt and eating, let the bite finish and keep fleeing.
-        boolean eatingHurt = mod.getFoodChain().isTryingToEat() && mod.getPlayer().getHealth() <= 10;
+        // S334: s332o fled 2.5 min / 330 blocks at hp 6 with food=0 into deep water and a drowned. A bite that
+        // can never happen (no food) must not hold the flee; and no 70-flee streak runs past 30s.
+        boolean eatingHurt = mod.getFoodChain().isTryingToEat() && mod.getFoodChain().hasFood() && mod.getPlayer().getHealth() <= 10
+                && !fleeStreakTooLong("eating");
         if (eatingHurt) {
             runAwayTask = keepRunAway();
             setTask(runAwayTask);
