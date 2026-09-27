@@ -302,7 +302,9 @@ public class FoodChain extends SingleTaskChain {
                 float score = saturationGoodScore - saturationLossPenalty - hungerLossPenalty - hungerNotFilledPenalty;
 
                 if (stack.getItem() == Items.ROTTEN_FLESH) {
-                    score -= config.foodPickRottenFleshPenalty;
+                    // S325: s324b held rotten flesh at hp 12, hun 14 with nothing else; the -100 penalty made hasFood
+                    // false so it never ate or regenerated and a zombie finished it. Hurt or starving, eat it.
+                    score = (health <= 12 || hunger <= 6) ? Math.max(score, 0.5f) : score - config.foodPickRottenFleshPenalty;
                 }
                 if (score > bestFoodScore) {
                     bestFoodScore = score;
