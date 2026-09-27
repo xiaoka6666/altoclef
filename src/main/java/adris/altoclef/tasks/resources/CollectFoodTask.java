@@ -323,6 +323,9 @@ public class CollectFoodTask extends Task {
                 if (nearest.isEmpty()) continue; // ?? This crashed once?
                 // S310: s306t chased fish down to y=11 and got stuck; only hunt fish near the surface.
                 if (cookable.isFish() && nearest.get().getY() < 54) continue;
+                // S355: s354o hunted cod in open ocean and a trident Drowned killed it. No fishing near drowned.
+                if (cookable.isFish() && mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.DrownedEntity.class)
+                        .stream().anyMatch(d -> d.isAlive() && d.distanceTo(nearest.get()) < 32)) continue;
                 int hungerPerformance = cookable.getCookedUnits();
                 double sqDistance = nearest.get().squaredDistanceTo(mod.getPlayer());
                 double score = (double) 100 * hungerPerformance / (sqDistance);
