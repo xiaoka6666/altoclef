@@ -300,6 +300,22 @@ public class MobDefenseChain extends SingleTaskChain {
         Item offhandItem = StorageHelper.getItemStackInSlot(offhandSlot).getItem();
         // Run away from creepers
         CreeperEntity blowingUp = getClosestFusingCreeper(mod);
+        if (blowingUp == null && System.currentTimeMillis() < creeperFleeUntilMs && runAwayTask instanceof RunAwayFromCreepersTask && !runAwayTask.isFinished()) {
+            setTask(runAwayTask);
+            return 85;
+        }
+        // S327 (owner: "why not just kill the creeper?"): with a sword and decent hp, fight it. Sword hits knock
+        // it back and reset the approach; a stone sword kills in 4 hits. Flee only unarmed, hurt, or late fuse.
+        if (blowingUp != null && mod.getItemStorage().getItemCount(net.minecraft.item.Items.STONE_SWORD, net.minecraft.item.Items.IRON_SWORD, net.minecraft.item.Items.DIAMOND_SWORD) > 0
+                && mod.getPlayer().getHealth() >= 10 && blowingUp.getClientFuseTime(1) < 0.5f) {
+            if (creeperKill == null || creeperKillId != blowingUp.getId()) {
+                creeperKill = new adris.altoclef.tasks.entity.KillEntityTask(blowingUp);
+                creeperKillId = blowingUp.getId();
+            }
+            creeperFleeUntilMs = 0;
+            setTask(creeperKill);
+            return 85;
+        }
         if (blowingUp != null) {
             if ((!mod.getFoodChain().needsToEat() || mod.getPlayer().getHealth() < 9)
                     && hasShield(mod)
@@ -318,7 +334,10 @@ public class MobDefenseChain extends SingleTaskChain {
                 doingFunkyStuff = true;
                 runAwayTask = new RunAwayFromCreepersTask(CREEPER_KEEP_DISTANCE);
                 setTask(runAwayTask);
-                return 55 + blowingUp.getClientFuseTime(1) * 50;
+                // S326: s325o alternated this (55-65) with RunAwayFromHostiles (65/80) 44 times in 5s, each
+                // cancelling the other path, and stood still until blown up. Creeper flee wins and holds 1.5s.
+                creeperFleeUntilMs = System.currentTimeMillis() + 1500;
+                return Math.max(85, 55 + blowingUp.getClientFuseTime(1) * 50);
             }
         }
         synchronized (BaritoneHelper.MINECRAFT_LOCK) {
@@ -698,6 +717,10 @@ public class MobDefenseChain extends SingleTaskChain {
         killAura.tickEnd(mod);
     }
 
+
+    private long creeperFleeUntilMs;
+    private Task creeperKill;
+    private int creeperKillId;
 
     private CreeperEntity getClosestFusingCreeper(AltoClef mod) {
         double worstSafety = Float.POSITIVE_INFINITY;
