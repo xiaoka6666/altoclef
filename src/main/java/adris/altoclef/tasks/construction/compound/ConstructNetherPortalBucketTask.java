@@ -365,6 +365,21 @@ public class ConstructNetherPortalBucketTask extends Task {
                 // (progressChecker is reset here, so nothing ever noticed). If we stay within a
                 // few blocks for 40s without a lava bucket, abandon this site and relocate.
                 BlockPos here = mod.getPlayer().getBlockPos();
+                // S331: s329o dug into a spider dungeon chasing cave lava and died there. A spawner near an
+                // underground lava hunt means a mob room: blacklist this lava and pick a site elsewhere.
+                if (here.getY() < 55 && mod.getBlockScanner().getNearestBlock(WorldHelper.toVec3d(here), Blocks.SPAWNER)
+                        .filter(s -> s.isWithinDistance(here, 14)).isPresent()) {
+                    int marked = 0;
+                    for (BlockPos lp : mod.getBlockScanner().getKnownLocations(Blocks.LAVA)) {
+                        if (lp.isWithinDistance(here, 24)) { mod.getBlockScanner().requestBlockUnreachable(lp, 0); marked++; }
+                    }
+                    Debug.logWarning("[S331] spawner near lava hunt @" + here.toShortString() + " - blacklisted " + marked + " lava, relocating");
+                    lavaStallAnchor = null;
+                    portalOrigin = null;
+                    currentDestroyTarget = null;
+                    lavaRelocate = new TimeoutWanderTask(20);
+                    return lavaRelocate;
+                }
                 // S314: s310t swung between 232,61,193 (lava target) and 233,61,188 (failed water bail)
                 // 5 blocks apart, resetting a 4-block anchor, until a drowned killed it. Use 10.
                 if (lavaStallAnchor == null || !lavaStallAnchor.isWithinDistance(here, 10)) {
