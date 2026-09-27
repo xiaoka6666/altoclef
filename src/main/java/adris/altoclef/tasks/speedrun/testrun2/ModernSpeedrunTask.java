@@ -1330,6 +1330,14 @@ public class ModernSpeedrunTask extends Task {
         // Melee hostiles in face (creeper / zombie / baby zombie villager) — own the fight so
         // stick() can drop back into CollectIron instead of leaving a silent noop after KillAura.
         // Still no ranged chase (skeletons/witches filtered in closeHostile).
+        // S345: s344o meleed a creeper at hp 9.8 while wading and was blown up 0.4s later. Mob defense only
+        // flees once the fuse is lit, which is too late in water. Low hp: back off instead of swinging.
+        if (!netherish && creeperInFace(mod) && mod.getPlayer().getHealth() <= 12) {
+            T2History.note("WHY S345: low-hp creeper in face, flee");
+            if (!(active instanceof adris.altoclef.tasks.movement.RunAwayFromCreepersTask))
+                active = new adris.altoclef.tasks.movement.RunAwayFromCreepersTask(7);
+            return active;
+        }
         if (!netherish && (creeperInFace(mod) || closeHostile(mod))) {
             lastCombatPulse = phaseTicks;
             ironNeedsKick = (phase == Phase.IRON);
