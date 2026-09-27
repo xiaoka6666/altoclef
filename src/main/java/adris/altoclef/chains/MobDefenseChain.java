@@ -66,6 +66,7 @@ public class MobDefenseChain extends SingleTaskChain {
     private boolean wasPuttingOutFire = false;
     private CustomBaritoneGoalTask runAwayTask;
     private long fleeHoldUntilMs;
+    private long lastHitMs;
     private String why = "?";
     private Task pillarTask;
     private int pillarY;
@@ -396,7 +397,9 @@ public class MobDefenseChain extends SingleTaskChain {
         // S354: s353o stood down to eat rotten flesh while a skeleton shot it from range (hp 20->6, dead).
         // A recent hit or a visible ranged mob within 20 blocks is a threat too.
         if (!meleeThreat && mod.getPlayer().getHealth() <= 16) {
-            meleeThreat = mod.getPlayer().hurtTime > 0 || mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.AbstractSkeletonEntity.class)
+            // S356: s355o still ate between arrows - hurtTime lasts 10 ticks. Any hit in the last 6s counts.
+            if (mod.getPlayer().hurtTime > 0) lastHitMs = System.currentTimeMillis();
+            meleeThreat = System.currentTimeMillis() - lastHitMs < 6000 || mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.AbstractSkeletonEntity.class)
                     .stream().anyMatch(h -> h.isAlive() && h.distanceTo(mod.getPlayer()) < 20 && mod.getPlayer().canSee(h));
         }
         if ((mod.getFoodChain().needsToEat() && !meleeThreat) || mod.getMLGBucketChain().isFalling(mod)
