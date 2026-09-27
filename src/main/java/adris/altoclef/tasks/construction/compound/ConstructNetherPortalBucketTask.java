@@ -372,6 +372,14 @@ public class ConstructNetherPortalBucketTask extends Task {
                     lavaStallTimer.reset();
                 } else if (lavaStallTimer.elapsed()) {
                     Debug.logWarning("[S211] lava collect stalled 40s @" + here.toShortString() + " - relocating portal site");
+                    // S319: s316t relocated 34 times but the wander came back to the same unreachable
+                    // lava around 520,60,-185 for 37 minutes. Blacklist lava near the stall so the
+                    // next pick is elsewhere.
+                    int marked = 0;
+                    for (BlockPos lp : mod.getBlockScanner().getKnownLocations(Blocks.LAVA)) {
+                        if (lp.isWithinDistance(here, 24)) { mod.getBlockScanner().requestBlockUnreachable(lp, 0); marked++; }
+                    }
+                    Debug.logWarning("[S319] blacklisted " + marked + " lava blocks near stall");
                     lavaStallAnchor = null;
                     portalOrigin = null;
                     currentDestroyTarget = null;
