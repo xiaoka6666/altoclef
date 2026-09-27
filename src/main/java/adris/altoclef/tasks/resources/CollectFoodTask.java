@@ -80,7 +80,7 @@ public class CollectFoodTask extends Task {
     // S303: s300t looped 7+ min on a cold-ocean island: the furnace needs cobble, the only stone was
     // under the sea, so every dig-down flooded -> water bail -> retry. After two failed cooks, stop
     // cooking for 10 min and count raw meat at its raw value so the bot just eats it.
-    private int cookFailures;
+    private int cookFailures, lastCookedCount = Integer.MAX_VALUE;
     private static volatile long rawOkUntilMs;
     private static boolean rawOk() { return System.currentTimeMillis() < rawOkUntilMs; }
     private Task currentResourceTask = null;
@@ -172,6 +172,14 @@ public class CollectFoodTask extends Task {
             }
         }
         // If we were previously smelting, keep on smelting.
+        // S309: the 30s cap counted from the start, so s305t pulled one cooked item (10s each) and
+        // left with the rest raw. Measure 30s without a new cooked item instead.
+        if (smeltTask != null) {
+            int cooked = mod.getItemStorage().getItemCount(Items.DRIED_KELP);
+            for (CookableFoodTarget c : COOKABLE_FOODS) cooked += mod.getItemStorage().getItemCount(c.getCooked());
+            if (cooked > lastCookedCount) smeltStartMs = System.currentTimeMillis();
+            lastCookedCount = cooked;
+        }
         if (smeltTask != null && smeltTask.isActive() && !smeltTask.isFinished()
                 && System.currentTimeMillis() - smeltStartMs > 30_000) {
             Debug.logMessage("S262 cooking timed out after 30s - keeping raw food");
