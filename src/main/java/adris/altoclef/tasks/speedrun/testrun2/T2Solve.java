@@ -450,6 +450,14 @@ public final class T2Solve {
                     return null;
                 }
                 if (s100Escalations >= 2) {
+                    // S344: s343o held 10 iron for 10 min: CraftInTableTask kept pathing to a table on a ledge
+                    // 8 blocks above its pit and S144 swapped it for a wander each time. Blacklist that table so
+                    // the next craft places a fresh one where the bot stands.
+                    if (childName.contains("CraftInTable")) {
+                        mod.getBlockScanner().getNearestBlock(mod.getPlayer().getPos(), net.minecraft.block.Blocks.CRAFTING_TABLE)
+                                .ifPresent(t -> { mod.getBlockScanner().requestBlockUnreachable(t, 0);
+                                    act("S344", "unreachable crafting table " + t.toShortString() + " blacklisted"); });
+                    }
                     act("S144", "jump-stuck collector — replace " + childName
                             + " with wander (esc=" + s100Escalations + ")");
                     s100Escalations = 0;
