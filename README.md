@@ -61,8 +61,27 @@ travel backend; mining, building, and inventory operations use Baritone processe
 
 When using an Ostinato-enabled pairing, its `movementBackend` setting selects
 `baritone`, `tungsten`, or `auto`; `auto` falls back to Baritone when Tungsten is not
-installed. See [Ostinato's README](https://github.com/vexrypt-rgb/Ostinato) for
+installed. The 1.16.1 pairing also has an experimental physics-driven `kinematicTravel`
+controller, plus `pitfallAvoidance`. See [Ostinato's README](https://github.com/vexrypt-rgb/Ostinato) for
 backend details.
+
+## Benchmarking movement
+
+The in-game `@pathbench` command measures the pathfinder and the movement layer:
+
+- `@pathbench search [-|setting=a,b] [reps]` times path searches, optionally sweeping a setting.
+- `@pathbench travel [baritone|tungsten|kinematic] [reps]` runs end-to-end trials over a fixed
+  set of goals and records reached/stalled and ticks per goal.
+
+Results are written as CSV to `run/pathbench/`. Latest 1.16.1 travel run (16 goals × 3 reps):
+
+| Mover | Goals reached | Avg ticks (reached goals) |
+| --- | --- | --- |
+| Baritone | 46/48 | 438 |
+| Kinematic (experimental) | 42/48 | 431 |
+
+The averages only cover goals each mover reached, so the main difference is reliability
+(Kinematic missed 6, Baritone 2).
 
 ## Project guides
 
