@@ -80,6 +80,8 @@ public class CollectFoodTask extends Task {
     // S303: s300t looped 7+ min on a cold-ocean island: the furnace needs cobble, the only stone was
     // under the sea, so every dig-down flooded -> water bail -> retry. After two failed cooks, stop
     // cooking for 10 min and count raw meat at its raw value so the bot just eats it.
+    // S310: set while chasing fish so the water-stall escape (T2Solve S102) leaves the swim alone.
+    public static volatile long fishingUntilMs;
     private int cookFailures, lastCookedCount = Integer.MAX_VALUE;
     private static volatile long rawOkUntilMs;
     private static boolean rawOk() { return System.currentTimeMillis() < rawOkUntilMs; }
@@ -319,6 +321,8 @@ public class CollectFoodTask extends Task {
                 if (!mod.getEntityTracker().entityFound(cookable.mobToKill)) continue;
                 Optional<Entity> nearest = mod.getEntityTracker().getClosestEntity(mod.getPlayer().getPos(),notBaby ,cookable.mobToKill);
                 if (nearest.isEmpty()) continue; // ?? This crashed once?
+                // S310: s306t chased fish down to y=11 and got stuck; only hunt fish near the surface.
+                if (cookable.isFish() && nearest.get().getY() < 54) continue;
                 int hungerPerformance = cookable.getCookedUnits();
                 double sqDistance = nearest.get().squaredDistanceTo(mod.getPlayer());
                 double score = (double) 100 * hungerPerformance / (sqDistance);
@@ -334,6 +338,7 @@ public class CollectFoodTask extends Task {
             }
             if (bestEntity != null) {
                 setDebugState("Killing " + bestEntity.getType().getTranslationKey());
+                if (bestEntity instanceof net.minecraft.entity.passive.FishEntity) fishingUntilMs = System.currentTimeMillis() + 3_000;
                 currentResourceTask = killTaskOrNull(bestEntity, notBaby, bestRawFood);
                 return currentResourceTask;
             }
