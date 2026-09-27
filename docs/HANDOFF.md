@@ -51,7 +51,11 @@ You are continuing work on TenorClef (an AltoClef fork, preprocessor multi-versi
     - About 50% of replans are drift (real vs predicted position differs by more than 0.1 after one tick). The likely cause is that the look rotation lands a tick late, so the sim ticks with a yaw the player doesn't have yet. That turned out not to be the cause; see below.
     - Average plan time is 13 ms, with spikes up to 130 ms.
     - Fixed: the drift came from vanilla's 10-tick held-jump cooldown, which PlayerSim didn't model. With it, physics reached 15/16 goals at avg 375 ticks (baritone 357) and drift replans halved.
-    - Remaining drift is about 0.2 horizontally on the first airborne tick after a jump, which looks like a sprint-jump boost mismatch. Check sprint-cancel-on-collision in `PlayerSim.tick`.
+    - Remaining drift, now diagnosed: the real player is often not sprinting while the plan assumes sprint. The sim then adds the 0.2 sprint-jump boost and sprint air speed, so the real player falls about 0.1–0.2 per tick behind.
+      - The Input.SPRINT override doesn't restart a dropped sprint. Something else clears it; `PathExecutor` line ~262 `setSprinting(false)` and the getter at ~773 used by PathingBehavior are suspects.
+      - Tried: calling `ctx.player().setSprinting(true)` in PhysicsTravel. Drift replans fell from about 300 to about 205 and avg ticks to 370, but it reached only 13/16. Reverted.
+      - Tried: sprint starts only on the ground in the sim. 15/16 at 402 ticks, drift unchanged. Reverted.
+      - Next: find what clears sprint, or feed the real `isSprinting()` into the plan's actions and plan non-sprint jumps when not sprinting.
     - Nearer-waypoint fallback on plan failure (retry at +2, then +1): 16/16 at 412 ticks when replanning only on reaching the waypoint; 14/16 at 519 with the rolling waypoint. Reverted. Single-rep runs are noisy, so use 3 reps before judging.
     - Tried and worse: drift 0.25 with cooldown 5 and radius 0.5 (14/16, 454 ticks); weighted A* at 1.5 (16/16, 495 ticks).
   - Next steps:
