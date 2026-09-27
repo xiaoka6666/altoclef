@@ -560,7 +560,10 @@ public class MobDefenseChain extends SingleTaskChain {
                 boolean caveSkeleton = nearest instanceof net.minecraft.entity.mob.AbstractSkeletonEntity
                         && damage >= 2 && mod.getPlayer().getHealth() > 12
                         && mod.getWorld().getLightLevel(net.minecraft.world.LightType.SKY, mod.getPlayer().getBlockPos()) <= 0;
-                if (rangedTarget && !caveSkeleton && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
+                // S347: s346o flip-flopped a portal-relocate wander with this 5s flee for 2 min at full hp (a
+                // skeleton behind cave rock), stood still and finally dug into lava. No line of sight, no flee.
+                if (rangedTarget && !caveSkeleton && mod.getPlayer().canSee(nearest)
+                        && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
                     needsChangeOnAttack = false;
                     fleeHoldUntilMs = System.currentTimeMillis() + 5000;
                     runAwayTask = keepRunAway();
