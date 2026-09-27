@@ -1,15 +1,10 @@
 package adris.altoclef.tasks.speedrun.testrun2.gui;
 
-import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +19,9 @@ public class T2MenuScreen extends Screen {
 
     private static int tab;
     private static int pendingOpen;
+
+    static int tab() { return tab; }
+    static void setTab(int v) { tab = v; }
 
     private static final String[][] TAB_TASKS_L = {
             {"testrun2  RSG", "testrun2"},
@@ -70,18 +68,17 @@ public class T2MenuScreen extends Screen {
             {"stop", "stop"},
     };
 
-    private Object keyBox;
-    private Object urlBox;
-    private Object modelBox;
-    private Object bindBox;
-    private boolean dropProv;
-    private boolean dropModel;
-    private final List<int[]> hits = new ArrayList<>();
-    private final List<String> hitCmd = new ArrayList<>();
-    private final List<String> hitLab = new ArrayList<>();
+    Object keyBox;
+    Object urlBox;
+    Object modelBox;
+    Object bindBox;
+    boolean dropProv;
+    boolean dropModel;
+    final List<int[]> hits = new ArrayList<>();
+    final List<String> hitCmd = new ArrayList<>();
+    final List<String> hitLab = new ArrayList<>();
 
-    // Floating panel (GUI units). Filled by layout().
-    private int px0, py0, px1, py1, headerB, sideR, contentX, contentY, contentW, footerT;
+    int px0, py0, px1, py1, headerB, sideR, contentX, contentY, contentW, footerT;
 
     public T2MenuScreen() {
         super(titleText());
@@ -112,7 +109,6 @@ public class T2MenuScreen extends Screen {
         }
     }
 
-    /** Chat closes the screen after the command. Wait it out. */
     public static void openSoon() {
         pendingOpen = 12;
         Debug.logMessage("T2MENU queued");
@@ -163,7 +159,7 @@ public class T2MenuScreen extends Screen {
         return TAB_TASKS_R;
     }
 
-    private void layout() {
+    void layout() {
         int pw = Math.min(560, Math.max(420, this.width - 32));
         int ph = Math.min(tab == 3 ? 292 : 268, this.height - 16);
         if (ph < 200) ph = Math.max(188, this.height - 16);
@@ -178,3 +174,122 @@ public class T2MenuScreen extends Screen {
         contentY = headerB + 8;
         contentW = px1 - contentX - 10;
     }
+
+    @Override
+    public void init() {
+        super.init();
+        hits.clear();
+        hitCmd.clear();
+        hitLab.clear();
+        layout();
+        T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 22, py0 + 7, 14, 14, "x", null));
+        String[] nav = {"Tasks", "Link", "Media", "Agent", "Faults"};
+        int[] navId = {0, 1, 2, 3, 4};
+        int iy = headerB + 8;
+        for (int i = 0; i < nav.length; i++) {
+            T2MenuActions.attach(this, T2MenuActions.button(this, px0 + 6, iy, sideR - px0 - 12, 16, nav[i], "TAB:" + navId[i]));
+            iy += 18;
+        }
+        String[][] L = tabLeft();
+        String[][] R = tabRight();
+        int colW = Math.max(80, (contentW - 8) / 2);
+        int bh = 20;
+        if (tab == 3) {
+            AgentConfig cfg = AgentConfig.cached();
+            AgentPresets.Preset preset = AgentPresets.byId(cfg.provider);
+            int top = contentY;
+            T2MenuActions.attach(this, T2MenuActions.button(this, contentX, top, colW, 18, "API  " + preset.label, "DROP:PROV"));
+            T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, top, colW, 18, "Model  " + cfg.model, "DROP:MODEL"));
+            if (dropProv) {
+                int py = top + 20;
+                for (AgentPresets.Preset p : AgentPresets.ALL) {
+                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX, py, colW, 16, p.label, "PROV:" + p.id));
+                    py += 17;
+                }
+            }
+            if (dropModel) {
+                int py = top + 20;
+                for (String m : preset.models) {
+                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, py, colW, 16, m, "MODEL:" + m));
+                    py += 17;
+                }
+            }
+            int y = contentY + 44;
+            for (String[] row : L) {
+                T2MenuActions.attach(this, T2MenuActions.button(this, contentX, y, colW, bh, row[0], row[1]));
+                y += 22;
+            }
+            y = contentY + 44;
+            for (String[] row : R) {
+                T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, y, colW, bh, row[0], row[1]));
+                y += 22;
+            }
+            int fx = contentX;
+            int fw = contentW;
+            int fy = footerT - 62;
+            keyBox = T2MenuActions.textField(this, fx, fy, fw, 14, cfg.apiKey);
+            urlBox = T2MenuActions.textField(this, fx, fy + 15, fw, 14, cfg.url);
+            modelBox = T2MenuActions.textField(this, fx, fy + 30, fw / 2 - 4, 14, cfg.model);
+            bindBox = T2MenuActions.textField(this, fx + fw / 2 + 4, fy + 30, fw / 2 - 4, 14, cfg.bind);
+            T2MenuActions.attach(this, keyBox);
+            T2MenuActions.attach(this, urlBox);
+            T2MenuActions.attach(this, modelBox);
+            T2MenuActions.attach(this, bindBox);
+            T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 212, footerT + 2, 96, 18, "save api", "SAVECFG"));
+            T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 108, footerT + 2, 96, 18, "close", null));
+            return;
+        }
+        int y = contentY;
+        for (String[] row : L) {
+            T2MenuActions.attach(this, T2MenuActions.button(this, contentX, y, colW, bh, row[0], row[1]));
+            y += 22;
+        }
+        y = contentY;
+        for (String[] row : R) {
+            T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, y, colW, bh, row[0], row[1]));
+            y += 22;
+        }
+        T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 108, footerT + 2, 96, 18, "close", null));
+    }
+
+    public boolean shouldPause() {
+        return false;
+    }
+
+    //#if MC >= 12000
+    @Override
+    public void render(net.minecraft.client.gui.DrawContext context, int mouseX, int mouseY, float delta) {
+        paintUi(adris.altoclef.multiversion.DrawContextWrapper.of(context), mouseX, mouseY);
+        super.render(context, mouseX, mouseY, delta);
+    }
+    //#else
+    //$$ @Override
+    //$$ public void render(net.minecraft.client.util.math.MatrixStack matrices, int mouseX, int mouseY, float delta) {
+    //$$     paintUi(adris.altoclef.multiversion.DrawContextWrapper.of(matrices), mouseX, mouseY);
+    //$$     com.mojang.blaze3d.systems.RenderSystem.enableTexture();
+    //$$     super.render(matrices, mouseX, mouseY, delta);
+    //$$ }
+    //#endif
+
+    private void paintUi(adris.altoclef.multiversion.DrawContextWrapper g, int mx, int my) {
+        T2MenuLook.paint(this, g, mx, my);
+    }
+
+    @Override
+    public boolean mouseClicked(double mx, double my, int button) {
+        if (button == 0) {
+            for (int i = hits.size() - 1; i >= 0; i--) {
+                int[] b = hits.get(i);
+                if (mx >= b[0] && mx <= b[0] + b[2] && my >= b[1] && my <= b[1] + b[3]) {
+                    T2MenuActions.runCmd(this, i < hitCmd.size() ? hitCmd.get(i) : null);
+                    return true;
+                }
+            }
+        }
+        try {
+            return super.mouseClicked(mx, my, button);
+        } catch (Throwable t) {
+            return false;
+        }
+    }
+}
