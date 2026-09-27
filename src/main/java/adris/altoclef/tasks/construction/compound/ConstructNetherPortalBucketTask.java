@@ -259,6 +259,14 @@ public class ConstructNetherPortalBucketTask extends Task {
 
         // Complementary fluid when we already hold lava XOR water with no empty to scoop.
         if (lavaBuckets > 0 && waterBuckets == 0 && emptyBuckets == 0) {
+            // S342: s341o held 2 lava + 0 empty with iron=3 for 25 min: the water-bucket task waded in, the
+            // parent's water-bail (exempt only with an empty bucket, S283) pulled it out, x100. Craft the
+            // empty bucket on land first so the scoop runs under the S283 exemption.
+            if (mod.getItemStorage().getItemCount(Items.IRON_INGOT) >= 3) {
+                setDebugState("S342 crafting empty bucket for water (have lava)");
+                progressChecker.reset();
+                return TaskCatalogue.getItemTask(Items.BUCKET, 1);
+            }
             setDebugState("Getting water (have lava)");
             progressChecker.reset();
             return TaskCatalogue.getItemTask(Items.WATER_BUCKET, 1);
