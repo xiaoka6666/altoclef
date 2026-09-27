@@ -113,6 +113,12 @@ def getJavaVersion() {
 repositories {
     mavenCentral()
     maven {
+        // upstream Baritone, compile-only on preprocess-only nodes (see dependencies)
+        name = "MiranCZRepo"
+        url = "https://mirancz.github.io/maven/"
+        artifactUrls("https://mirancz.github.io/maven/cabaletta/baritone-unoptimized/${project.name}")
+    }
+    maven {
         name = 'babbaj-repo'
         url = 'https://babbaj.github.io/maven/'
     }
@@ -253,8 +259,14 @@ dependencies {
                 println "[altoclef] Ostinato tip jar not found for ${project.name} — configure continues without Baritone (stage ../Ostinato/dist or libs/; see docs/DEVELOPMENT.md)"
             }
         }
-        // Every other version is a preprocess-only node: TenorClef always runs on Ostinato,
-        // never on upstream Baritone, and Ostinato has no build for these versions.
+        // Every other version is a preprocess-only node: TenorClef always runs on Ostinato, and
+        // Ostinato has no build for these versions, so they are never compiled or packaged. The
+        // preprocessor still resolves types on each node while remapping sources down the chain
+        // (without Baritone, calls on its return types such as player.setPitch are left unmapped
+        // and 1.16.1 fails), so the matching upstream jar is compile-only here, for that analysis.
+        if (mcVersion != 12111) {
+            modCompileOnly "cabaletta:baritone-unoptimized-fabric:${project.name}"
+        }
     }
 
     //modImplementation 'baritone-api-fabric:baritone-api-fabric:1.6.3'
