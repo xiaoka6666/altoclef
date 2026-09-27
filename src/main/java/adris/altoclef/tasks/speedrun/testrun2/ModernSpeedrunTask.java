@@ -569,7 +569,7 @@ public class ModernSpeedrunTask extends Task {
         try {
             moverLine = adris.altoclef.movement.TungstenMovement.statusLine();
         } catch (Throwable t) {
-            moverLine = "mover=baritone (status unavailable)";
+            moverLine = "mover=ostinato (status unavailable)";
         }
         Debug.logMessage("TESRUN2 start " + moverLine + " eyes=" + SpeedrunOpt.EYES
                 + " rods=" + SpeedrunOpt.BLAZE_RODS
