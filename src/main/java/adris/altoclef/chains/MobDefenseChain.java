@@ -565,8 +565,17 @@ public class MobDefenseChain extends SingleTaskChain {
                         && mod.getWorld().getLightLevel(net.minecraft.world.LightType.SKY, mod.getPlayer().getBlockPos()) <= 0;
                 // S347: s346o flip-flopped a portal-relocate wander with this 5s flee for 2 min at full hp (a
                 // skeleton behind cave rock), stood still and finally dug into lava. No line of sight, no flee.
-                if (rangedTarget && !caveSkeleton && mod.getPlayer().canSee(nearest)
-                        && (damage < 4 || mod.getPlayer().getHealth() <= 10)) {
+                // S351: s350o was shot 19->2 digging a 1x1 hole: canSee failed from inside the hole, the flee was
+                // skipped and the kill branch charged the skeleton with a wooden pick. Recent damage counts as seen,
+                // and an unseen, harmless ranged mob is ignored rather than charged.
+                boolean rangedSeen = mod.getPlayer().canSee(nearest) || mod.getPlayer().hurtTime > 0
+                        || mod.getPlayer().getRecentDamageSource() != null;
+                boolean weakVsRanged = damage < 4 || mod.getPlayer().getHealth() <= 10;
+                if (rangedTarget && !caveSkeleton && weakVsRanged && !rangedSeen) {
+                    runAwayTask = null;
+                    return 0;
+                }
+                if (rangedTarget && !caveSkeleton && rangedSeen && weakVsRanged) {
                     needsChangeOnAttack = false;
                     fleeHoldUntilMs = System.currentTimeMillis() + 5000;
                     runAwayTask = keepRunAway();
