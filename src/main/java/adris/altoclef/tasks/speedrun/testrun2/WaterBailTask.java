@@ -129,6 +129,12 @@ public class WaterBailTask extends Task {
                 }
             }
         }
+        // S324: a shore target that stops making progress is dropped and re-picked.
+        if (shoreTask != null && noProgressTicks > SHORE_AFTER_TICKS * 3) {
+            T2Log.force("S324", "shore path stalled - re-picking");
+            shoreTask = null;
+            noProgressTicks = 0;
+        }
         if (shoreTask != null) return shoreTask;
 
         return new GetOutOfWaterTask();
@@ -147,7 +153,9 @@ public class WaterBailTask extends Task {
                             var state = mod.getWorld().getBlockState(p);
                             var up = mod.getWorld().getBlockState(p.up());
                             if (!state.getFluidState().isEmpty()) continue;
-                            if (!state.isAir() && up.isAir()) return p.up();
+                            // S324: s322t aimed at y=44 air pockets under the ocean (shipwrecks, door pockets) and sat
+                            // at spd=0. A shore must be open to the sky.
+                            if (!state.isAir() && up.isAir() && mod.getWorld().isSkyVisible(p.up())) return p.up();
                         } catch (Throwable ignored) {}
                     }
                 }
