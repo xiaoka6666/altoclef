@@ -88,6 +88,7 @@ public class ConstructNetherPortalBucketTask extends Task {
     private final TimerGame lavaStallTimer = new TimerGame(40);
     private BlockPos lavaStallAnchor = null;
     private Task lavaRelocate;
+    private Task lowHpClimb;
     private final MovementProgressChecker progressChecker = new MovementProgressChecker();
     private final TimeoutWanderTask wanderTask = new TimeoutWanderTask(5);
     // Stored here to cache lava blacklist
@@ -369,6 +370,17 @@ public class ConstructNetherPortalBucketTask extends Task {
                     currentDestroyTarget = null;
                     lavaRelocate = new TimeoutWanderTask(20);
                     return lavaRelocate;
+                }
+                // S315: s311t chased cave lava down to y=30 at 9.5hp with no food; a skeleton and an
+                // 8-block drop killed it. Don't hunt lava underground while hurt - climb out first.
+                if (mod.getPlayer().getHealth() <= 12 && mod.getPlayer().getBlockY() < 55) {
+                    if (!(lowHpClimb != null && !lowHpClimb.isFinished())) {
+                        Debug.logWarning("[S315] hp=" + mod.getPlayer().getHealth() + " y=" + mod.getPlayer().getBlockY() + " - no cave lava while hurt, climbing out");
+                        lowHpClimb = new adris.altoclef.tasks.speedrun.testrun2.SurfaceBailTask();
+                    }
+                    setDebugState("S315 climbing out before lava");
+                    progressChecker.reset();
+                    return lowHpClimb;
                 }
                 setDebugState("Collecting lava");
                 progressChecker.reset();
