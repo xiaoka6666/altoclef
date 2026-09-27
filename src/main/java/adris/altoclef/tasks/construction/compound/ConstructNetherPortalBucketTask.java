@@ -357,7 +357,9 @@ public class ConstructNetherPortalBucketTask extends Task {
                 // (progressChecker is reset here, so nothing ever noticed). If we stay within a
                 // few blocks for 40s without a lava bucket, abandon this site and relocate.
                 BlockPos here = mod.getPlayer().getBlockPos();
-                if (lavaStallAnchor == null || !lavaStallAnchor.isWithinDistance(here, 4)) {
+                // S314: s310t swung between 232,61,193 (lava target) and 233,61,188 (failed water bail)
+                // 5 blocks apart, resetting a 4-block anchor, until a drowned killed it. Use 10.
+                if (lavaStallAnchor == null || !lavaStallAnchor.isWithinDistance(here, 10)) {
                     lavaStallAnchor = here;
                     lavaStallTimer.reset();
                 } else if (lavaStallTimer.elapsed()) {
