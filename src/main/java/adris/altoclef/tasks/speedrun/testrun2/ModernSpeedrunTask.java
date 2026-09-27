@@ -1184,6 +1184,16 @@ public class ModernSpeedrunTask extends Task {
                 T2Log.force("S261", "food=" + food(mod) + " - stocking before walk-in");
             }
             if (starveHunt && food(mod) >= 40) { starveHunt = false; T2Log.force("S279", "walk-in food hunt done food=" + food(mod)); }
+            // S339: s338o stocked food while standing in its freshly lit portal; the portal fired 3s later
+            // and it arrived with food=8, never healed from hp 5 and died to blazes. Step out first.
+            if (starveHunt) {
+                BlockPos feet = mod.getPlayer().getBlockPos();
+                if (mod.getWorld().getBlockState(feet).getBlock() == Blocks.NETHER_PORTAL
+                        || mod.getWorld().getBlockState(feet.up()).getBlock() == Blocks.NETHER_PORTAL) {
+                    T2Log.force("S339", "standing in portal while stocking food - stepping out");
+                    return new TimeoutWanderTask(6);
+                }
+            }
             if (starveHunt) return new adris.altoclef.tasks.resources.CollectFoodTask(40);
             T2History.note("WHY walk-in: portal + iron pick");
             return stick(new EnterNetherPortalTask(Dimension.NETHER));
