@@ -1047,7 +1047,7 @@ public class ModernSpeedrunTask extends Task {
             T2History.note("closer dropped — in nether");
         }
 
-        int hp = (int) mod.getPlayer().getHealth();
+        int hp = (int) Math.ceil(mod.getPlayer().getHealth());
         if (lastHp > 0 && hp <= 0) {
             recycleArmed = true;
             deathDim = WorldHelper.getCurrentDimension();
