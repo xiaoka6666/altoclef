@@ -39,10 +39,10 @@ final class T2MenuLook {
         g.fill(s.px0 + 14, s.py0 + 14, s.px0 + 20, s.py0 + 16, C_ACCENT2);
         drawLogo(s, g, "TenorClef", s.px0 + 26, s.py0 + 10);
         String chip = "control";
-        int cx = s.px0 + 26 + s.textRenderer.getWidth("TenorClef") + 8;
-        int cw = s.textRenderer.getWidth(chip) + 10;
+        int cx = s.px0 + 26 + net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth("TenorClef") + 8;
+        int cw = net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(chip) + 10;
         g.fill(cx, s.py0 + 9, cx + cw, s.py0 + 20, 0x22E8C96A);
-        g.drawText(s.textRenderer, chip, cx + 5, s.py0 + 11, C_ACCENT, false);
+        g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, chip, cx + 5, s.py0 + 11, C_ACCENT, false);
         g.fill(s.px0 + 1, s.headerB, s.px1 - 1, s.headerB + 1, 0x16FFFFFF);
 
         g.fill(s.px0 + 1, s.headerB + 1, s.sideR, s.footerT, C_SIDE);
@@ -50,18 +50,18 @@ final class T2MenuLook {
 
         g.fill(s.px0 + 1, s.footerT, s.px1 - 1, s.py1 - 1, 0x80080A0F);
         g.fill(s.px0 + 1, s.footerT, s.px1 - 1, s.footerT + 1, 0x16FFFFFF);
-        g.drawText(s.textRenderer, "RSG \u00b7 AA \u00b7 fleet", s.px0 + 10, s.footerT + 8, C_DIM, false);
+        g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, "RSG \u00b7 AA \u00b7 fleet", s.px0 + 10, s.footerT + 8, C_DIM, false);
 
         int tab = T2MenuScreen.tab();
         if (tab == 3) {
-            g.drawText(s.textRenderer, "API key / URL / model / bind", s.contentX, s.footerT - 74, C_MUTED, false);
+            g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, "API key / URL / model / bind", s.contentX, s.footerT - 74, C_MUTED, false);
         }
         if (tab == 4) {
             long now = System.currentTimeMillis();
             String head = "time lost to faults: "
                     + (adris.altoclef.tasks.speedrun.testrun2.fault.FaultBook.lostMs(now) / 1000)
                     + "s   (altoclef/faults.jsonl)";
-            g.drawText(s.textRenderer, trim(s, head, s.contentW), s.contentX, s.contentY, C_ACCENT, false);
+            g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, trim(s, head, s.contentW), s.contentX, s.contentY, C_ACCENT, false);
             String[] lines = adris.altoclef.tasks.speedrun.testrun2.fault.FaultBook.recentText().split("\n");
             int rows = Math.max(1, (s.footerT - s.contentY - 20) / 11);
             int from = Math.max(0, lines.length - rows);
@@ -69,7 +69,7 @@ final class T2MenuLook {
             for (int i = lines.length - 1; i >= from; i--) {
                 String str = trim(s, lines[i], s.contentW);
                 int col = str.contains(" E") ? 0xFFFF8A84 : C_TEXT;
-                g.drawText(s.textRenderer, str, s.contentX, ly, col, false);
+                g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, str, s.contentX, ly, col, false);
                 ly += 11;
             }
         }
@@ -86,7 +86,7 @@ final class T2MenuLook {
                 } else if (hover) {
                     g.fill(b[0], b[1], b[0] + b[2], b[1] + b[3], 0x14FFFFFF);
                 }
-                g.drawText(s.textRenderer, label, b[0] + 10, b[1] + (b[3] - 8) / 2,
+                g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, label, b[0] + 10, b[1] + (b[3] - 8) / 2,
                         on ? C_TEXT : C_MUTED, false);
                 continue;
             }
@@ -97,7 +97,7 @@ final class T2MenuLook {
             if (primary) bg = hover ? 0xFFFFD58A : C_ACCENT;
             if (close && label.equals("x")) {
                 g.fill(b[0], b[1], b[0] + b[2], b[1] + b[3], hover ? 0x30E5534B : 0x14FFFFFF);
-                g.drawText(s.textRenderer, "x", b[0] + 4, b[1] + 3, hover ? C_TEXT : C_MUTED, false);
+                g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, "x", b[0] + 4, b[1] + 3, hover ? C_TEXT : C_MUTED, false);
                 continue;
             }
             g.fill(b[0], b[1], b[0] + b[2], b[1] + b[3], hover ? (danger ? C_DANGER : C_ACCENT) : C_BORDER);
@@ -108,19 +108,19 @@ final class T2MenuLook {
             int fg = primary ? 0xFF120E0A : (danger ? 0xFFFF8A84 : C_TEXT);
             int ty = b[1] + (b[3] - 8) / 2;
             if (close || primary) {
-                int tw = s.textRenderer.getWidth(label);
-                g.drawText(s.textRenderer, label, b[0] + (b[2] - tw) / 2, ty, fg, false);
+                int tw = net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(label);
+                g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, label, b[0] + (b[2] - tw) / 2, ty, fg, false);
             } else {
                 int sp = label.indexOf("  ");
                 String head2 = sp > 0 ? label.substring(0, sp) : label;
                 String tail = sp > 0 ? label.substring(sp).trim() : "";
                 int tx = b[0] + (isCmd ? 10 : 6);
-                g.drawText(s.textRenderer, head2, tx, ty, fg, false);
+                g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, head2, tx, ty, fg, false);
                 if (!tail.isEmpty()) {
-                    g.drawText(s.textRenderer, tail, tx + s.textRenderer.getWidth(head2) + 6, ty, C_MUTED, false);
+                    g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, tail, tx + net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(head2) + 6, ty, C_MUTED, false);
                 }
                 if (cmd.startsWith("DROP:")) {
-                    g.drawText(s.textRenderer, "v", b[0] + b[2] - 10, ty, C_MUTED, false);
+                    g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, "v", b[0] + b[2] - 10, ty, C_MUTED, false);
                 }
             }
         }
@@ -152,16 +152,16 @@ final class T2MenuLook {
         for (int i = 0; i < str.length(); i++) {
             String ch = String.valueOf(str.charAt(i));
             int col = LOGO[Math.min(LOGO.length - 1, i)];
-            g.drawText(s.textRenderer, ch, cx, y, col, true);
-            cx += s.textRenderer.getWidth(ch);
+            g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, ch, cx, y, col, true);
+            cx += net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(ch);
         }
     }
 
     static String trim(T2MenuScreen s, String str, int maxW) {
         if (str == null) return "";
-        if (s.textRenderer.getWidth(str) <= maxW) return str;
+        if (net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(str) <= maxW) return str;
         String t = str;
-        while (t.length() > 1 && s.textRenderer.getWidth(t + "..") > maxW) {
+        while (t.length() > 1 && net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(t + "..") > maxW) {
             t = t.substring(0, t.length() - 1);
         }
         return t + "..";
