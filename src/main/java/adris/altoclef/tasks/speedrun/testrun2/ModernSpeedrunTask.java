@@ -127,6 +127,7 @@ public class ModernSpeedrunTask extends Task {
      * and the bot walked into a fortress bare-headed — E110 at 9:51 in the last run.
      */
     private int goldHelmTicks;
+    private BlockPos lastBailPos; private long lastBailMs; private int bailRepeat; // S350
     private int helmTotalTicks = 0; // S348
     private int helmGoldHuntTicks;
     private boolean starveHunt;
@@ -1320,6 +1321,18 @@ public class ModernSpeedrunTask extends Task {
                 && !(phase == Phase.PORTAL && mod.getItemStorage().hasItem(Items.BUCKET)
                         && !mod.getItemStorage().hasItem(Items.WATER_BUCKET)
                         && mod.getPlayer().getHealth() > 10)) {
+            // S350: s349o sat 4.5 h at one water spot: MovementSwim up failed forever, each bail timed out,
+            // a wander, then the same bail. Third bail at the same spot inside 3 min: pillar straight up.
+            BlockPos bp = mod.getPlayer().getBlockPos();
+            long nowMs = System.currentTimeMillis();
+            bailRepeat = (lastBailPos != null && lastBailPos.isWithinDistance(bp, 4) && nowMs - lastBailMs < 180_000) ? bailRepeat + 1 : 0;
+            lastBailPos = bp; lastBailMs = nowMs;
+            if (bailRepeat >= 2) {
+                bailRepeat = 0;
+                waterCooldown = 20 * 15;
+                T2Log.force("S350", "water bail failing at " + bp.toShortString() + " - pillar out");
+                return stick(new HolePillarTask());
+            }
             waterCooldown = 20 * 15;
             T2Log.warn("E10", "submerged — bail once");
             return stick(new WaterBailTask());
