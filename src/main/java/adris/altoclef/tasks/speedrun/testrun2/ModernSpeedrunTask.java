@@ -127,6 +127,7 @@ public class ModernSpeedrunTask extends Task {
      * and the bot walked into a fortress bare-headed — E110 at 9:51 in the last run.
      */
     private int goldHelmTicks;
+    private int helmTotalTicks = 0; // S348
     private int helmGoldHuntTicks;
     private boolean starveHunt;
     private boolean ironHunt;
@@ -2256,6 +2257,13 @@ public class ModernSpeedrunTask extends Task {
         if (!wearingGold(mod)) {
             goldHelmTicks++;
             T2History.note("WHY nether: gold helm on head before fortress");
+            // S348: s347o had gold but no reachable table and no planks, and looped craft<->wander at one
+            // spot for 28 min. S215 only bounds the gold hunt; bound the whole helm effort at 3 min.
+            if (++helmTotalTicks > 20 * 180) {
+                helmLatched = true;
+                T2Log.force("S348", "helm effort over 180s, proceeding without helm");
+                return null;
+            }
             // S243: time the equip from when the helm is IN HAND, not from when the craft began.
             // s243t crafted it after 9s of goldHelmTicks and latched "worn" the same tick, then
             // fought blazes bare-headed with the helm in its pocket.
