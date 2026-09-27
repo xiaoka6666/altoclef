@@ -157,7 +157,7 @@ public class MobDefenseChain extends SingleTaskChain {
             if (toDealWith instanceof EndermanEntity || toDealWith instanceof SlimeEntity || toDealWith instanceof BlazeEntity) {
 
                 numberOfProblematicEntities += 1;
-            } else if (toDealWith instanceof DrownedEntity && toDealWith.getEquippedItems() == Items.TRIDENT) {
+            } else if (toDealWith instanceof DrownedEntity && ((DrownedEntity) toDealWith).getMainHandStack().getItem() == Items.TRIDENT) {
                 // Drowned with tridents are also REALLY dangerous, maybe we should increase this??
                 numberOfProblematicEntities += 5;
             }
@@ -528,7 +528,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 }
                 // Prefer fighting zombies/spiders over fleeing when only melee hostiles
                 boolean onlySimpleMelee = toDealWithList.stream().allMatch(e ->
-                        e instanceof ZombieEntity || e instanceof SpiderEntity || e instanceof SilverfishEntity);
+                        (e instanceof ZombieEntity && !(e instanceof net.minecraft.entity.mob.DrownedEntity dd && dd.getMainHandStack().getItem() == Items.TRIDENT)) || e instanceof SpiderEntity || e instanceof SilverfishEntity);
                 if (onlySimpleMelee) {
                     canDealWith = Math.max(canDealWith, toDealWithList.size());
                 }
@@ -553,7 +553,10 @@ public class MobDefenseChain extends SingleTaskChain {
                         // S284: s283t charged a blaze at hp 6 while on fire and burned to death.
                         || nearest instanceof net.minecraft.entity.mob.BlazeEntity
                         // S288: s287t punched a creeper at 2:08 (no weapon) from full hp and was blown up.
-                        || nearest instanceof CreeperEntity;
+                        || nearest instanceof CreeperEntity
+                        // S349: s348o was impaled by a Drowned; it is a ZombieEntity, so it counted as simple melee.
+                        || (nearest instanceof net.minecraft.entity.mob.DrownedEntity d
+                            && d.getMainHandStack().getItem() == Items.TRIDENT);
                 // S312: s308t fled a skeleton inside a dark cave with only a pickaxe (damage<4) and was
                 // shot from 20hp to death; running in a cave never breaks line of sight. Underground,
                 // with any tool and hp>12, close in and kill the skeleton instead.
