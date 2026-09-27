@@ -2048,6 +2048,15 @@ public class ModernSpeedrunTask extends Task {
 
     private Task portal(AltoClef mod) {
         if (WorldHelper.getCurrentDimension() == Dimension.NETHER) return null;
+        // S320: no run since s308t crafted a sword (S201 never fired: the iron-pick branch returns
+        // first). s308t/s311t/s317t all died to cave skeletons during the portal build. Make a
+        // stone sword on the way into PORTAL; give up after 30s so it can't stall the phase.
+        if (portalSwordTicks < 600 && mod.getItemStorage().getItemCount(Items.STONE_SWORD, Items.IRON_SWORD) < 1
+                && mod.getItemStorage().getItemCount(Items.COBBLESTONE, Items.BLACKSTONE) >= 2
+                && (mod.getItemStorage().getItemCount(Items.STICK) >= 1 || totalPlanks(mod) >= 2 || totalLogs(mod) >= 1)) {
+            if (portalSwordTicks++ == 0) T2Log.force("S320", "craft stone sword before portal build");
+            return TaskCatalogue.getItemTask(Items.STONE_SWORD, 1);
+        }
         // S218: the starve branch below sat after the construct latch, so a long portal build
         // never ate (deepgate: hun=2 for 8+ min, 161x E103, bread branch 0x). Food first.
         int hun = 20;
@@ -3000,6 +3009,7 @@ public class ModernSpeedrunTask extends Task {
 
     /** S221: no golden helmet yet and no table to craft one with in the Nether. */
     private int tablePickupTicks;
+    private int portalSwordTicks;
 
     private boolean needsNetherTable(AltoClef mod) {
         return mod.getItemStorage().getItemCount(Items.GOLDEN_HELMET) < 1 && !wearingGold(mod)
