@@ -376,7 +376,12 @@ public class MobDefenseChain extends SingleTaskChain {
             }
         }
 
-        if (mod.getFoodChain().needsToEat() || mod.getMLGBucketChain().isFalling(mod)
+        // S335: s333o stood down to eat at hp<12 with a zombie in melee range; the zombie hit every bite
+        // and killed it. With a hostile within 5 blocks and hp<=12, don't yield to eating — fall through to the
+        // eatingHurt flee so the bite happens while running.
+        boolean meleeThreat = mod.getPlayer().getHealth() <= 12 && mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.HostileEntity.class)
+                .stream().anyMatch(h -> h.isAlive() && h.distanceTo(mod.getPlayer()) < 5);
+        if ((mod.getFoodChain().needsToEat() && !meleeThreat) || mod.getMLGBucketChain().isFalling(mod)
                 || !mod.getMLGBucketChain().doneMLG() || mod.getMLGBucketChain().isChorusFruiting()) {
             killAura.stopShielding(mod);
             stopShielding(mod);
@@ -388,7 +393,7 @@ public class MobDefenseChain extends SingleTaskChain {
         // swung every tick, cancelling each bite. When hurt and eating, let the bite finish and keep fleeing.
         // S334: s332o fled 2.5 min / 330 blocks at hp 6 with food=0 into deep water and a drowned. A bite that
         // can never happen (no food) must not hold the flee; and no 70-flee streak runs past 30s.
-        boolean eatingHurt = mod.getFoodChain().isTryingToEat() && mod.getFoodChain().hasFood() && mod.getPlayer().getHealth() <= 10
+        boolean eatingHurt = (mod.getFoodChain().isTryingToEat() || mod.getFoodChain().needsToEat()) && mod.getFoodChain().hasFood() && mod.getPlayer().getHealth() <= 12
                 && !fleeStreakTooLong("eating");
         if (eatingHurt) {
             runAwayTask = keepRunAway();
