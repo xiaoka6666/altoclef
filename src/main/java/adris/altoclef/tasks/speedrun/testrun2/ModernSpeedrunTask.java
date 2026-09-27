@@ -1437,6 +1437,11 @@ public class ModernSpeedrunTask extends Task {
         // Pick is enough to leave IRON. Sword/shield table crafts walk
         // back into the hole we just climbed out of.
         // skipIronPick only skips the iron pick craft — still need wooden+ before PORTAL
+        // S332: stay in IRON until the 2nd bucket (+ flint/shield) is covered; see iron().
+        if (phase != Phase.PORTAL && mod.getItemStorage().getItemCount(Items.IRON_PICKAXE) >= 1 && !skipIronPick) {
+            int bk = mod.getItemStorage().getItemCount(Items.BUCKET, Items.WATER_BUCKET, Items.LAVA_BUCKET);
+            if (bk < 2 && mod.getItemStorage().getItemCount(Items.IRON_INGOT) < Math.max(0, 2 - bk) * 3 + 2) return Phase.IRON;
+        }
         if (mod.getItemStorage().getItemCount(Items.IRON_PICKAXE) >= 1 || (skipIronPick && hasMiningPick(mod))) {
             return Phase.PORTAL;
         }
@@ -1748,6 +1753,15 @@ public class ModernSpeedrunTask extends Task {
         } catch (Throwable ignored) {}
         if (mod.getItemStorage().getItemCount(Items.IRON_PICKAXE) >= 1 || (skipIronPick && hasMiningPick(mod))) {
             pickCraftLock = false;
+            // S332: s330o left IRON with 1 bucket and iron=4; flint+shield ate 2, so PORTAL spent 8 min
+            // hunting iron for the 2nd bucket far from the lava. Finish bucket iron (+2 for flint/shield) here.
+            int bk = mod.getItemStorage().getItemCount(Items.BUCKET, Items.WATER_BUCKET, Items.LAVA_BUCKET);
+            int ing = mod.getItemStorage().getItemCount(Items.IRON_INGOT);
+            int ironNeed = Math.max(0, 2 - bk) * 3 + 2;
+            if (bk < 2 && ing < ironNeed) {
+                T2History.note("WHY iron: S332 buckets=" + bk + " ingots=" + ing + " need " + ironNeed + " before PORTAL");
+                return TaskCatalogue.getItemTask(Items.IRON_INGOT, ironNeed);
+            }
             T2History.note("WHY iron: pick done — skip sword/shield table, go PORTAL");
             return null;
         }
