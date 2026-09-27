@@ -393,6 +393,12 @@ public class MobDefenseChain extends SingleTaskChain {
         // eatingHurt flee so the bite happens while running.
         boolean meleeThreat = mod.getPlayer().getHealth() <= 12 && mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.HostileEntity.class)
                 .stream().anyMatch(h -> h.isAlive() && h.distanceTo(mod.getPlayer()) < 5);
+        // S354: s353o stood down to eat rotten flesh while a skeleton shot it from range (hp 20->6, dead).
+        // A recent hit or a visible ranged mob within 20 blocks is a threat too.
+        if (!meleeThreat && mod.getPlayer().getHealth() <= 16) {
+            meleeThreat = mod.getPlayer().hurtTime > 0 || mod.getEntityTracker().getTrackedEntities(net.minecraft.entity.mob.AbstractSkeletonEntity.class)
+                    .stream().anyMatch(h -> h.isAlive() && h.distanceTo(mod.getPlayer()) < 20 && mod.getPlayer().canSee(h));
+        }
         if ((mod.getFoodChain().needsToEat() && !meleeThreat) || mod.getMLGBucketChain().isFalling(mod)
                 || !mod.getMLGBucketChain().doneMLG() || mod.getMLGBucketChain().isChorusFruiting()) {
             killAura.stopShielding(mod);
