@@ -1,0 +1,50 @@
+name: Port check
+
+# Diagnostic for the multi-version ports (1.21.11, 26.3). Compiles one preprocess node against the released
+# Ostinato jar and keeps the full log, so port errors can be read without a local 15-minute build.
+on:
+  push:
+    branches: [ccr-9292ccac-gfi0nr]
+    paths: ['.github/workflows/port-check.yml']
+  workflow_dispatch:
+    inputs:
+      node:
+        description: 'Gradle node to compile (e.g. 1.21.11)'
+        required: true
+        default: '1.21.11'
+      ostinato_asset:
+        description: 'Ostinato v1.0.1 release asset to stage as libs/baritone-unoptimized-fabric-ostinato-<node>.jar'
+        required: true
+        default: 'ostinato-mc1.21.11-unoptimized-fabric-1.17.0.jar'
+      java:
+        description: 'JDK to build with'
+        required: true
+        default: '21'
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ inputs.java || '21' }}
+      - name: Stage Ostinato jar
+        run: |
+          curl -fsSL -o "libs/baritone-unoptimized-fabric-ostinato-${{ inputs.node || '1.21.11' }}.jar" \
+            "https://github.com/vexrypt-rgb/Ostinato/releases/download/v1.0.1/${{ inputs.ostinato_asset || 'ostinato-mc1.21.11-unoptimized-fabric-1.17.0.jar' }}"
+          ls -la libs
+      - name: Compile ${{ inputs.node || '1.21.11' }}
+        run: ./gradlew :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+      - name: Errors
+        if: always()
+        run: grep -E "error:|warning: \[|cannot find symbol|package .* does not exist" -A2 port-check.log | head -300 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: port-check-log-${{ inputs.node || '1.21.11' }}
+          path: port-check.log
