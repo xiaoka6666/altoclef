@@ -39,10 +39,13 @@ jobs:
             "https://github.com/vexrypt-rgb/Ostinato/releases/download/v1.0.1/${{ inputs.ostinato_asset || 'ostinato-mc1.21.11-unoptimized-fabric-1.17.0.jar' }}"
           ls -la libs
       - name: Compile ${{ inputs.node || '1.21.11' }}
-        run: ./gradlew :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+        run: |
+          set -o pipefail
+          ./gradlew :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
       - name: Errors
         if: always()
-        run: grep -E "error:|warning: \[|cannot find symbol|package .* does not exist" -A2 port-check.log | head -300 || true
+        run: |
+          grep -E "error:|cannot find symbol|does not exist" -A2 port-check.log | head -300 || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
