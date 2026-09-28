@@ -79,9 +79,9 @@ public class EntityVer {
     @Pattern
     private static Vec3d getPos(Entity entity) {
         //#if MC >= 12111
-        return entity.getEntityPos();
+        //$$ return entity.getEntityPos();
         //#else
-        //$$ return entity.getPos();
+        return entity.getPos();
         //#endif
     }
 
