@@ -117,6 +117,24 @@ public class ShowcaseCommand extends Command {
         Thread t = new Thread(() -> {
             try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
             mc.execute(() -> mod.getClientBaritone().getCustomGoalProcess().setGoalAndPath(new GoalBlock(g.getX(), g.getY(), g.getZ())));
+            // -Dtenorclef.show.trace=true: log the player's water/pose state twice a second while the demo runs.
+            for (int i = 0; Boolean.getBoolean("tenorclef.show.trace") && i < 80; i++) {
+                try { Thread.sleep(500); } catch (InterruptedException ignored) {}
+                mc.execute(() -> {
+                    var pl = mc.player;
+                    if (pl == null) return;
+                    String mv = "-";
+                    var ex = mod.getClientBaritone().getPathingBehavior().getCurrent();
+                    if (ex != null && ex.getPosition() < ex.getPath().movements().size()) {
+                        var m = ex.getPath().movements().get(ex.getPosition());
+                        mv = m.getClass().getSimpleName() + " " + m.getSrc().toShortString() + "->" + m.getDest().toShortString();
+                    }
+                    System.out.println("SHOWTRACE mv=" + mv);
+                    System.out.printf("SHOWTRACE x=%.2f y=%.2f water=%s under=%s swim=%s sprint=%s sneak=%s pose=%s pitch=%.0f pathing=%s%n",
+                            pl.getX(), pl.getY(), pl.isTouchingWater(), pl.isSubmergedInWater(), pl.isSwimming(), pl.isSprinting(),
+                            pl.isSneaking(), pl.getPose(), pl.getPitch(), mod.getClientBaritone().getPathingBehavior().isPathing());
+                });
+            }
         }, "showcase-start");
         t.setDaemon(true);
         t.start();

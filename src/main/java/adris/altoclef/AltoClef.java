@@ -120,12 +120,24 @@ public class AltoClef implements ModInitializer {
         // This code runs as soon as Minecraft is in a mod-load-ready state.
         // However, some things (like resources) may still be uninitialized.
         // As such, nothing will be loaded here but basic initialization.
-        EventBus.subscribe(TitleScreenEntryEvent.class, evt -> onInitializeLoad());
+        EventBus.subscribe(TitleScreenEntryEvent.class, evt -> ensureLoaded());
 
         if (instance != null) {
             throw new IllegalStateException("AltoClef already loaded!");
         }
         instance = this;
+    }
+
+    private static boolean loadStarted;
+
+    /**
+     * Runs {@link #onInitializeLoad} once. Normally the title screen triggers it; a launch that skips the title
+     * screen (quick play) would otherwise leave every manager null, so the client tick calls this too.
+     */
+    public static void ensureLoaded() {
+        if (loadStarted || instance == null) return;
+        loadStarted = true;
+        instance.onInitializeLoad();
     }
 
     public void onInitializeLoad() {
