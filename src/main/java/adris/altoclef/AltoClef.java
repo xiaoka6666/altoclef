@@ -145,6 +145,7 @@ public class AltoClef implements ModInitializer {
         // This is the actual start point, controlled by a mixin.
 
         initializeBaritoneSettings();
+        hookFreecamStatus();
 
         // Central Managers
         commandExecutor = new CommandExecutor(this);
@@ -509,6 +510,25 @@ public class AltoClef implements ModInitializer {
     /**
      * The user task chain (runs your command. Ex. Get Diamonds, Beat the Game)
      */
+    /**
+     * Ostinato's freecam draws the bot as a translucent ghost with a status tag; feed it the current task.
+     * Reflective because not every Ostinato build has the hook.
+     */
+    private void hookFreecamStatus() {
+        try {
+            java.util.function.Supplier<String> status = () -> {
+                adris.altoclef.tasksystem.TaskChain chain = taskRunner == null ? null : taskRunner.getCurrentTaskChain();
+                if (chain == null || chain.getTasks().isEmpty()) {
+                    return null;
+                }
+                java.util.List<adris.altoclef.tasksystem.Task> tasks = chain.getTasks();
+                return tasks.get(tasks.size() - 1).toString();
+            };
+            Class.forName("baritone.behavior.FreecamBehavior").getField("statusSupplier").set(null, status);
+        } catch (ReflectiveOperationException | LinkageError ignored) {
+        }
+    }
+
     public UserTaskChain getUserTaskChain() {
         return userTaskChain;
     }
