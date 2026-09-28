@@ -41,7 +41,10 @@ jobs:
       - name: Compile ${{ inputs.node || '1.21.11' }}
         run: |
           set -o pipefail
-          ./gradlew :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+          cat > "$RUNNER_TEMP/maxerrs.gradle" <<'EOF'
+          allprojects { tasks.withType(JavaCompile).configureEach { options.compilerArgs += ['-Xmaxerrs', '100000'] } }
+          EOF
+          ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
       - name: Error summary
         if: always()
         run: |
@@ -52,8 +55,26 @@ jobs:
           grep -h '^ *symbol: ' port-check.log | sed 's/^ *//' | sort | uniq -c | sort -rn | head -80
           echo "=== files with errors ==="
           grep -h ' error: ' port-check.log | sed 's/:[0-9]*: error:.*//; s#.*/preprocessed/main/java/##' | sort | uniq -c | sort -rn | head -80
+      - name: API dump (remapped Minecraft classes)
+        if: always()
+        run: |
+          JAR=""
+          for j in $(find ~/.gradle/caches/fabric-loom -name '*.jar' 2>/dev/null); do
+            if unzip -l "$j" 2>/dev/null | grep -q 'net/minecraft/entity/Entity.class'; then JAR="$j"; break; fi
+          done
+          echo "minecraft jar: $JAR"
+          [ -z "$JAR" ] && { find ~/.gradle/caches/fabric-loom -name '*.jar' | head -20; exit 0; }
+          for c in net.minecraft.entity.Entity net.minecraft.entity.LivingEntity net.minecraft.entity.player.PlayerInventory \
+                   net.minecraft.entity.player.PlayerEntity net.minecraft.world.dimension.DimensionType net.minecraft.client.gui.DrawContext \
+                   net.minecraft.client.render.RenderLayer net.minecraft.item.ArmorItem net.minecraft.item.Item; do
+            echo "##### $c"; javap -cp "$JAR" -public "$c" 2>&1 | head -400
+          done > api-dump.txt
+          wc -l api-dump.txt
+          grep -n -E 'getEntityPos|getPos\(|getEntityWorld|getWorld\(|getMainStacks|getSelectedSlot|setSelectedSlot|EquippedItems|getEquippedStack|ultrawarm|drawHorizontalLine|fill\(|getGui|Matrix' api-dump.txt | head -60
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: port-check-log-${{ inputs.node || '1.21.11' }}
-          path: port-check.log
+          path: |
+            port-check.log
+            api-dump.txt
