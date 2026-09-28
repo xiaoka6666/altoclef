@@ -58,15 +58,24 @@ public class ShowcaseCommand extends Command {
             case "swim", "dive" -> {
                 // Glass-walled pool; "dive" roofs the middle so the route goes under it via an air pocket.
                 boolean roof = demo.equals("dive");
+                // The pool spans the whole corridor and tall glass walls seal the sides, so there is no way round.
                 clear(cmds, x, y, z, 32, 4);
-                cmds.add(fill(x + 2, y - 7, z - 4, x + 28, y, z + 4, "glass"));
-                cmds.add(fill(x + 3, y - 6, z - 3, x + 27, y - 1, z + 3, "water"));
+                // Bedrock can't be broken and the barrier on top is too tall to pillar past cheaply.
+                cmds.add(fill(x - 2, y - 8, z - 5, x + 32, y + 5, z - 5, "bedrock"));
+                cmds.add(fill(x - 2, y - 8, z + 5, x + 32, y + 5, z + 5, "bedrock"));
+                cmds.add(fill(x - 2, y - 8, z - 5, x - 2, y + 5, z + 5, "bedrock"));
+                cmds.add(fill(x - 2, y + 6, z - 5, x + 32, y + 14, z - 5, "barrier"));
+                cmds.add(fill(x - 2, y + 6, z + 5, x + 32, y + 14, z + 5, "barrier"));
+                cmds.add(fill(x - 2, y + 6, z - 5, x - 2, y + 14, z + 5, "barrier"));
+                cmds.add(fill(x - 1, y - 1, z - 4, x + 2, y - 1, z + 4, "gold_block"));
+                cmds.add(fill(x + 3, y - 7, z - 4, x + 27, y - 7, z + 4, "glass"));
+                cmds.add(fill(x + 3, y - 6, z - 4, x + 27, y - 1, z + 4, "water"));
+                cmds.add(fill(x + 28, y - 7, z - 4, x + 28, y - 1, z + 4, "glass"));
                 if (roof) {
-                    cmds.add(fill(x + 8, y - 1, z - 4, x + 22, y + 3, z + 4, "stone"));
+                    cmds.add(fill(x + 8, y - 1, z - 4, x + 22, y + 5, z + 4, "bedrock"));
                     cmds.add(fill(x + 15, y - 1, z - 1, x + 15, y - 1, z + 1, "air")); // air pocket
-                    cmds.add(fill(x + 15, y - 2, z - 1, x + 15, y - 2, z + 1, "water"));
                 }
-                cmds.add(fill(x + 29, y - 1, z - 1, x + 31, y - 1, z + 1, "emerald_block"));
+                cmds.add(fill(x + 29, y - 1, z - 4, x + 31, y - 1, z + 4, "emerald_block"));
                 s.swimInWater.value = true;
                 goal = new BlockPos(x + 30, y, z);
             }
@@ -115,7 +124,7 @@ public class ShowcaseCommand extends Command {
     }
 
     private static void clear(List<String> cmds, int x, int y, int z, int len, int half) {
-        cmds.add(fill(x - 1, y, z - half - 1, x + len, y + 4, z + half + 1, "air"));
+        cmds.add(fill(x - 1, y, z - half - 1, x + len, y + 6, z + half + 1, "air"));
     }
 
     private static String fill(int x1, int y1, int z1, int x2, int y2, int z2, String block) {
