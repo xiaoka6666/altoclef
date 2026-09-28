@@ -75,6 +75,16 @@ public class EntityVer {
         //#endif
     }
 
+    /** Yarn renamed Entity.getPos() to getEntityPos() in 1.21.11 (older versions keep getPos()). */
+    @Pattern
+    private static Vec3d getPos(Entity entity) {
+        //#if MC >= 12111
+        return entity.getEntityPos();
+        //#else
+        //$$ return entity.getPos();
+        //#endif
+    }
+
     @Pattern
     private static Vec3d getEyePos(Entity entity) {
         //#if MC >= 11701

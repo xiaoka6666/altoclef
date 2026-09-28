@@ -5,7 +5,7 @@ name: Port check
 on:
   push:
     branches: [ccr-9292ccac-gfi0nr]
-    paths: ['.github/workflows/port-check.yml']
+    paths: ['.github/workflows/port-check.yml', 'src/**', 'versions/**', 'build.gradle', 'root.gradle.kts']
   workflow_dispatch:
     inputs:
       node:
@@ -60,6 +60,7 @@ jobs:
         run: |
           JAR=""
           for j in $(find ~/.gradle/caches/fabric-loom -name '*.jar' 2>/dev/null); do
+            case "$j" in *minecraft-merged/${{ inputs.node || '1.21.11' }}-*) ;; *) continue ;; esac
             if unzip -l "$j" 2>/dev/null | grep -q 'net/minecraft/entity/Entity.class'; then JAR="$j"; break; fi
           done
           echo "minecraft jar: $JAR"
