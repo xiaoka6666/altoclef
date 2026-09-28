@@ -363,6 +363,14 @@ public class AltoClef implements ModInitializer {
         autoRunWorld = getWorld();
         Debug.logHarness("AUTORUN: executing '" + cmd + "'");
         Debug.logMessage("AUTORUN: executing '" + cmd + "'");
+        // -Dtenorclef.autorun.freecam=true: start Ostinato's freecam first, for reproducing freecam issues headless.
+        if (Boolean.getBoolean("tenorclef.autorun.freecam")) {
+            try {
+                getClientBaritone().getCommandManager().execute("freecam");
+            } catch (Throwable t) {
+                Debug.logWarning("AUTORUN freecam failed: " + t);
+            }
+        }
         try {
             getCommandExecutor().executeWithPrefix(cmd);
         } catch (Throwable t) {
