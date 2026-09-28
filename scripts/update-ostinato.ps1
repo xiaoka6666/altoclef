@@ -8,7 +8,7 @@
   Gotchas (verified 2026-09-27):
    - Ostinato uses Gradle 4.9, which needs JDK 8. ~/.gradle/gradle.properties pins
      org.gradle.java.home to JDK 21 for TenorClef, so it is overridden on the command line.
-   - The :proguard step fails; the unoptimized jar is produced before it and is what TenorClef uses.
+   - The :proguard step produces the unoptimized jar TenorClef uses; :createDist fails and is skipped.
    - The jar file is named ...-1.16.5.jar but fabric.mod.json targets minecraft 1.16.1.
 #>
 [CmdletBinding()]
@@ -41,7 +41,7 @@ try {
   # Detached with redirected streams: Gradle 4.9 hung (idle JVM at compileApiJava) when it inherited a pipe as stdin.
   $nul = Join-Path $env:TEMP 'ostinato-empty-stdin.txt'; Set-Content $nul '' -Encoding ascii
   Start-Process -FilePath (Join-Path $wt 'gradlew.bat') -WorkingDirectory $wt -NoNewWindow -Wait `
-    -ArgumentList "-Dorg.gradle.java.home=$($Jdk8 -replace '\\','/')", '-Dorg.gradle.jvmargs=-Xmx3G', '--console=plain', 'build', '-x', 'test', '-x', 'proguard' `
+    -ArgumentList "-Dorg.gradle.java.home=$($Jdk8 -replace '\\','/')", '-Dorg.gradle.jvmargs=-Xmx3G', '--console=plain', 'build', 'proguard', '-x', 'test', '-x', 'createDist' `
     -RedirectStandardOutput $log -RedirectStandardError "$log.err" -RedirectStandardInput $nul
   $env:JAVA_HOME = $oldJH; if ($oldTO) { $env:JAVA_TOOL_OPTIONS = $oldTO }
   $jar = Get-ChildItem (Join-Path $wt 'build\libs') -Filter 'baritone-unoptimized-fabric-*.jar' -EA SilentlyContinue | Select-Object -First 1
