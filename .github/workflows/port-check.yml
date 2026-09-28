@@ -42,10 +42,16 @@ jobs:
         run: |
           set -o pipefail
           ./gradlew :${{ inputs.node || '1.21.11' }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
-      - name: Errors
+      - name: Error summary
         if: always()
         run: |
-          grep -E "error:|cannot find symbol|does not exist" -A2 port-check.log | head -300 || true
+          echo "total errors: $(grep -c ' error: ' port-check.log || true)"
+          echo "=== by message ==="
+          grep -h ' error: ' port-check.log | sed 's/.* error: //' | sort | uniq -c | sort -rn | head -60
+          echo "=== missing symbols ==="
+          grep -h '^ *symbol: ' port-check.log | sed 's/^ *//' | sort | uniq -c | sort -rn | head -80
+          echo "=== files with errors ==="
+          grep -h ' error: ' port-check.log | sed 's/:[0-9]*: error:.*//; s#.*/preprocessed/main/java/##' | sort | uniq -c | sort -rn | head -80
       - uses: actions/upload-artifact@v4
         if: always()
         with:
