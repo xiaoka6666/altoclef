@@ -68,12 +68,27 @@ public class T2MenuScreen extends Screen {
             {"stop", "stop"},
     };
 
+    // TEMPORARY showcase tab: commands added since the vexrypt/Ostinato work began.
+    private static final String[][] TAB_SHOW_L = {
+            {"parkour  4/3/2-gap run", "show parkour"},
+            {"swim  surface lanes", "show swim"},
+            {"dive  roofed + air pocket", "show dive"},
+            {"boat  place, sail, collect", "show boat"},
+    };
+    private static final String[][] TAB_SHOW_R = {
+            {"kinematic  slalom", "show kinematic"},
+            {"physics  sim-driven slalom", "show physics"},
+            {"off  stop demo", "show off"},
+            {"stop", "stop"},
+    };
+
     Object keyBox;
     Object urlBox;
     Object modelBox;
     Object bindBox;
     boolean dropProv;
     boolean dropModel;
+    int dropStart = Integer.MAX_VALUE;
     final List<int[]> hits = new ArrayList<>();
     final List<String> hitCmd = new ArrayList<>();
     final List<String> hitLab = new ArrayList<>();
@@ -148,6 +163,7 @@ public class T2MenuScreen extends Screen {
         if (tab == 2) return TAB_MEDIA_L;
         if (tab == 3) return TAB_AGENT_L;
         if (tab == 4) return new String[0][];
+        if (tab == 5) return TAB_SHOW_L;
         return TAB_TASKS_L;
     }
 
@@ -156,6 +172,7 @@ public class T2MenuScreen extends Screen {
         if (tab == 2) return TAB_MEDIA_R;
         if (tab == 3) return TAB_AGENT_R;
         if (tab == 4) return new String[0][];
+        if (tab == 5) return TAB_SHOW_R;
         return TAB_TASKS_R;
     }
 
@@ -181,10 +198,11 @@ public class T2MenuScreen extends Screen {
         hits.clear();
         hitCmd.clear();
         hitLab.clear();
+        dropStart = Integer.MAX_VALUE;
         layout();
         T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 22, py0 + 7, 14, 14, "x", null));
-        String[] nav = {"Tasks", "Link", "Media", "Agent", "Faults"};
-        int[] navId = {0, 1, 2, 3, 4};
+        String[] nav = {"Tasks", "Link", "Media", "Agent", "Faults", "Showcase"};
+        int[] navId = {0, 1, 2, 3, 4, 5};
         int iy = headerB + 8;
         for (int i = 0; i < nav.length; i++) {
             T2MenuActions.attach(this, T2MenuActions.button(this, px0 + 6, iy, sideR - px0 - 12, 16, nav[i], "TAB:" + navId[i]));
@@ -200,20 +218,6 @@ public class T2MenuScreen extends Screen {
             int top = contentY;
             T2MenuActions.attach(this, T2MenuActions.button(this, contentX, top, colW, 18, "API  " + preset.label, "DROP:PROV"));
             T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, top, colW, 18, "Model  " + cfg.model, "DROP:MODEL"));
-            if (dropProv) {
-                int py = top + 20;
-                for (AgentPresets.Preset p : AgentPresets.ALL) {
-                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX, py, colW, 16, p.label, "PROV:" + p.id));
-                    py += 17;
-                }
-            }
-            if (dropModel) {
-                int py = top + 20;
-                for (String m : preset.models) {
-                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, py, colW, 16, m, "MODEL:" + m));
-                    py += 17;
-                }
-            }
             int y = contentY + 44;
             for (String[] row : L) {
                 T2MenuActions.attach(this, T2MenuActions.button(this, contentX, y, colW, bh, row[0], row[1]));
@@ -237,6 +241,22 @@ public class T2MenuScreen extends Screen {
             T2MenuActions.attach(this, bindBox);
             T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 212, footerT + 2, 96, 18, "save api", "SAVECFG"));
             T2MenuActions.attach(this, T2MenuActions.button(this, px1 - 108, footerT + 2, 96, 18, "close", null));
+            // Dropdowns last: hits paint in order and click-test in reverse, so they sit on top.
+            dropStart = hits.size();
+            if (dropProv) {
+                int py = top + 20;
+                for (AgentPresets.Preset p : AgentPresets.ALL) {
+                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX, py, colW, 16, p.label, "PROV:" + p.id));
+                    py += 17;
+                }
+            }
+            if (dropModel) {
+                int py = top + 20;
+                for (String m : preset.models) {
+                    T2MenuActions.attach(this, T2MenuActions.button(this, contentX + colW + 8, py, colW, 16, m, "MODEL:" + m));
+                    py += 17;
+                }
+            }
             return;
         }
         int y = contentY;
@@ -259,9 +279,20 @@ public class T2MenuScreen extends Screen {
     //#if MC >= 12000
     @Override
     public void render(net.minecraft.client.gui.DrawContext context, int mouseX, int mouseY, float delta) {
-        paintUi(adris.altoclef.multiversion.DrawContextWrapper.of(context), mouseX, mouseY);
+        adris.altoclef.multiversion.DrawContextWrapper g = adris.altoclef.multiversion.DrawContextWrapper.of(context);
+        paintUi(g, mouseX, mouseY);
         super.render(context, mouseX, mouseY, delta);
+        // Text-field widgets draw after the panel; repaint open dropdowns over them.
+        if (dropStart < hits.size()) T2MenuLook.paintHits(this, g, mouseX, mouseY, dropStart);
     }
+
+    //#if MC >= 12002
+    // super.render() draws the background first, and on 1.21+ that applies the menu blur,
+    // which would blur the panel painted above. The panel supplies its own backdrop.
+    @Override
+    public void renderBackground(net.minecraft.client.gui.DrawContext context, int mouseX, int mouseY, float delta) {
+    }
+    //#endif
     //#else
     //$$ @Override
     //$$ public void render(net.minecraft.client.util.math.MatrixStack matrices, int mouseX, int mouseY, float delta) {
