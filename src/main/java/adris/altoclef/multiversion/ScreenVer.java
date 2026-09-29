@@ -8,7 +8,7 @@ public class ScreenVer {
 
     public static Screen current(MinecraftClient mc) {
         //#if MC >= 260000
-        //$$ return mc.screen();
+        //$$ return mc.gui.screen();
         //#else
         return mc.currentScreen;
         //#endif

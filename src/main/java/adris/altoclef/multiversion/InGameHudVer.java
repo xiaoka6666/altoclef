@@ -6,7 +6,7 @@ public class InGameHudVer {
 
     public static boolean shouldShowDebugHud() {
         //#if MC >= 260000
-        //$$ return MinecraftClient.getInstance().showDebugScreen();
+        //$$ return net.minecraft.client.Minecraft.getInstance().showDebugScreen();
         //#elseif MC > 12001
         return MinecraftClient.getInstance().inGameHud.getDebugHud().shouldShowDebugHud();
         //#else

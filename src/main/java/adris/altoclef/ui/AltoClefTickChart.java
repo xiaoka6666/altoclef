@@ -112,7 +112,13 @@ public class AltoClefTickChart {
     }
 
     private static int lerp(float delta, int start, int end) {
-        //#if MC >= 12102
+        //#if MC >= 260000
+        //$$ int i = (int) net.minecraft.util.Mth.lerp(delta, net.minecraft.util.ARGB.alpha(start), net.minecraft.util.ARGB.alpha(end));
+        //$$ int j = (int) net.minecraft.util.Mth.lerp(delta, net.minecraft.util.ARGB.red(start), net.minecraft.util.ARGB.red(end));
+        //$$ int k = (int) net.minecraft.util.Mth.lerp(delta, net.minecraft.util.ARGB.green(start), net.minecraft.util.ARGB.green(end));
+        //$$ int l = (int) net.minecraft.util.Mth.lerp(delta, net.minecraft.util.ARGB.blue(start), net.minecraft.util.ARGB.blue(end));
+        //$$ return net.minecraft.util.ARGB.color(i, j, k, l);
+        //#elseif MC >= 12102
         //$$ int i = (int) MathHelper.lerp(delta, ColorHelper.getAlpha(start), ColorHelper.getAlpha(end));
         //$$ int j = (int) MathHelper.lerp(delta, ColorHelper.getRed(start), ColorHelper.getRed(end));
         //$$ int k = (int) MathHelper.lerp(delta, ColorHelper.getGreen(start), ColorHelper.getGreen(end));

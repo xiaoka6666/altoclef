@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 
 public class LivingEntityVer {
 
@@ -18,6 +19,15 @@ public class LivingEntityVer {
         return entity.getEquippedItems();
         //#else
         //$$ return entity.getItemsEquipped();
+        //#endif
+    }
+
+    @Pattern
+    private static void swingHand(LivingEntity entity, Hand hand) {
+        //#if MC >= 260000
+        //$$ entity.swing(hand, net.minecraft.world.item.component.SwingAnimation.DEFAULT, false);
+        //#else
+        entity.swingHand(hand);
         //#endif
     }
 

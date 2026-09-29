@@ -32,7 +32,9 @@ public class EntityVer {
 
     @Pattern
     public BlockPos getLandingPos(Entity entity) {
-        //#if MC >= 11701
+        //#if MC >= 260000
+        //$$ return entity.getBlockPosBelowThatAffectsMyMovement();
+        //#elseif MC >= 11701
         return entity.getSteppingPos();
         //#else
         //$$ return ((adris.altoclef.mixins.EntityAccessor) entity).invokeGetLandingPos();

@@ -19,6 +19,11 @@ public class BlockPosVer {
     }
 
 
+    /** 26.x removed the BlockPos(Vec3i) constructor. */
+    public static BlockPos copyOf(Vec3i v) {
+        return new BlockPos(v.getX(), v.getY(), v.getZ());
+    }
+
     /** Vec3i.isWithinDistance(Vec3i, double); 26.x splits it by argument type, so compute it directly. */
     public static boolean isWithinDistance(Vec3i a, Vec3i b, double distance) {
         double dx = a.getX() - b.getX();

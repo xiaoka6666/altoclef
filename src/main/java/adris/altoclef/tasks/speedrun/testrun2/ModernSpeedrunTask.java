@@ -3474,7 +3474,7 @@ public class ModernSpeedrunTask extends Task {
         try {
             for (int i = 0; i < 9; i++) {
                 //#if MC >= 12111
-                //$$ if (mod.getPlayer().getInventory().getStack(i).isIn(net.minecraft.registry.tag.ItemTags.PICKAXES)) return;
+                //$$ if (mod.getPlayer().getInventory().getStack(i) != null && adris.altoclef.util.helpers.ItemHelper.stackIn(mod.getPlayer().getInventory().getStack(i), net.minecraft.registry.tag.ItemTags.PICKAXES)) return;
                 //#else
                 if (mod.getPlayer().getInventory().getStack(i).getItem() instanceof net.minecraft.item.PickaxeItem) return;
                 //#endif

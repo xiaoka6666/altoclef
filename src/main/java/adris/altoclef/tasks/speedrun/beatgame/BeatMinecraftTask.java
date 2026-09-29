@@ -283,7 +283,7 @@ public class BeatMinecraftTask extends Task {
 
         for (BlockPos pos : mod.getBlockScanner().getKnownLocations(Blocks.END_PORTAL_FRAME)) {
             // distance is arbitrary for now, dont think this can run into any edge cases in a normal mc world
-            if (pos.isWithinDistance(endPortalCenter, 20)) {
+            if (BlockPosVer.isWithinDistance(pos, endPortalCenter, 20)) {
                 frameBlocks.add(pos);
             }
         }
@@ -1030,13 +1030,13 @@ public class BeatMinecraftTask extends Task {
             if (blacklistedChests.contains(blockPos)) return false;
 
             boolean isUnopenedChest = WorldHelper.isUnopenedChest(blockPos);
-            boolean isWithinDistance = mod.getPlayer().getBlockPos().isWithinDistance(blockPos, 150);
+            boolean isWithinDistance = BlockPosVer.isWithinDistance(mod.getPlayer().getBlockPos(), blockPos, 150);
             boolean isLootableChest = canBeLootablePortalChest(mod, blockPos);
 
             // TODO make more sophisticated
             //dont open spawner chests
             Optional<BlockPos> nearestSpawner = mod.getBlockScanner().getNearestBlock(WorldHelper.toVec3d(blockPos), Blocks.SPAWNER);
-            if (nearestSpawner.isPresent() && nearestSpawner.get().isWithinDistance(blockPos, 6)) {
+            if (nearestSpawner.isPresent() && BlockPosVer.isWithinDistance(nearestSpawner.get(), blockPos, 6)) {
                 blacklistedChests.add(blockPos);
                 return false;
             }
@@ -1750,7 +1750,7 @@ public class BeatMinecraftTask extends Task {
                             }
 
                             return new PlaceObsidianBucketTask(
-                                    mod.getBlockScanner().getNearestBlock(WorldHelper.toVec3d(endPortalCenterLocation), (blockPos) -> !blockPos.isWithinDistance(endPortalCenterLocation, 8), Blocks.LAVA).get());
+                                    mod.getBlockScanner().getNearestBlock(WorldHelper.toVec3d(endPortalCenterLocation), (blockPos) -> !BlockPosVer.isWithinDistance(blockPos, endPortalCenterLocation, 8), Blocks.LAVA).get());
                         }
                         setDebugState(waterPlacedTimer.getDuration() + "");
                         return null;
@@ -2010,7 +2010,7 @@ public class BeatMinecraftTask extends Task {
             // Log the average position.
             mod.log("Average Position: " + average);
 
-            return new BlockPos(new Vec3i((int) average.x, (int) average.y, (int) average.z));
+            return BlockPosVer.copyOf(new Vec3i((int) average.x, (int) average.y, (int) average.z));
         }
 
         // Log that there are not enough frames.
@@ -2169,7 +2169,7 @@ public class BeatMinecraftTask extends Task {
                         TaskChange t2 = taskChanges.get(1);
                         TaskChange t3 = taskChanges.get(2);
 
-                        if (t1.original == t2.interrupt && t1.pos.isWithinDistance(t3.pos, 5) && t3.original == t1.interrupt) {
+                        if (t1.original == t2.interrupt && BlockPosVer.isWithinDistance(t1.pos, t3.pos, 5) && t3.original == t1.interrupt) {
                             forcedTaskTimer.reset();
                             mod.logWarning("Probably stuck! Forcing timer...");
                             taskChanges.clear();

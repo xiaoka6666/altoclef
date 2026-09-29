@@ -38,6 +38,9 @@ import net.minecraft.item.*;
 //$$ import net.minecraft.world.item.Items;
 //$$ import net.minecraft.world.item.ShieldItem;
 //#endif
+//#if MC >= 12102
+//$$ import net.minecraft.registry.tag.TagKey;
+//#endif
 //#if MC < 260000
 import net.minecraft.screen.*;
 //#else
@@ -262,8 +265,8 @@ public class StorageHelper {
         final HashMap<Class, Integer> bestMaterials = new HashMap<>();
         final HashMap<Class, Slot> bestToolSlot = new HashMap<>();
         //#else
-        //$$ final HashMap<net.minecraft.registry.tag.TagKey<Item>, Double> bestMaterials = new HashMap<>();
-        //$$ final HashMap<net.minecraft.registry.tag.TagKey<Item>, Slot> bestToolSlot = new HashMap<>();
+        //$$ final HashMap<TagKey<Item>, Double> bestMaterials = new HashMap<>();
+        //$$ final HashMap<TagKey<Item>, Slot> bestToolSlot = new HashMap<>();
         //#endif
 
         for (Slot slot : PlayerSlot.getCurrentScreenSlots()) {

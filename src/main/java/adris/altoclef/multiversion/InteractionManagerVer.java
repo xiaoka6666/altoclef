@@ -23,6 +23,15 @@ public class InteractionManagerVer {
     }
 
     @Pattern
+    public ActionResult interactEntity(ClientPlayerInteractionManager interactionManager, PlayerEntity player, net.minecraft.entity.Entity entity, Hand hand) {
+        //#if MC >= 260000
+        //$$ return interactionManager.interact(player, entity, new net.minecraft.world.phys.EntityHitResult(entity), hand);
+        //#else
+        return interactionManager.interactEntity(player, entity, hand);
+        //#endif
+    }
+
+    @Pattern
     public ActionResult interactBlock(ClientPlayerInteractionManager interactionManager, ClientPlayerEntity player, Hand hand, BlockHitResult hitResult) {
         //#if MC >= 11904
         return interactionManager.interactBlock(player,hand, hitResult);

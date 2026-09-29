@@ -405,7 +405,25 @@ public class ItemHelper {
 
     private static Map<Item, Integer> getFuelTimeMap() {
         if (fuelTimeMap == null) {
-            //#if MC >= 12102
+            //#if MC >= 260000
+            //$$ fuelTimeMap = new java.util.HashMap<>();
+            //$$ java.util.Map<net.minecraft.world.item.Item, Integer> fixedFuel = new java.util.HashMap<>();
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.LAVA_BUCKET, 20000);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.COAL_BLOCK, 16000);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.DRIED_KELP_BLOCK, 4001);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.BLAZE_ROD, 2400);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.COAL, 1600);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.CHARCOAL, 1600);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.STICK, 100);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.BOWL, 100);
+            //$$ fixedFuel.put(net.minecraft.world.item.Items.BAMBOO, 50);
+            //$$ for (net.minecraft.world.item.Item it : net.minecraft.core.registries.BuiltInRegistries.ITEM) {
+            //$$     net.minecraft.world.item.ItemStack st = new net.minecraft.world.item.ItemStack(it);
+            //$$     if (fixedFuel.containsKey(it)) fuelTimeMap.put(it, fixedFuel.get(it));
+            //$$     else if (st.is(net.minecraft.tags.ItemTags.LOGS_THAT_BURN) || st.is(net.minecraft.tags.ItemTags.PLANKS)) fuelTimeMap.put(it, 300);
+            //$$     else if (st.is(net.minecraft.tags.ItemTags.WOODEN_SLABS)) fuelTimeMap.put(it, 150);
+            //$$ }
+            //#elseif MC >= 12102
             //$$ fuelTimeMap = new java.util.HashMap<>();
             //$$ net.minecraft.item.FuelRegistry fuels = net.minecraft.client.MinecraftClient.getInstance().world != null ? net.minecraft.client.MinecraftClient.getInstance().world.getFuelRegistry() : null;
             //$$ if (fuels != null) for (Item it : fuels.getFuelItems()) fuelTimeMap.put(it, fuels.getFuelTicks(new net.minecraft.item.ItemStack(it)));
@@ -511,11 +529,11 @@ public class ItemHelper {
     }
 
     //#if MC >= 260000
-    //$$ private static boolean stackIn(net.minecraft.world.item.ItemStack stack, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
+    //$$ public static boolean stackIn(net.minecraft.world.item.ItemStack stack, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
     //$$     return stack.is(tag);
     //$$ }
     //#else
-    private static boolean stackIn(net.minecraft.item.ItemStack stack, net.minecraft.registry.tag.TagKey<net.minecraft.item.Item> tag) {
+    public static boolean stackIn(net.minecraft.item.ItemStack stack, net.minecraft.registry.tag.TagKey<net.minecraft.item.Item> tag) {
         return stack.isIn(tag);
     }
     //#endif
@@ -526,15 +544,15 @@ public class ItemHelper {
     public static double toolQuality(net.minecraft.item.Item item) {
         //#if MC >= 12102
         //$$ net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(item);
-        //$$ if (stack.isIn(net.minecraft.registry.tag.ItemTags.SWORDS)) {
+        //$$ if (stackIn(stack, net.minecraft.registry.tag.ItemTags.SWORDS)) {
         //$$     return meleeDps(item);
         //$$ }
         //$$ net.minecraft.block.BlockState reference;
-        //$$ if (stack.isIn(net.minecraft.registry.tag.ItemTags.PICKAXES)) {
+        //$$ if (stackIn(stack, net.minecraft.registry.tag.ItemTags.PICKAXES)) {
         //$$     reference = net.minecraft.block.Blocks.STONE.getDefaultState();
-        //$$ } else if (stack.isIn(net.minecraft.registry.tag.ItemTags.AXES)) {
+        //$$ } else if (stackIn(stack, net.minecraft.registry.tag.ItemTags.AXES)) {
         //$$     reference = net.minecraft.block.Blocks.OAK_LOG.getDefaultState();
-        //$$ } else if (stack.isIn(net.minecraft.registry.tag.ItemTags.SHOVELS)) {
+        //$$ } else if (stackIn(stack, net.minecraft.registry.tag.ItemTags.SHOVELS)) {
         //$$     reference = net.minecraft.block.Blocks.DIRT.getDefaultState();
         //$$ } else {
         //$$     reference = net.minecraft.block.Blocks.STONE.getDefaultState();
