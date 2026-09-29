@@ -294,7 +294,7 @@ dependencies {
                 def jar = ostinatoJars[0]
                 println "[altoclef] Ostinato Baritone for ${project.name}: ${jar.name}"
                 modImplementation files(jar)
-                include files(jar)
+                // Not `include files(jar)`: Loom rejects flat-file jars in processIncludeJars (see the 1.16.1 note above).
             } else {
                 println "[altoclef] Ostinato tip jar not found for ${project.name} — configure continues without Baritone (stage ../Ostinato/dist or libs/; see docs/DEVELOPMENT.md)"
             }
