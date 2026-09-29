@@ -17,6 +17,10 @@ on:
         description: 'Ostinato v1.0.1 release asset to stage for a non-released node'
         required: false
         default: 'ostinato-mc1.21.11-unoptimized-fabric-1.17.0.jar'
+      task:
+        description: 'Gradle task on the node (compileJava, or build -x test to check the full jar)'
+        required: false
+        default: 'compileJava'
       java:
         description: 'JDK to build with'
         required: false
@@ -59,7 +63,7 @@ jobs:
           EOF
           # Watchdog: a hung build otherwise leaves no log. Dump thread stacks at 25 min, then kill at 30.
           ( sleep 1500; echo '=== WATCHDOG: jstack ==='; for p in $(jps -q); do echo "--- pid $p"; jstack $p | head -120; done ) &
-          timeout 1800 ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" ${{ matrix.node == '26.3' && '-Pwith26 -Porg.gradle.java.installations.fromEnv=JAVA_HOME_25_X64' || '' }} :${{ matrix.node }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+          timeout 1800 ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" ${{ matrix.node == '26.3' && '-Pwith26 -Porg.gradle.java.installations.fromEnv=JAVA_HOME_25_X64' || '' }} :${{ matrix.node }}:${{ inputs.task || 'compileJava' }} --console=plain --stacktrace 2>&1 | tee port-check.log
       - name: Error summary
         if: always()
         run: |
