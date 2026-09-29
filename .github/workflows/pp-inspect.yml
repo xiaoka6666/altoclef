@@ -27,4 +27,4 @@ jobs:
           unzip -l "$JAR" | awk '{print $4}' | grep -i -E 'mapping|remap' | head -60
           mkdir -p x && cd x && unzip -q -o "$JAR"
           K=com/replaymod/gradle/preprocess
-          javap -p -c -constants "$K/PreprocessPluginKt.class" | awk '/getTinyMappings\(/{p=1} /^  (public|private|static)/{ if(!($0 ~ /getTinyMappings\(/)) p=0 } p' | sed -E 's/^ *//' | cut -c1-170
+          javap -p -c -constants "$K/PreprocessPluginKt.class" | awk '/maybeGetGroovyProperty\(|getMappingsProvider\(/{p=1} /^  (public|private|static)/{ if(!($0 ~ /maybeGetGroovyProperty\(|getMappingsProvider\(/)) p=0 } p' | sed -E 's/^ *//' | cut -c1-170
