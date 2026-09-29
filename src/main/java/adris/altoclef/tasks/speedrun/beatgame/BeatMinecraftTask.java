@@ -38,12 +38,34 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
+//#if MC < 260000
 import net.minecraft.entity.mob.*;
+//#else
+//$$ import net.minecraft.entity.mob.EndermanEntity;
+//$$ import net.minecraft.entity.mob.HostileEntity;
+//$$ import net.minecraft.entity.mob.PillagerEntity;
+//$$ import net.minecraft.entity.mob.SilverfishEntity;
+//$$ import net.minecraft.entity.mob.WitchEntity;
+//#endif
 import net.minecraft.entity.player.PlayerInventory;
+//#if MC < 260000
 import net.minecraft.item.*;
+//#else
+//$$ import net.minecraft.item.EnderEyeItem;
+//$$ import net.minecraft.item.Item;
+//$$ import net.minecraft.item.ItemStack;
+//#endif
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.collection.DefaultedList;
+//#if MC < 260000
 import net.minecraft.util.math.*;
+//#else
+//$$ import net.minecraft.util.math.BlockPos;
+//$$ import net.minecraft.util.math.Box;
+//$$ import net.minecraft.util.math.Position;
+//$$ import net.minecraft.util.math.Vec3d;
+//$$ import net.minecraft.util.math.Vec3i;
+//#endif
 import net.minecraft.world.Difficulty;
 import org.apache.commons.lang3.ArrayUtils;
 import adris.altoclef.multiversion.versionedfields.Items;

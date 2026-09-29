@@ -3,7 +3,16 @@ package adris.altoclef.util.slots;
 import adris.altoclef.Debug;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+//#if MC < 260000
 import net.minecraft.client.gui.screen.ingame.*;
+//#else
+//$$ import net.minecraft.client.gui.screen.ingame.BlastFurnaceScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.SmithingScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.SmokerScreen;
+//#endif
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.screen.GenericContainerScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;

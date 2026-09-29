@@ -22,7 +22,15 @@ import baritone.api.pathing.goals.GoalTwoBlocks;
 import baritone.api.process.ICustomGoalProcess;
 import baritone.api.utils.Rotation;
 import baritone.api.utils.input.Input;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.DoorBlock;
+//$$ import net.minecraft.block.FenceBlock;
+//$$ import net.minecraft.block.FenceGateBlock;
+//$$ import net.minecraft.block.FlowerBlock;
+//#endif
 import adris.altoclef.multiversion.versionedfields.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

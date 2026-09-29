@@ -22,13 +22,34 @@ import adris.altoclef.util.helpers.WorldHelper;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.slots.SmokerSlot;
 import adris.altoclef.util.time.TimerGame;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.BeetrootsBlock;
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.BlockState;
+//$$ import net.minecraft.block.Blocks;
+//$$ import net.minecraft.block.CarrotsBlock;
+//$$ import net.minecraft.block.CropBlock;
+//$$ import net.minecraft.block.PotatoesBlock;
+//#endif
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.SlimeEntity;
+//#if MC < 260000
 import net.minecraft.entity.passive.*;
+//#else
+//$$ import net.minecraft.entity.passive.ChickenEntity;
+//$$ import net.minecraft.entity.passive.CodEntity;
+//$$ import net.minecraft.entity.passive.CowEntity;
+//$$ import net.minecraft.entity.passive.FishEntity;
+//$$ import net.minecraft.entity.passive.PigEntity;
+//$$ import net.minecraft.entity.passive.RabbitEntity;
+//$$ import net.minecraft.entity.passive.SalmonEntity;
+//$$ import net.minecraft.entity.passive.SheepEntity;
+//#endif
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

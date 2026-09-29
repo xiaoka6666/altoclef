@@ -29,9 +29,43 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.effect.StatusEffects;
+//#if MC < 260000
 import net.minecraft.entity.mob.*;
+//#else
+//$$ import net.minecraft.entity.mob.AbstractSkeletonEntity;
+//$$ import net.minecraft.entity.mob.BlazeEntity;
+//$$ import net.minecraft.entity.mob.CaveSpiderEntity;
+//$$ import net.minecraft.entity.mob.CreeperEntity;
+//$$ import net.minecraft.entity.mob.DrownedEntity;
+//$$ import net.minecraft.entity.mob.EndermanEntity;
+//$$ import net.minecraft.entity.mob.GhastEntity;
+//$$ import net.minecraft.entity.mob.HoglinEntity;
+//$$ import net.minecraft.entity.mob.HostileEntity;
+//$$ import net.minecraft.entity.mob.MagmaCubeEntity;
+//$$ import net.minecraft.entity.mob.MobEntity;
+//$$ import net.minecraft.entity.mob.PiglinEntity;
+//$$ import net.minecraft.entity.mob.PillagerEntity;
+//$$ import net.minecraft.entity.mob.SilverfishEntity;
+//$$ import net.minecraft.entity.mob.SkeletonEntity;
+//$$ import net.minecraft.entity.mob.SlimeEntity;
+//$$ import net.minecraft.entity.mob.SpiderEntity;
+//$$ import net.minecraft.entity.mob.StrayEntity;
+//$$ import net.minecraft.entity.mob.VindicatorEntity;
+//$$ import net.minecraft.entity.mob.WitchEntity;
+//$$ import net.minecraft.entity.mob.WitherSkeletonEntity;
+//$$ import net.minecraft.entity.mob.ZoglinEntity;
+//$$ import net.minecraft.entity.mob.ZombieEntity;
+//#endif
 import net.minecraft.entity.player.PlayerEntity;
+//#if MC < 260000
 import net.minecraft.entity.projectile.*;
+//#else
+//$$ import net.minecraft.entity.projectile.ArrowEntity;
+//$$ import net.minecraft.entity.projectile.DragonFireballEntity;
+//$$ import net.minecraft.entity.projectile.FireballEntity;
+//$$ import net.minecraft.entity.projectile.SmallFireballEntity;
+//$$ import net.minecraft.entity.projectile.SpectralArrowEntity;
+//#endif
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

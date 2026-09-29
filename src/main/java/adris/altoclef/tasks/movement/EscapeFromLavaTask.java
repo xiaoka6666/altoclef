@@ -13,10 +13,24 @@ import baritone.pathing.movement.MovementHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+//#if MC < 260000
 import net.minecraft.item.*;
+//#else
+//$$ import net.minecraft.item.Item;
+//$$ import net.minecraft.item.ItemStack;
+//$$ import net.minecraft.item.Items;
+//#endif
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+//#if MC < 260000
 import net.minecraft.util.math.*;
+//#else
+//$$ import net.minecraft.util.math.BlockPos;
+//$$ import net.minecraft.util.math.Box;
+//$$ import net.minecraft.util.math.Direction;
+//$$ import net.minecraft.util.math.MathHelper;
+//$$ import net.minecraft.util.math.Vec3d;
+//#endif
 import net.minecraft.world.RaycastContext;
 
 import java.util.Optional;

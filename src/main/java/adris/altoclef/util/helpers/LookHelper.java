@@ -20,7 +20,16 @@ import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+//#if MC < 260000
 import net.minecraft.util.math.*;
+//#else
+//$$ import net.minecraft.util.math.BlockPos;
+//$$ import net.minecraft.util.math.Box;
+//$$ import net.minecraft.util.math.Direction;
+//$$ import net.minecraft.util.math.MathHelper;
+//$$ import net.minecraft.util.math.Vec3d;
+//$$ import net.minecraft.util.math.Vec3i;
+//#endif
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 

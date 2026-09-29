@@ -10,7 +10,26 @@ import baritone.pathing.movement.CalculationContext;
 import baritone.pathing.movement.MovementHelper;
 import baritone.process.MineProcess;
 import baritone.utils.BlockStateInterface;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.AbstractFurnaceBlock;
+//$$ import net.minecraft.block.BarrelBlock;
+//$$ import net.minecraft.block.BedBlock;
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.BlockState;
+//$$ import net.minecraft.block.Blocks;
+//$$ import net.minecraft.block.CartographyTableBlock;
+//$$ import net.minecraft.block.ChestBlock;
+//$$ import net.minecraft.block.CraftingTableBlock;
+//$$ import net.minecraft.block.EnchantingTableBlock;
+//$$ import net.minecraft.block.EnderChestBlock;
+//$$ import net.minecraft.block.FallingBlock;
+//$$ import net.minecraft.block.FluidBlock;
+//$$ import net.minecraft.block.LoomBlock;
+//$$ import net.minecraft.block.RedstoneOreBlock;
+//$$ import net.minecraft.block.SpawnerBlock;
+//#endif
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.block.enums.BedPart;
@@ -21,7 +40,15 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.ClientConnection;
+//#if MC < 260000
 import net.minecraft.util.math.*;
+//#else
+//$$ import net.minecraft.util.math.BlockPos;
+//$$ import net.minecraft.util.math.Box;
+//$$ import net.minecraft.util.math.Direction;
+//$$ import net.minecraft.util.math.Vec3d;
+//$$ import net.minecraft.util.math.Vec3i;
+//#endif
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;

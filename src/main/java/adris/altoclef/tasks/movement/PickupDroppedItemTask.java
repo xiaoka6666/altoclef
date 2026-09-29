@@ -15,7 +15,15 @@ import adris.altoclef.util.helpers.StlHelper;
 import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.helpers.WorldHelper;
 import adris.altoclef.util.progresscheck.MovementProgressChecker;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.DoorBlock;
+//$$ import net.minecraft.block.FenceBlock;
+//$$ import net.minecraft.block.FenceGateBlock;
+//$$ import net.minecraft.block.FlowerBlock;
+//#endif
 import adris.altoclef.multiversion.versionedfields.Blocks;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;

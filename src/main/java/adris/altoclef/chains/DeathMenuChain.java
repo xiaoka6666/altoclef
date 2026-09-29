@@ -10,8 +10,19 @@ import adris.altoclef.tasksystem.TaskRunner;
 import adris.altoclef.util.time.TimerGame;
 import adris.altoclef.util.time.TimerReal;
 import net.minecraft.client.MinecraftClient;
+//#if MC < 260000
 import net.minecraft.client.gui.screen.*;
+//#else
+//$$ import net.minecraft.client.gui.screen.DeathScreen;
+//$$ import net.minecraft.client.gui.screen.DisconnectedScreen;
+//$$ import net.minecraft.client.gui.screen.Screen;
+//$$ import net.minecraft.client.gui.screen.TitleScreen;
+//#endif
+//#if MC < 260000
 import net.minecraft.client.gui.screen.multiplayer.*;
+//#else
+//$$ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+//#endif
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
 import net.minecraft.text.Text;

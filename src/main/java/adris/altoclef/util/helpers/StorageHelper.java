@@ -27,8 +27,29 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+//#if MC < 260000
 import net.minecraft.item.*;
+//#else
+//$$ import net.minecraft.item.BlockItem;
+//$$ import net.minecraft.item.Item;
+//$$ import net.minecraft.item.ItemStack;
+//$$ import net.minecraft.item.Items;
+//$$ import net.minecraft.item.ShieldItem;
+//#endif
+//#if MC < 260000
 import net.minecraft.screen.*;
+//#else
+//$$ import net.minecraft.screen.AbstractFurnaceScreenHandler;
+//$$ import net.minecraft.screen.BlastFurnaceScreenHandler;
+//$$ import net.minecraft.screen.BrewingStandScreenHandler;
+//$$ import net.minecraft.screen.CraftingScreenHandler;
+//$$ import net.minecraft.screen.FurnaceScreenHandler;
+//$$ import net.minecraft.screen.GenericContainerScreenHandler;
+//$$ import net.minecraft.screen.PlayerScreenHandler;
+//$$ import net.minecraft.screen.PropertyDelegate;
+//$$ import net.minecraft.screen.ScreenHandler;
+//$$ import net.minecraft.screen.SmokerScreenHandler;
+//#endif
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.*;

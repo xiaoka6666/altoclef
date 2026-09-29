@@ -2,7 +2,15 @@ package adris.altoclef.util.slots;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
+//#if MC < 260000
 import net.minecraft.client.gui.screen.ingame.*;
+//#else
+//$$ import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.BrewingStandScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
+//$$ import net.minecraft.client.gui.screen.ingame.SmithingScreen;
+//#endif
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;

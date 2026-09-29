@@ -11,7 +11,21 @@ import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+//#if MC < 260000
 import net.minecraft.item.*;
+//#else
+//$$ import net.minecraft.item.BucketItem;
+//$$ import net.minecraft.item.EmptyMapItem;
+//$$ import net.minecraft.item.EnderEyeItem;
+//$$ import net.minecraft.item.FireworkRocketItem;
+//$$ import net.minecraft.item.FishingRodItem;
+//$$ import net.minecraft.item.Item;
+//$$ import net.minecraft.item.ItemStack;
+//$$ import net.minecraft.item.Items;
+//$$ import net.minecraft.item.OnAStickItem;
+//$$ import net.minecraft.item.PotionItem;
+//$$ import net.minecraft.item.SpawnEggItem;
+//#endif
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.List;

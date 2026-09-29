@@ -13,7 +13,15 @@ import adris.altoclef.util.baritone.GoalFollowEntity;
 import adris.altoclef.util.helpers.WorldHelper;
 import adris.altoclef.util.progresscheck.MovementProgressChecker;
 import baritone.api.utils.input.Input;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.DoorBlock;
+//$$ import net.minecraft.block.FenceBlock;
+//$$ import net.minecraft.block.FenceGateBlock;
+//$$ import net.minecraft.block.FlowerBlock;
+//#endif
 import adris.altoclef.multiversion.versionedfields.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;

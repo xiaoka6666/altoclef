@@ -11,7 +11,14 @@ import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import net.minecraft.entity.EquipmentSlot;
+//#if MC < 260000
 import net.minecraft.item.*;
+//#else
+//$$ import net.minecraft.item.Item;
+//$$ import net.minecraft.item.ItemStack;
+//$$ import net.minecraft.item.Items;
+//$$ import net.minecraft.item.ShieldItem;
+//#endif
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import org.apache.commons.lang3.ArrayUtils;

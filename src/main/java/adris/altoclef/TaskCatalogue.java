@@ -15,8 +15,28 @@ import adris.altoclef.util.*;
 import adris.altoclef.util.helpers.ItemHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
+//#if MC < 260000
 import net.minecraft.entity.mob.*;
+//#else
+//$$ import net.minecraft.entity.mob.CreeperEntity;
+//$$ import net.minecraft.entity.mob.SkeletonEntity;
+//$$ import net.minecraft.entity.mob.SlimeEntity;
+//$$ import net.minecraft.entity.mob.SpiderEntity;
+//$$ import net.minecraft.entity.mob.WitherSkeletonEntity;
+//$$ import net.minecraft.entity.mob.ZombieEntity;
+//#endif
+//#if MC < 260000
 import net.minecraft.entity.passive.*;
+//#else
+//$$ import net.minecraft.entity.passive.ChickenEntity;
+//$$ import net.minecraft.entity.passive.CodEntity;
+//$$ import net.minecraft.entity.passive.CowEntity;
+//$$ import net.minecraft.entity.passive.PigEntity;
+//$$ import net.minecraft.entity.passive.RabbitEntity;
+//$$ import net.minecraft.entity.passive.SalmonEntity;
+//$$ import net.minecraft.entity.passive.SheepEntity;
+//$$ import net.minecraft.entity.passive.SquidEntity;
+//#endif
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 

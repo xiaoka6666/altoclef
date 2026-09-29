@@ -10,7 +10,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+//#if MC < 260000
 import net.minecraft.recipe.*;
+//#else
+//$$ import net.minecraft.recipe.CraftingRecipe;
+//$$ import net.minecraft.recipe.Ingredient;
+//$$ import net.minecraft.recipe.SpecialCraftingRecipe;
+//#endif
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -13,7 +13,15 @@ import adris.altoclef.util.progresscheck.MovementProgressChecker;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import baritone.api.utils.input.Input;
+//#if MC < 260000
 import net.minecraft.block.*;
+//#else
+//$$ import net.minecraft.block.Block;
+//$$ import net.minecraft.block.DoorBlock;
+//$$ import net.minecraft.block.FenceBlock;
+//$$ import net.minecraft.block.FenceGateBlock;
+//$$ import net.minecraft.block.FlowerBlock;
+//#endif
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.mob.MobEntity;
