@@ -1,0 +1,31 @@
+name: Preprocessor inspect
+
+# One-off diagnostic: shows how the ReplayMod preprocessor reads version mapping files (format of method lines).
+on:
+  push:
+    branches: [ccr-9292ccac-gfi0nr]
+    paths: ['.github/workflows/pp-inspect.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Resolve plugin
+        run: ./gradlew :1.16.1:help --console=plain 2>&1 | tail -5
+      - name: Inspect
+        run: |
+          JAR=$(find ~/.gradle -name 'preprocessor*.jar' -size +50k | head -1)
+          echo "jar: $JAR"
+          unzip -l "$JAR" | awk '{print $4}' | grep -i -E 'mapping|remap' | head -60
+          mkdir -p x && cd x && unzip -q -o "$JAR"
+          for c in $(find . -name '*.class' | grep -i -E 'legacy|MappingFile|TinyReader|Srg' | head -12); do
+            echo "##### $c"; javap -p -c -constants "$c" 2>&1 | grep -E 'ldc|String |Method |private|public|static' | head -80
+          done
