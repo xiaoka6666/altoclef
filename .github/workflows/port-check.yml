@@ -63,6 +63,8 @@ jobs:
       - name: Error summary
         if: always()
         run: |
+          echo "=== root cause ==="
+          grep -nE "What went wrong|^Caused by|^Execution failed|Could not (resolve|GET|find)|Failed to|Exception:" port-check.log | grep -v '^\S*\s*at ' | awk '!seen[$0]++' | cut -c1-300 | head -25
           echo "unique errors: $(( $(grep -c ' error: ' port-check.log || true) / 3 ))"
           echo "=== by message ==="
           grep -h ' error: ' port-check.log | sed 's/.* error: //' | sort | uniq -c | sort -rn | head -60
