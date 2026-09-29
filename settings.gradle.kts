@@ -55,6 +55,7 @@ rootProject.buildFileName = "root.gradle.kts"
 // If 16-minute builds become intolerable, prefer REDUCING BUILD COUNT (batch edits,
 // javap-verify before building, longer runs between builds) over trimming the graph.
 val versions = listOf(
+    "26.3",
     "1.21.11",
     "1.21.4",
     "1.21.1",

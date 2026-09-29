@@ -19,6 +19,7 @@ subprojects {
 // this block. Trimming the chain to speed up a 1.16.1-only build throws
 // NullPointerException at PreprocessPlugin.apply(PreprocessPlugin.kt:60) — verified.
 preprocess {
+    val mc260300 = createNode("26.3", 260300, "mojmap")
     val mc12111 = createNode("1.21.11", 12111, "yarn")
     val mc12104 = createNode("1.21.4", 12104, "yarn")
     val mc12101 = createNode("1.21.1", 12101, "yarn")
@@ -35,6 +36,7 @@ preprocess {
     val mc11605 = createNode("1.16.5", 11605, "yarn")
     val mc11601 = createNode("1.16.1", 11601, "yarn")
 
+    mc260300.link(mc12111, file("versions/mapping-26.3-1.21.11.txt"))
     mc12111.link(mc12104)
     mc12104.link(mc12101)
     mc12101.link(mc12100)
