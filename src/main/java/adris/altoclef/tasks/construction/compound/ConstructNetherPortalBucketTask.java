@@ -1,5 +1,7 @@
 package adris.altoclef.tasks.construction.compound;
 
+import adris.altoclef.multiversion.ScreenVer;
+
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.TaskCatalogue;
@@ -205,7 +207,7 @@ public class ConstructNetherPortalBucketTask extends Task {
         if (refreshTimer.elapsed()) {
             // NEVER refresh while a container/craft screen is open - double-clicking every
             // inventory slot desyncs the handler and causes "Ignoring click in mismatching container".
-            if (MinecraftClient.getInstance().currentScreen == null && !mod.getControllerExtras().isBreakingBlock()) {
+            if (ScreenVer.current(MinecraftClient.getInstance()) == null && !mod.getControllerExtras().isBreakingBlock()) {
                 Debug.logMessage("Duct tape: Refreshing inventory again just in case");
                 mod.getSlotHandler().refreshInventory();
             }

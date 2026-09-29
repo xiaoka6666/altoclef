@@ -1,5 +1,7 @@
 package adris.altoclef.chains;
 
+import adris.altoclef.multiversion.ScreenVer;
+
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.mixins.DeathScreenAccessor;
@@ -70,7 +72,7 @@ public class DeathMenuChain extends TaskChain {
     public float getPriority() {
         //MinecraftClient.getInstance().getCurrentServerEntry().address;
 //        MinecraftClient.getInstance().
-        Screen screen = MinecraftClient.getInstance().currentScreen;
+        Screen screen = ScreenVer.current(MinecraftClient.getInstance());
 
         // This might fix Weird fail to respawn that happened only once
         if (prevScreen == DeathScreen.class) {

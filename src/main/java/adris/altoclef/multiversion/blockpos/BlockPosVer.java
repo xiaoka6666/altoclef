@@ -19,8 +19,18 @@ public class BlockPosVer {
     }
 
 
+    /** Vec3i.isWithinDistance(Vec3i, double); 26.x splits it by argument type, so compute it directly. */
+    public static boolean isWithinDistance(Vec3i a, Vec3i b, double distance) {
+        double dx = a.getX() - b.getX();
+        double dy = a.getY() - b.getY();
+        double dz = a.getZ() - b.getZ();
+        return dx * dx + dy * dy + dz * dz < distance * distance;
+    }
+
     public static double getSquaredDistance(BlockPos pos, Position obj) {
-        //#if MC >= 11802
+        //#if MC >= 260000
+        //$$ return pos.distToCenterSqr(obj);
+        //#elseif MC >= 11802
         return pos.getSquaredDistance(obj);
         //#else
         //$$ return pos.getSquaredDistance(obj.getX(), obj.getY(), obj.getZ(), true);

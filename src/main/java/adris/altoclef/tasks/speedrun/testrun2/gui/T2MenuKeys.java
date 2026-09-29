@@ -1,5 +1,7 @@
 package adris.altoclef.tasks.speedrun.testrun2.gui;
 
+import adris.altoclef.multiversion.ScreenVer;
+
 import net.minecraft.client.MinecraftClient;
 import adris.altoclef.util.helpers.InputHelper;
 
@@ -16,7 +18,7 @@ public final class T2MenuKeys {
         T2MenuScreen.poll();
         MinecraftClient mc = MinecraftClient.getInstance();
         if (mc == null) return;
-        if (mc.currentScreen != null) {
+        if (ScreenVer.current(mc) != null) {
             wasDown = false;
             return;
         }

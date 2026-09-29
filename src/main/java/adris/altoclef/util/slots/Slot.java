@@ -1,5 +1,7 @@
 package adris.altoclef.util.slots;
 
+import adris.altoclef.multiversion.ScreenVer;
+
 import adris.altoclef.Debug;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -77,7 +79,7 @@ public abstract class Slot {
     }
 
     private static ContainerType getCurrentType() {
-        Screen screen = MinecraftClient.getInstance().currentScreen;
+        Screen screen = ScreenVer.current(MinecraftClient.getInstance());
         if (screen instanceof FurnaceScreen || screen instanceof SmithingScreen || screen instanceof SmokerScreen ||
                 screen instanceof BlastFurnaceScreen) {
             return ContainerType.FURNACE_OR_SMITH_OR_SMOKER_OR_BLAST;

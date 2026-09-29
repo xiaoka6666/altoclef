@@ -1,5 +1,10 @@
 package adris.altoclef.tasks.speedrun.beatgame;
 
+import adris.altoclef.multiversion.CBlocks;
+
+import adris.altoclef.multiversion.ScreenVer;
+
+import adris.altoclef.util.helpers.MathsHelper;
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.TaskCatalogue;
@@ -750,7 +755,7 @@ public class BeatMinecraftTask extends Task {
      */
     @Override
     public boolean isFinished() {
-        if (getInstance().currentScreen instanceof CreditsScreen) {
+        if (ScreenVer.current(getInstance()) instanceof CreditsScreen) {
             Debug.logInternal("isFinished - Current screen is CreditsScreen");
             return true;
         }
@@ -1285,7 +1290,7 @@ public class BeatMinecraftTask extends Task {
 
                     }
                 }
-                if (craftingTablePosUp.getBlock() == Blocks.WHITE_WOOL) {
+                if (craftingTablePosUp.getBlock() == CBlocks.WHITE_WOOL) {
                     Debug.logMessage("Blacklisting pillage crafting table.");
                     mod.getBlockScanner().requestBlockUnreachable(craftingTable, 0);
                 }
@@ -1999,7 +2004,8 @@ public class BeatMinecraftTask extends Task {
 
         if (frames.size() >= END_PORTAL_FRAME_COUNT) {
             // Calculate the average position of the frames.
-            Vec3d average = frames.stream().reduce(Vec3d.ZERO, (accum, bpos) -> accum.add((int) Math.round(bpos.getX() + 0.5), (int) Math.round(bpos.getY() + 0.5), (int) Math.round(bpos.getZ() + 0.5)), Vec3d::add).multiply(1d / frames.size());
+            Vec3d average = frames.stream().reduce(Vec3d.ZERO, (accum, bpos) -> accum.add((int) Math.round(bpos.getX() + 0.5), (int) Math.round(bpos.getY() + 0.5), (int) Math.round(bpos.getZ() + 0.5)), Vec3d::add);
+            average = MathsHelper.scale(average, 1d / frames.size());
 
             // Log the average position.
             mod.log("Average Position: " + average);

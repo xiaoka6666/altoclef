@@ -1,5 +1,7 @@
 package adris.altoclef.util.helpers;
 
+import adris.altoclef.multiversion.ScreenVer;
+
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.TaskCatalogue;
@@ -68,7 +70,7 @@ public class StorageHelper {
     public static void closeScreen() {
         if (MinecraftClient.getInstance().player == null)
             return;
-        Screen screen = MinecraftClient.getInstance().currentScreen;
+        Screen screen = ScreenVer.current(MinecraftClient.getInstance());
         if (
                 screen != null &&
                         !(screen instanceof GameMenuScreen) &&

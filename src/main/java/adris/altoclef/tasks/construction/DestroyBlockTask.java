@@ -1,5 +1,7 @@
 package adris.altoclef.tasks.construction;
 
+import adris.altoclef.multiversion.CBlocks;
+
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
 import adris.altoclef.tasks.movement.GetOutOfWaterTask;
@@ -262,7 +264,7 @@ public class DestroyBlockTask extends Task implements ITaskRequiresGrounded {
         AltoClef mod = AltoClef.getInstance();
 
         // Check if there is white wool at the specified position
-        if (mod.getWorld().getBlockState(pos).getBlock() == Blocks.WHITE_WOOL) {
+        if (mod.getWorld().getBlockState(pos).getBlock() == CBlocks.WHITE_WOOL) {
             // Iterate over all entities in the world
             Iterable<Entity> entities = mod.getWorld().getEntities();
             for (Entity entity : entities) {
