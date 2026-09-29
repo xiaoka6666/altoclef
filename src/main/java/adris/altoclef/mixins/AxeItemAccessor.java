@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 import java.util.Set;
 
 //#if MC >= 260000
-//$$ @Mixin(net.minecraft.item.Item.class)
+//$$ @Mixin(net.minecraft.world.item.Item.class)
 //#else
 @Mixin(AxeItem.class)
 //#endif

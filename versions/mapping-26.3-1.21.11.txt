@@ -1655,8 +1655,6 @@ net.minecraft.recipebook.PlaceRecipeHelper$Output net.minecraft.recipe.RecipeGri
 net.minecraft.recipebook.ServerPlaceRecipe net.minecraft.recipe.InputSlotFiller
 net.minecraft.recipebook.ServerPlaceRecipe$CraftingMenuAccess net.minecraft.recipe.InputSlotFiller$Handler
 net.minecraft.recipebook.package-info net.minecraft.unused.packageinfo.PackageInfo6323
-net.minecraft.world.level.block.Blocks net.minecraft.block.BlockKeys
-net.minecraft.world.item.Items net.minecraft.item.ItemKeys
 net.minecraft.references.package-info net.minecraft.unused.packageinfo.PackageInfo10118
 net.minecraft.resources.DelegatingOps net.minecraft.util.dynamic.ForwardingDynamicOps
 net.minecraft.resources.DelegatingOps$DelegateListBuilder net.minecraft.util.dynamic.ForwardingDynamicOps$ForwardingListBuilder
@@ -3229,7 +3227,6 @@ net.minecraft.world.Container net.minecraft.inventory.Inventory
 net.minecraft.world.Container$1 net.minecraft.class_1263$1
 net.minecraft.world.Container$ContainerIterator net.minecraft.inventory.Inventory$Iterator
 net.minecraft.world.ContainerHelper net.minecraft.inventory.Inventories
-net.minecraft.world.inventory.ContainerListener net.minecraft.inventory.InventoryChangedListener
 net.minecraft.world.Containers net.minecraft.util.ItemScatterer
 net.minecraft.world.DifficultyInstance net.minecraft.world.LocalDifficulty
 net.minecraft.world.InteractionHand net.minecraft.util.Hand
@@ -7594,7 +7591,6 @@ net.minecraft.client.color.item.Firework net.minecraft.client.render.item.tint.F
 net.minecraft.client.color.item.GrassColorSource net.minecraft.client.render.item.tint.GrassTintSource
 net.minecraft.client.color.item.ItemTintSource net.minecraft.client.render.item.tint.TintSource
 net.minecraft.client.color.item.ItemTintSources net.minecraft.client.render.item.tint.TintSourceTypes
-net.minecraft.world.level.material.MapColor net.minecraft.client.render.item.tint.MapColorTintSource
 net.minecraft.client.color.item.Potion net.minecraft.client.render.item.tint.PotionTintSource
 net.minecraft.client.color.item.TeamColor net.minecraft.client.render.item.tint.TeamTintSource
 net.minecraft.client.color.item.package-info net.minecraft.unused.packageinfo.PackageInfo6203

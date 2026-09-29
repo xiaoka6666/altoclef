@@ -492,7 +492,11 @@ public class ItemHelper {
     }
 
     //#if MC >= 12005
+    //#if MC >= 260000
+    //$$ public static net.minecraft.tags.TagKey<net.minecraft.world.item.Item> toolFamily(net.minecraft.world.item.Item item) {
+    //#else
     public static net.minecraft.registry.tag.TagKey<net.minecraft.item.Item> toolFamily(net.minecraft.item.Item item) {
+    //#endif
         if (item == null) return null;
         net.minecraft.item.ItemStack stack = new net.minecraft.item.ItemStack(item);
         if (stack.isIn(net.minecraft.registry.tag.ItemTags.PICKAXES)) return net.minecraft.registry.tag.ItemTags.PICKAXES;
