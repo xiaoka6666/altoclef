@@ -48,6 +48,10 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     options.release = unobfuscated ? 25 : 21
+    if (unobfuscated) {
+        // Gradle itself stays on JDK 21: the preprocessor's embedded Kotlin cannot parse Java 25 version strings.
+        javaCompiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(25) }
+    }
 }
 
 base {

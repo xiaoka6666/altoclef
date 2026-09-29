@@ -37,7 +37,9 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: ${{ inputs.java || '21' }}
+          # 26.3 compiles with JDK 25 (toolchain) but Gradle and the preprocessor's Kotlin remapper run on 21
+          # (that Kotlin cannot parse the 25.0.4.1 version string); the last entry is the default JAVA_HOME.
+          java-version: ${{ matrix.node == '26.3' && format('25\n{0}', inputs.java == '25' && '21' || inputs.java || '21') || inputs.java || '21' }}
       - name: Stage Ostinato jar (nodes without a committed jar)
         if: matrix.node != '1.21.4' && matrix.node != '1.16.1'
         run: |
@@ -50,7 +52,7 @@ jobs:
           cat > "$RUNNER_TEMP/maxerrs.gradle" <<'EOF'
           allprojects { tasks.withType(JavaCompile).configureEach { options.compilerArgs += ['-Xmaxerrs', '100000'] } }
           EOF
-          ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" ${{ matrix.node == '26.3' && '-Pwith26' || '' }} :${{ matrix.node }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+          ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" ${{ matrix.node == '26.3' && '-Pwith26 -Porg.gradle.java.installations.fromEnv=JAVA_HOME_25_X64' || '' }} :${{ matrix.node }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
       - name: Error summary
         if: always()
         run: |
