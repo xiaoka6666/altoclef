@@ -26,6 +26,7 @@ jobs:
           echo "jar: $JAR"
           unzip -l "$JAR" | awk '{print $4}' | grep -i -E 'mapping|remap' | head -60
           mkdir -p x && cd x && unzip -q -o "$JAR"
-          for c in 'com/replaymod/gradle/preprocess/PreprocessPlugin$apply$3' com/replaymod/gradle/preprocess/PreprocessPluginKt com/replaymod/gradle/preprocess/PreprocessPlugin; do
-            echo "##### $c"; javap -p -c -constants "$c.class" 2>&1 | grep -E 'ldc|Method |String |invoke|private|public|static|instanceof|athrow' | head -600
-          done
+          K=com/replaymod/gradle/preprocess
+          javap -p -c -constants "$K/PreprocessPluginKt.class" | awk '/getIntermediaryMappings\(|getNotchMappings\(|getMappingsProvider\(/{p=1} /^  (public|private|static)/{ if(!($0 ~ /getIntermediaryMappings\(|getNotchMappings\(|getMappingsProvider\(/)) p=0 } p' | sed -E 's/^ *//' | cut -c1-170
+          echo "##### apply3"
+          javap -p -c -constants "$K/PreprocessPlugin\$apply\$3.class" | sed -E 's/^ *//' | cut -c1-170 | sed -n '1,220p'
