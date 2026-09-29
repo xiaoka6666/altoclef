@@ -969,26 +969,26 @@ public class CItems {
     //#if MC >= 260000
     //$$ public static final net.minecraft.world.item.Item COPPER_BLOCK = net.minecraft.world.item.Items.COPPER_BLOCK.weathering().unaffected();
     //#else
-    public static final Item COPPER_BLOCK = Items.COPPER_BLOCK;
+    public static final Item COPPER_BLOCK = adris.altoclef.multiversion.versionedfields.Items.COPPER_BLOCK;
     //#endif
     //#if MC >= 260000
     //$$ public static final net.minecraft.world.item.Item CUT_COPPER = net.minecraft.world.item.Items.CUT_COPPER.weathering().unaffected();
     //#else
-    public static final Item CUT_COPPER = Items.CUT_COPPER;
+    public static final Item CUT_COPPER = adris.altoclef.multiversion.versionedfields.Items.CUT_COPPER;
     //#endif
     //#if MC >= 260000
     //$$ public static final net.minecraft.world.item.Item CUT_COPPER_SLAB = net.minecraft.world.item.Items.CUT_COPPER_SLAB.weathering().unaffected();
     //#else
-    public static final Item CUT_COPPER_SLAB = Items.CUT_COPPER_SLAB;
+    public static final Item CUT_COPPER_SLAB = adris.altoclef.multiversion.versionedfields.Items.CUT_COPPER_SLAB;
     //#endif
     //#if MC >= 260000
     //$$ public static final net.minecraft.world.item.Item CUT_COPPER_STAIRS = net.minecraft.world.item.Items.CUT_COPPER_STAIRS.weathering().unaffected();
     //#else
-    public static final Item CUT_COPPER_STAIRS = Items.CUT_COPPER_STAIRS;
+    public static final Item CUT_COPPER_STAIRS = adris.altoclef.multiversion.versionedfields.Items.CUT_COPPER_STAIRS;
     //#endif
     //#if MC >= 260000
     //$$ public static final net.minecraft.world.item.Item LIGHTNING_ROD = net.minecraft.world.item.Items.LIGHTNING_ROD.weathering().unaffected();
     //#else
-    public static final Item LIGHTNING_ROD = Items.LIGHTNING_ROD;
+    public static final Item LIGHTNING_ROD = adris.altoclef.multiversion.versionedfields.Items.LIGHTNING_ROD;
     //#endif
 }
