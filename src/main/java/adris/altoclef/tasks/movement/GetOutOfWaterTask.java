@@ -9,6 +9,7 @@ import adris.altoclef.util.time.TimerGame;
 import baritone.api.pathing.goals.Goal;
 import baritone.api.utils.input.Input;
 import baritone.pathing.movement.MovementHelper;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.Item;
@@ -41,9 +42,10 @@ public class GetOutOfWaterTask extends CustomBaritoneGoalTask {
             return super.onTick();
         }
 
+        BlockPos stepPos = mod.getPlayer().getSteppingPos();
         boolean hasBlockBelow = false;
         for (int i = 0; i < 3; i++) {
-            if (mod.getWorld().getBlockState(mod.getPlayer().getSteppingPos().down(i)).getBlock() != Blocks.WATER) {
+            if (mod.getWorld().getBlockState(stepPos.down(i)).getBlock() != Blocks.WATER) {
                 hasBlockBelow = true;
             }
         }
@@ -61,7 +63,7 @@ public class GetOutOfWaterTask extends CustomBaritoneGoalTask {
             }
 
             mod.getSlotHandler().forceEquipItem(mod.getClientBaritoneSettings().acceptableThrowawayItems.value.toArray(new Item[0]));
-            LookHelper.lookAt(mod, mod.getPlayer().getSteppingPos().down());
+            LookHelper.lookAt(mod, stepPos.down());
             mod.getInputControls().tryPress(Input.CLICK_RIGHT);
         }
 
