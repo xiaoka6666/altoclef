@@ -7,8 +7,8 @@ Fixes on top of 0.22.0.
 
 | Minecraft | TenorClef jar | Ostinato |
 |---|---|---|
-| 1.21.4 | `tenorclef-mc1.21.4-v0.22.1.jar` | Ostinato v1.0.1 `ostinato-mc1.21.4-*.jar` |
-| 1.16.1 | `tenorclef-mc1.16.1-v0.22.1.jar` | Ostinato v1.0.1 `ostinato-mc1.16.1-*.jar` |
+| 1.21.4 | `tenorclef-mc1.21.4-v0.22.1.jar` | Ostinato v1.0.2 `ostinato-mc1.21.4-*.jar` |
+| 1.16.1 | `tenorclef-mc1.16.1-v0.22.1.jar` | Ostinato v1.0.2 `ostinato-mc1.16.1-*.jar` |
 
 Install Fabric Loader, Fabric API, the TenorClef jar and the matching Ostinato jar. Do not add a second Baritone jar.
 
