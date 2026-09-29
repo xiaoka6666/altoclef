@@ -7,8 +7,8 @@ subprojects {
     repositories {
         mavenCentral()
         maven("https://libraries.minecraft.net/")
-        maven("https://repo.spongepowered.org/repository/maven-public/")
         maven("https://maven.fabricmc.net/")
+        maven("https://repo.spongepowered.org/repository/maven-public/")
         maven("https://jitpack.io")
     }
 }
