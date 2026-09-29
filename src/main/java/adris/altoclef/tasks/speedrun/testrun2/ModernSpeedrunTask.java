@@ -3467,7 +3467,11 @@ public class ModernSpeedrunTask extends Task {
         if (HolePillar.busy() || HolePillar.holding() || McCompat.baritonePlacing(mod)) return;
         try {
             for (int i = 0; i < 9; i++) {
+                //#if MC >= 12111
+                //$$ if (mod.getPlayer().getInventory().getStack(i).isIn(net.minecraft.registry.tag.ItemTags.PICKAXES)) return;
+                //#else
                 if (mod.getPlayer().getInventory().getStack(i).getItem() instanceof net.minecraft.item.PickaxeItem) return;
+                //#endif
             }
             Item[] picks = new Item[]{Items.NETHERITE_PICKAXE, Items.DIAMOND_PICKAXE, Items.IRON_PICKAXE,
                     Items.STONE_PICKAXE, Items.GOLDEN_PICKAXE, Items.WOODEN_PICKAXE};

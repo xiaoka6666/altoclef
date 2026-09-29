@@ -77,14 +77,13 @@ public class AltoClefTickChart {
 
 
     protected void drawBorderedText(DrawContextWrapper context, String string, int x, int y) {
-        MatrixStack matrixStack = context.getMatrices();
-        matrixStack.push();
-        matrixStack.scale(0.5f,0.5f,1);
+        context.pushMatrix();
+        context.scale(0.5f,0.5f,1);
 
         context.fill(x*2, y*2, x*2 + this.textRenderer.getWidth(string) + 2, y*2 + this.textRenderer.fontHeight+1, 0x90505050);
         context.drawText(this.textRenderer, string, (x + 1)*2, (y + 1)*2, 0xE9E9E9, false);
 
-        matrixStack.pop();
+        context.popMatrix();
     }
 
 

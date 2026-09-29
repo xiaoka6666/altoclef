@@ -306,6 +306,28 @@ public class T2MenuScreen extends Screen {
         T2MenuLook.paint(this, g, mx, my);
     }
 
+    //#if MC >= 12111
+    //$$ @Override
+    //$$ public boolean mouseClicked(net.minecraft.client.gui.Click click, boolean doubled) {
+    //$$     double mx = click.x();
+    //$$     double my = click.y();
+    //$$     int button = click.button();
+    //$$     if (button == 0) {
+    //$$         for (int i = hits.size() - 1; i >= 0; i--) {
+    //$$             int[] b = hits.get(i);
+    //$$             if (mx >= b[0] && mx <= b[0] + b[2] && my >= b[1] && my <= b[1] + b[3]) {
+    //$$                 T2MenuActions.runCmd(this, i < hitCmd.size() ? hitCmd.get(i) : null);
+    //$$                 return true;
+    //$$             }
+    //$$         }
+    //$$     }
+    //$$     try {
+    //$$         return super.mouseClicked(click, doubled);
+    //$$     } catch (Throwable t) {
+    //$$         return false;
+    //$$     }
+    //$$ }
+    //#else
     @Override
     public boolean mouseClicked(double mx, double my, int button) {
         if (button == 0) {
@@ -323,4 +345,5 @@ public class T2MenuScreen extends Screen {
             return false;
         }
     }
+    //#endif
 }

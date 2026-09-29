@@ -85,6 +85,16 @@ public class EntityVer {
         //#endif
     }
 
+    /** Yarn renamed Entity.getWorld() to getEntityWorld() in 1.21.11. */
+    @Pattern
+    private static net.minecraft.world.World getWorld(Entity entity) {
+        //#if MC >= 12111
+        //$$ return entity.getEntityWorld();
+        //#else
+        return entity.getWorld();
+        //#endif
+    }
+
     @Pattern
     private static Vec3d getEyePos(Entity entity) {
         //#if MC >= 11701
