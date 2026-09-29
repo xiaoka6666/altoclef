@@ -88,6 +88,10 @@ jobs:
             echo "##### classes named *Armor*/*Pickaxe*/*ToolMaterial*/Click*"
             unzip -l "$JAR" | grep -E 'item/[A-Za-z]*(Armor|Pickaxe|ToolMaterial|MiningTool)[A-Za-z]*\.class|gui/Click|input/(Mouse|Key)Input' | awk '{print $4}' | head -40
             show net.minecraft.item.Items 'PICKAXE|_HELMET$'
+            show net.minecraft.client.gui.Click ''
+            show net.minecraft.client.input.MouseInput ''
+            show net.minecraft.registry.tag.ItemTags 'PICKAXES'
+            show net.minecraft.world.World 'NETHER|OVERWORLD|getRegistryKey|getEntityWorld'
           } > api-dump.txt
           cat api-dump.txt
       - uses: actions/upload-artifact@v4
