@@ -9,13 +9,13 @@ import adris.altoclef.util.slots.Slot;
 //#if MC < 260000
 import net.minecraft.block.*;
 //#else
-//$$ import net.minecraft.block.BeetrootsBlock;
-//$$ import net.minecraft.block.Block;
-//$$ import net.minecraft.block.BlockState;
-//$$ import net.minecraft.block.Blocks;
-//$$ import net.minecraft.block.CarrotsBlock;
-//$$ import net.minecraft.block.CropBlock;
-//$$ import net.minecraft.block.PotatoesBlock;
+//$$ import net.minecraft.world.level.block.BeetrootBlock;
+//$$ import net.minecraft.world.level.block.Block;
+//$$ import net.minecraft.world.level.block.state.BlockState;
+//$$ import net.minecraft.world.level.block.Blocks;
+//$$ import net.minecraft.world.level.block.CarrotBlock;
+//$$ import net.minecraft.world.level.block.CropBlock;
+//$$ import net.minecraft.world.level.block.PotatoBlock;
 //#endif
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;

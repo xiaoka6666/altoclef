@@ -6,12 +6,12 @@ import net.minecraft.client.gui.screen.Screen;
 //#if MC < 260000
 import net.minecraft.client.gui.screen.ingame.*;
 //#else
-//$$ import net.minecraft.client.gui.screen.ingame.BlastFurnaceScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.SmithingScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.SmokerScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.BlastFurnaceScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.CraftingScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.SmithingScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.SmokerScreen;
 //#endif
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.screen.GenericContainerScreenHandler;

@@ -13,14 +13,14 @@ import net.minecraft.entity.effect.StatusEffects;
 //#if MC < 260000
 import net.minecraft.entity.mob.*;
 //#else
-//$$ import net.minecraft.entity.mob.EndermanEntity;
-//$$ import net.minecraft.entity.mob.HoglinEntity;
-//$$ import net.minecraft.entity.mob.HostileEntity;
-//$$ import net.minecraft.entity.mob.MobEntity;
-//$$ import net.minecraft.entity.mob.PiglinEntity;
-//$$ import net.minecraft.entity.mob.SlimeEntity;
-//$$ import net.minecraft.entity.mob.ZoglinEntity;
-//$$ import net.minecraft.entity.mob.ZombifiedPiglinEntity;
+//$$ import net.minecraft.world.entity.monster.Enderman;
+//$$ import net.minecraft.world.entity.monster.hoglin.Hoglin;
+//$$ import net.minecraft.world.entity.monster.Monster;
+//$$ import net.minecraft.world.entity.Mob;
+//$$ import net.minecraft.world.entity.monster.piglin.Piglin;
+//$$ import net.minecraft.world.entity.monster.cubemob.Slime;
+//$$ import net.minecraft.world.entity.monster.Zoglin;
+//$$ import net.minecraft.world.entity.monster.zombie.ZombifiedPiglin;
 //#endif
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;

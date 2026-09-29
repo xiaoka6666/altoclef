@@ -25,13 +25,13 @@ import adris.altoclef.util.time.TimerGame;
 //#if MC < 260000
 import net.minecraft.block.*;
 //#else
-//$$ import net.minecraft.block.BeetrootsBlock;
-//$$ import net.minecraft.block.Block;
-//$$ import net.minecraft.block.BlockState;
-//$$ import net.minecraft.block.Blocks;
-//$$ import net.minecraft.block.CarrotsBlock;
-//$$ import net.minecraft.block.CropBlock;
-//$$ import net.minecraft.block.PotatoesBlock;
+//$$ import net.minecraft.world.level.block.BeetrootBlock;
+//$$ import net.minecraft.world.level.block.Block;
+//$$ import net.minecraft.world.level.block.state.BlockState;
+//$$ import net.minecraft.world.level.block.Blocks;
+//$$ import net.minecraft.world.level.block.CarrotBlock;
+//$$ import net.minecraft.world.level.block.CropBlock;
+//$$ import net.minecraft.world.level.block.PotatoBlock;
 //#endif
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ItemEntity;
@@ -41,14 +41,14 @@ import net.minecraft.entity.mob.SlimeEntity;
 //#if MC < 260000
 import net.minecraft.entity.passive.*;
 //#else
-//$$ import net.minecraft.entity.passive.ChickenEntity;
-//$$ import net.minecraft.entity.passive.CodEntity;
-//$$ import net.minecraft.entity.passive.CowEntity;
-//$$ import net.minecraft.entity.passive.FishEntity;
-//$$ import net.minecraft.entity.passive.PigEntity;
-//$$ import net.minecraft.entity.passive.RabbitEntity;
-//$$ import net.minecraft.entity.passive.SalmonEntity;
-//$$ import net.minecraft.entity.passive.SheepEntity;
+//$$ import net.minecraft.world.entity.animal.chicken.Chicken;
+//$$ import net.minecraft.world.entity.animal.fish.Cod;
+//$$ import net.minecraft.world.entity.animal.cow.Cow;
+//$$ import net.minecraft.world.entity.animal.fish.AbstractFish;
+//$$ import net.minecraft.world.entity.animal.pig.Pig;
+//$$ import net.minecraft.world.entity.animal.rabbit.Rabbit;
+//$$ import net.minecraft.world.entity.animal.fish.Salmon;
+//$$ import net.minecraft.world.entity.animal.sheep.Sheep;
 //#endif
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

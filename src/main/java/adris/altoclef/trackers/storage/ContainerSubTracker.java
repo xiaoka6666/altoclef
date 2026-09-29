@@ -12,27 +12,27 @@ import adris.altoclef.util.helpers.WorldHelper;
 //#if MC < 260000
 import net.minecraft.block.*;
 //#else
-//$$ import net.minecraft.block.AbstractFurnaceBlock;
-//$$ import net.minecraft.block.BarrelBlock;
-//$$ import net.minecraft.block.Block;
-//$$ import net.minecraft.block.BlockState;
-//$$ import net.minecraft.block.Blocks;
-//$$ import net.minecraft.block.ChestBlock;
-//$$ import net.minecraft.block.DispenserBlock;
-//$$ import net.minecraft.block.HopperBlock;
-//$$ import net.minecraft.block.ShulkerBoxBlock;
+//$$ import net.minecraft.world.level.block.AbstractFurnaceBlock;
+//$$ import net.minecraft.world.level.block.BarrelBlock;
+//$$ import net.minecraft.world.level.block.Block;
+//$$ import net.minecraft.world.level.block.state.BlockState;
+//$$ import net.minecraft.world.level.block.Blocks;
+//$$ import net.minecraft.world.level.block.ChestBlock;
+//$$ import net.minecraft.world.level.block.DispenserBlock;
+//$$ import net.minecraft.world.level.block.HopperBlock;
+//$$ import net.minecraft.world.level.block.ShulkerBoxBlock;
 //#endif
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 //#if MC < 260000
 import net.minecraft.client.gui.screen.ingame.*;
 //#else
-//$$ import net.minecraft.client.gui.screen.ingame.BlastFurnaceScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.FurnaceScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.HopperScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.SmokerScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.BlastFurnaceScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.FurnaceScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.HopperScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.ShulkerBoxScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.SmokerScreen;
 //#endif
 import net.minecraft.item.Item;
 import net.minecraft.screen.ScreenHandler;

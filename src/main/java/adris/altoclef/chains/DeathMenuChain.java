@@ -13,15 +13,15 @@ import net.minecraft.client.MinecraftClient;
 //#if MC < 260000
 import net.minecraft.client.gui.screen.*;
 //#else
-//$$ import net.minecraft.client.gui.screen.DeathScreen;
-//$$ import net.minecraft.client.gui.screen.DisconnectedScreen;
-//$$ import net.minecraft.client.gui.screen.Screen;
-//$$ import net.minecraft.client.gui.screen.TitleScreen;
+//$$ import net.minecraft.client.gui.screens.DeathScreen;
+//$$ import net.minecraft.client.gui.screens.DisconnectedScreen;
+//$$ import net.minecraft.client.gui.screens.Screen;
+//$$ import net.minecraft.client.gui.screens.TitleScreen;
 //#endif
 //#if MC < 260000
 import net.minecraft.client.gui.screen.multiplayer.*;
 //#else
-//$$ import net.minecraft.client.gui.screen.multiplayer.MultiplayerScreen;
+//$$ import net.minecraft.client.gui.screens.multiplayer.JoinMultiplayerScreen;
 //#endif
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;

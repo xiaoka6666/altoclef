@@ -25,11 +25,11 @@ import baritone.api.utils.input.Input;
 //#if MC < 260000
 import net.minecraft.block.*;
 //#else
-//$$ import net.minecraft.block.Block;
-//$$ import net.minecraft.block.DoorBlock;
-//$$ import net.minecraft.block.FenceBlock;
-//$$ import net.minecraft.block.FenceGateBlock;
-//$$ import net.minecraft.block.FlowerBlock;
+//$$ import net.minecraft.world.level.block.Block;
+//$$ import net.minecraft.world.level.block.DoorBlock;
+//$$ import net.minecraft.world.level.block.FenceBlock;
+//$$ import net.minecraft.world.level.block.FenceGateBlock;
+//$$ import net.minecraft.world.level.block.FlowerBlock;
 //#endif
 import adris.altoclef.multiversion.versionedfields.Blocks;
 import net.minecraft.item.Item;

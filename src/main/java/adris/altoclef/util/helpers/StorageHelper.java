@@ -30,25 +30,25 @@ import net.minecraft.entity.player.PlayerInventory;
 //#if MC < 260000
 import net.minecraft.item.*;
 //#else
-//$$ import net.minecraft.item.BlockItem;
-//$$ import net.minecraft.item.Item;
-//$$ import net.minecraft.item.ItemStack;
-//$$ import net.minecraft.item.Items;
-//$$ import net.minecraft.item.ShieldItem;
+//$$ import net.minecraft.world.item.BlockItem;
+//$$ import net.minecraft.world.item.Item;
+//$$ import net.minecraft.world.item.ItemStack;
+//$$ import net.minecraft.world.item.Items;
+//$$ import net.minecraft.world.item.ShieldItem;
 //#endif
 //#if MC < 260000
 import net.minecraft.screen.*;
 //#else
-//$$ import net.minecraft.screen.AbstractFurnaceScreenHandler;
-//$$ import net.minecraft.screen.BlastFurnaceScreenHandler;
-//$$ import net.minecraft.screen.BrewingStandScreenHandler;
-//$$ import net.minecraft.screen.CraftingScreenHandler;
-//$$ import net.minecraft.screen.FurnaceScreenHandler;
-//$$ import net.minecraft.screen.GenericContainerScreenHandler;
-//$$ import net.minecraft.screen.PlayerScreenHandler;
-//$$ import net.minecraft.screen.PropertyDelegate;
-//$$ import net.minecraft.screen.ScreenHandler;
-//$$ import net.minecraft.screen.SmokerScreenHandler;
+//$$ import net.minecraft.world.inventory.AbstractFurnaceMenu;
+//$$ import net.minecraft.world.inventory.BlastFurnaceMenu;
+//$$ import net.minecraft.world.inventory.BrewingStandMenu;
+//$$ import net.minecraft.world.inventory.CraftingMenu;
+//$$ import net.minecraft.world.inventory.FurnaceMenu;
+//$$ import net.minecraft.world.inventory.ChestMenu;
+//$$ import net.minecraft.world.inventory.InventoryMenu;
+//$$ import net.minecraft.world.inventory.ContainerData;
+//$$ import net.minecraft.world.inventory.AbstractContainerMenu;
+//$$ import net.minecraft.world.inventory.SmokerMenu;
 //#endif
 import org.apache.commons.lang3.ArrayUtils;
 

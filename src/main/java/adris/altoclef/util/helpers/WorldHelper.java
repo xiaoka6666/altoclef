@@ -13,22 +13,22 @@ import baritone.utils.BlockStateInterface;
 //#if MC < 260000
 import net.minecraft.block.*;
 //#else
-//$$ import net.minecraft.block.AbstractFurnaceBlock;
-//$$ import net.minecraft.block.BarrelBlock;
-//$$ import net.minecraft.block.BedBlock;
-//$$ import net.minecraft.block.Block;
-//$$ import net.minecraft.block.BlockState;
-//$$ import net.minecraft.block.Blocks;
-//$$ import net.minecraft.block.CartographyTableBlock;
-//$$ import net.minecraft.block.ChestBlock;
-//$$ import net.minecraft.block.CraftingTableBlock;
-//$$ import net.minecraft.block.EnchantingTableBlock;
-//$$ import net.minecraft.block.EnderChestBlock;
-//$$ import net.minecraft.block.FallingBlock;
-//$$ import net.minecraft.block.FluidBlock;
-//$$ import net.minecraft.block.LoomBlock;
-//$$ import net.minecraft.block.RedstoneOreBlock;
-//$$ import net.minecraft.block.SpawnerBlock;
+//$$ import net.minecraft.world.level.block.AbstractFurnaceBlock;
+//$$ import net.minecraft.world.level.block.BarrelBlock;
+//$$ import net.minecraft.world.level.block.BedBlock;
+//$$ import net.minecraft.world.level.block.Block;
+//$$ import net.minecraft.world.level.block.state.BlockState;
+//$$ import net.minecraft.world.level.block.Blocks;
+//$$ import net.minecraft.world.level.block.CartographyTableBlock;
+//$$ import net.minecraft.world.level.block.ChestBlock;
+//$$ import net.minecraft.world.level.block.CraftingTableBlock;
+//$$ import net.minecraft.world.level.block.EnchantingTableBlock;
+//$$ import net.minecraft.world.level.block.EnderChestBlock;
+//$$ import net.minecraft.world.level.block.FallingBlock;
+//$$ import net.minecraft.world.level.block.LiquidBlock;
+//$$ import net.minecraft.world.level.block.LoomBlock;
+//$$ import net.minecraft.world.level.block.RedStoneOreBlock;
+//$$ import net.minecraft.world.level.block.SpawnerBlock;
 //#endif
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.MobSpawnerBlockEntity;
@@ -43,11 +43,11 @@ import net.minecraft.network.ClientConnection;
 //#if MC < 260000
 import net.minecraft.util.math.*;
 //#else
-//$$ import net.minecraft.util.math.BlockPos;
-//$$ import net.minecraft.util.math.Box;
-//$$ import net.minecraft.util.math.Direction;
-//$$ import net.minecraft.util.math.Vec3d;
-//$$ import net.minecraft.util.math.Vec3i;
+//$$ import net.minecraft.core.BlockPos;
+//$$ import net.minecraft.world.phys.AABB;
+//$$ import net.minecraft.core.Direction;
+//$$ import net.minecraft.world.phys.Vec3;
+//$$ import net.minecraft.core.Vec3i;
 //#endif
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;

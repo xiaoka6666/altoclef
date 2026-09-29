@@ -16,20 +16,20 @@ import net.minecraft.client.network.ClientPlayerEntity;
 //#if MC < 260000
 import net.minecraft.item.*;
 //#else
-//$$ import net.minecraft.item.Item;
-//$$ import net.minecraft.item.ItemStack;
-//$$ import net.minecraft.item.Items;
+//$$ import net.minecraft.world.item.Item;
+//$$ import net.minecraft.world.item.ItemStack;
+//$$ import net.minecraft.world.item.Items;
 //#endif
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 //#if MC < 260000
 import net.minecraft.util.math.*;
 //#else
-//$$ import net.minecraft.util.math.BlockPos;
-//$$ import net.minecraft.util.math.Box;
-//$$ import net.minecraft.util.math.Direction;
-//$$ import net.minecraft.util.math.MathHelper;
-//$$ import net.minecraft.util.math.Vec3d;
+//$$ import net.minecraft.core.BlockPos;
+//$$ import net.minecraft.world.phys.AABB;
+//$$ import net.minecraft.core.Direction;
+//$$ import net.minecraft.util.Mth;
+//$$ import net.minecraft.world.phys.Vec3;
 //#endif
 import net.minecraft.world.RaycastContext;
 

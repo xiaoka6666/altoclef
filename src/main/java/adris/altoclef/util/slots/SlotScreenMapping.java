@@ -5,11 +5,11 @@ import net.minecraft.client.gui.screen.Screen;
 //#if MC < 260000
 import net.minecraft.client.gui.screen.ingame.*;
 //#else
-//$$ import net.minecraft.client.gui.screen.ingame.AbstractFurnaceScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.BrewingStandScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.CraftingScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.GenericContainerScreen;
-//$$ import net.minecraft.client.gui.screen.ingame.SmithingScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.BrewingStandScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.CraftingScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+//$$ import net.minecraft.client.gui.screens.inventory.SmithingScreen;
 //#endif
 import org.apache.commons.lang3.NotImplementedException;
 

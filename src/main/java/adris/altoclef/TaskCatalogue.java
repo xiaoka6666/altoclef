@@ -18,24 +18,24 @@ import net.minecraft.block.MapColor;
 //#if MC < 260000
 import net.minecraft.entity.mob.*;
 //#else
-//$$ import net.minecraft.entity.mob.CreeperEntity;
-//$$ import net.minecraft.entity.mob.SkeletonEntity;
-//$$ import net.minecraft.entity.mob.SlimeEntity;
-//$$ import net.minecraft.entity.mob.SpiderEntity;
-//$$ import net.minecraft.entity.mob.WitherSkeletonEntity;
-//$$ import net.minecraft.entity.mob.ZombieEntity;
+//$$ import net.minecraft.world.entity.monster.Creeper;
+//$$ import net.minecraft.world.entity.monster.skeleton.Skeleton;
+//$$ import net.minecraft.world.entity.monster.cubemob.Slime;
+//$$ import net.minecraft.world.entity.monster.spider.Spider;
+//$$ import net.minecraft.world.entity.monster.skeleton.WitherSkeleton;
+//$$ import net.minecraft.world.entity.monster.zombie.Zombie;
 //#endif
 //#if MC < 260000
 import net.minecraft.entity.passive.*;
 //#else
-//$$ import net.minecraft.entity.passive.ChickenEntity;
-//$$ import net.minecraft.entity.passive.CodEntity;
-//$$ import net.minecraft.entity.passive.CowEntity;
-//$$ import net.minecraft.entity.passive.PigEntity;
-//$$ import net.minecraft.entity.passive.RabbitEntity;
-//$$ import net.minecraft.entity.passive.SalmonEntity;
-//$$ import net.minecraft.entity.passive.SheepEntity;
-//$$ import net.minecraft.entity.passive.SquidEntity;
+//$$ import net.minecraft.world.entity.animal.chicken.Chicken;
+//$$ import net.minecraft.world.entity.animal.fish.Cod;
+//$$ import net.minecraft.world.entity.animal.cow.Cow;
+//$$ import net.minecraft.world.entity.animal.pig.Pig;
+//$$ import net.minecraft.world.entity.animal.rabbit.Rabbit;
+//$$ import net.minecraft.world.entity.animal.fish.Salmon;
+//$$ import net.minecraft.world.entity.animal.sheep.Sheep;
+//$$ import net.minecraft.world.entity.animal.squid.Squid;
 //#endif
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;

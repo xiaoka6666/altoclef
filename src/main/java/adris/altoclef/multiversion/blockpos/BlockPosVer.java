@@ -4,10 +4,10 @@ import adris.altoclef.multiversion.Pattern;
 //#if MC < 260000
 import net.minecraft.util.math.*;
 //#else
-//$$ import net.minecraft.util.math.BlockPos;
-//$$ import net.minecraft.util.math.MathHelper;
-//$$ import net.minecraft.util.math.Position;
-//$$ import net.minecraft.util.math.Vec3i;
+//$$ import net.minecraft.core.BlockPos;
+//$$ import net.minecraft.util.Mth;
+//$$ import net.minecraft.core.Position;
+//$$ import net.minecraft.core.Vec3i;
 //#endif
 import adris.altoclef.multiversion.blockpos.BlockPosHelper;
 

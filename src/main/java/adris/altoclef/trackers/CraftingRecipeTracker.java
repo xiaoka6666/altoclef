@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 //#if MC < 260000
 import net.minecraft.recipe.*;
 //#else
-//$$ import net.minecraft.recipe.CraftingRecipe;
-//$$ import net.minecraft.recipe.Ingredient;
-//$$ import net.minecraft.recipe.SpecialCraftingRecipe;
+//$$ import net.minecraft.world.item.crafting.CraftingRecipe;
+//$$ import net.minecraft.world.item.crafting.Ingredient;
+//$$ import net.minecraft.world.item.crafting.CustomRecipe;
 //#endif
 
 import java.util.ArrayList;

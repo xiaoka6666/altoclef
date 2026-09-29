@@ -41,30 +41,30 @@ import net.minecraft.entity.ItemEntity;
 //#if MC < 260000
 import net.minecraft.entity.mob.*;
 //#else
-//$$ import net.minecraft.entity.mob.EndermanEntity;
-//$$ import net.minecraft.entity.mob.HostileEntity;
-//$$ import net.minecraft.entity.mob.PillagerEntity;
-//$$ import net.minecraft.entity.mob.SilverfishEntity;
-//$$ import net.minecraft.entity.mob.WitchEntity;
+//$$ import net.minecraft.world.entity.monster.Enderman;
+//$$ import net.minecraft.world.entity.monster.Monster;
+//$$ import net.minecraft.world.entity.monster.illager.Pillager;
+//$$ import net.minecraft.world.entity.monster.Silverfish;
+//$$ import net.minecraft.world.entity.monster.Witch;
 //#endif
 import net.minecraft.entity.player.PlayerInventory;
 //#if MC < 260000
 import net.minecraft.item.*;
 //#else
-//$$ import net.minecraft.item.EnderEyeItem;
-//$$ import net.minecraft.item.Item;
-//$$ import net.minecraft.item.ItemStack;
+//$$ import net.minecraft.world.item.EnderEyeItem;
+//$$ import net.minecraft.world.item.Item;
+//$$ import net.minecraft.world.item.ItemStack;
 //#endif
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.collection.DefaultedList;
 //#if MC < 260000
 import net.minecraft.util.math.*;
 //#else
-//$$ import net.minecraft.util.math.BlockPos;
-//$$ import net.minecraft.util.math.Box;
-//$$ import net.minecraft.util.math.Position;
-//$$ import net.minecraft.util.math.Vec3d;
-//$$ import net.minecraft.util.math.Vec3i;
+//$$ import net.minecraft.core.BlockPos;
+//$$ import net.minecraft.world.phys.AABB;
+//$$ import net.minecraft.core.Position;
+//$$ import net.minecraft.world.phys.Vec3;
+//$$ import net.minecraft.core.Vec3i;
 //#endif
 import net.minecraft.world.Difficulty;
 import org.apache.commons.lang3.ArrayUtils;
