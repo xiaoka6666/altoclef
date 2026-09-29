@@ -34,12 +34,17 @@ jobs:
         node: ${{ fromJSON(inputs.node && format('["{0}"]', inputs.node) || '["1.21.11","1.21.4","1.16.1"]') }}
     steps:
       - uses: actions/checkout@v4
+      # 26.3 compiles with a JDK 25 toolchain, but Gradle and the preprocessor's Kotlin remapper run on 21
+      # (that Kotlin cannot parse the 25.0.4.1 version string). The second setup-java is the default JAVA_HOME.
+      - uses: actions/setup-java@v4
+        if: matrix.node == '26.3'
+        with:
+          distribution: temurin
+          java-version: '25'
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          # 26.3 compiles with JDK 25 (toolchain) but Gradle and the preprocessor's Kotlin remapper run on 21
-          # (that Kotlin cannot parse the 25.0.4.1 version string); the last entry is the default JAVA_HOME.
-          java-version: ${{ matrix.node == '26.3' && format('25\n{0}', inputs.java == '25' && '21' || inputs.java || '21') || inputs.java || '21' }}
+          java-version: ${{ matrix.node == '26.3' && '21' || inputs.java || '21' }}
       - name: Stage Ostinato jar (nodes without a committed jar)
         if: matrix.node != '1.21.4' && matrix.node != '1.16.1'
         run: |
