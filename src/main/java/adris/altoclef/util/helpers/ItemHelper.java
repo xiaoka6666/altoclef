@@ -510,13 +510,15 @@ public class ItemHelper {
         return null;
     }
 
+    //#if MC >= 260000
+    //$$ private static boolean stackIn(net.minecraft.world.item.ItemStack stack, net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag) {
+    //$$     return stack.is(tag);
+    //$$ }
+    //#else
     private static boolean stackIn(net.minecraft.item.ItemStack stack, net.minecraft.registry.tag.TagKey<net.minecraft.item.Item> tag) {
-        //#if MC >= 260000
-        //$$ return stack.is(tag);
-        //#else
         return stack.isIn(tag);
-        //#endif
     }
+    //#endif
     //#else
     //$$ public static Object toolFamily(net.minecraft.item.Item item) { return null; }
     //#endif
