@@ -50,7 +50,7 @@ jobs:
           cat > "$RUNNER_TEMP/maxerrs.gradle" <<'EOF'
           allprojects { tasks.withType(JavaCompile).configureEach { options.compilerArgs += ['-Xmaxerrs', '100000'] } }
           EOF
-          ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" :${{ matrix.node }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
+          ./gradlew -I "$RUNNER_TEMP/maxerrs.gradle" ${{ matrix.node == '26.3' && '-Pwith26' || '' }} :${{ matrix.node }}:compileJava --console=plain --stacktrace 2>&1 | tee port-check.log
       - name: Error summary
         if: always()
         run: |
