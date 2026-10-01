@@ -54,6 +54,14 @@ tasks.withType(JavaCompile).configureEach {
     }
 }
 
+if (unobfuscated) {
+    // 26.x runs on a Java 25 JVM: its Loom-injected jvm args include --sun-misc-unsafe-memory-access=allow,
+    // which the JDK 21 daemon JVM rejects. Point the run tasks' launcher at the same 25 toolchain as the compiler.
+    tasks.matching { it.name in ['runClient', 'runServer', 'runClientRenderDoc'] }.configureEach {
+        javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(25) }
+    }
+}
+
 base {
     archivesName = project.archives_base_name
 }

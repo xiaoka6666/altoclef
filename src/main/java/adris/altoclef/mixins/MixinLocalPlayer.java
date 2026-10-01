@@ -17,18 +17,9 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayerEntity {
     }
 
     //#if MC >= 260300
-    // 26.x (mojmap): LocalPlayer no longer declares interpolated pitch/yaw getters; they
-    // live on Entity as getXRot(float)/getYRot(float). Target the inherited 1-arg getters
-    // literally (remap=false) so Mixin resolves mojmap names without a refmap.
-    @Inject(method = "getXRot", remap = false, at = @At("RETURN"), cancellable = true)
-    public void onPitch(float tickDelta, CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(super.getXRot(tickDelta));
-    }
-
-    @Inject(method = "getYRot", remap = false, at = @At("RETURN"), cancellable = true)
-    public void onYaw(float tickDelta, CallbackInfoReturnable<Float> cir) {
-        cir.setReturnValue(super.getYRot(tickDelta));
-    }
+    // 26.x (mojmap): the interpolated pitch/yaw getters (getXRot(float)/getYRot(float)) live
+    // on Entity, not LocalPlayer, so they cannot be @Inject targets on LocalPlayer.
+    // This mixin's pitch/yaw interception point does not exist on 26.3 - no-op by design.
     //#else
     @Inject(method = "getPitch", at = @At("RETURN"), cancellable = true)
     public void getPitch(float tickDelta, CallbackInfoReturnable<Float> cir) {
