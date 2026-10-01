@@ -44,7 +44,12 @@ public class ItemDeserializer extends StdDeserializer<Object> {
                 itemKey = ItemHelper.trimItemName(itemKey);
                 Identifier identifier = Identifier.of(itemKey);
                 if (Registries.ITEM.containsId(identifier)) {
-                    item = Registries.ITEM.get(identifier);
+                    //#if MC >= 12104
+                    // 1.21.4+ yarn: getEntry(Identifier) returns Optional<RegistryEntry.Reference<Item>>.
+                    //$$ item = Registries.ITEM.getEntry(identifier).map(net.minecraft.registry.entry.RegistryEntry.Reference::value).orElseThrow();
+                    //#else
+                    //$$ item = Registries.ITEM.get(identifier);
+                    //#endif
                 } else {
                     Debug.logWarning("Invalid item name:" + itemKey + " at " + p.getCurrentLocation().toString());
                 }

@@ -254,7 +254,13 @@ public class Playground {
                     File f = new File(fname);
                     FileWriter fw = new FileWriter(f);
                     for (Identifier id : Registries.ITEM.getIds()) {
-                        Item item = Registries.ITEM.get(id);
+                        //#if MC >= 12104
+                        // 1.21.4+ yarn: Registry.get(Identifier) was renamed to getEntry(Identifier) and
+                        // now returns Optional<RegistryEntry.Reference<Item>>. Unwrap to Item.
+                        //$$ Item item = Registries.ITEM.getEntry(id).map(net.minecraft.registry.entry.RegistryEntry.Reference::value).orElseThrow();
+                        //#else
+                        //$$ Item item = Registries.ITEM.get(id);
+                        //#endif
                         if (!TaskCatalogue.isObtainable(item)) {
                             ++unobtainable;
                             fw.write(item.getTranslationKey() + "\n");

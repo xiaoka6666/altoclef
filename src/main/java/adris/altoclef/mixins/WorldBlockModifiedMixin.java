@@ -20,8 +20,13 @@ public class WorldBlockModifiedMixin {
         return !state.isAir() && state.isSolidBlock(MinecraftClient.getInstance().world, pos);
     }
 
+    //#if MC >= 260300
+    // 26.x (mojmap): the 3-arg block-state-changed callback on Level is
+    // updatePOIOnBlockStateChange(BlockPos, BlockState, BlockState). Target it with the
+    // explicit mojmap name + remap=false so Mixin resolves it literally (no refmap in the
+    // unobfuscated run). Yarn 1.16.5..1.21.11 keep onBlockChanged below.
     @Inject(
-            method = "onBlockChanged",
+            method = "updatePOIOnBlockStateChange", remap = false,
             at = @At("HEAD")
     )
     public void onBlockWasChanged(BlockPos pos, BlockState oldBlock, BlockState newBlock, CallbackInfo ci) {
@@ -30,5 +35,17 @@ public class WorldBlockModifiedMixin {
             EventBus.publish(evt);
         }
     }
+    //#else
+    //$$ @Inject(
+    //$$         method = "onBlockChanged",
+    //$$         at = @At("HEAD")
+    //$$ )
+    //$$ public void onBlockWasChanged(BlockPos pos, BlockState oldBlock, BlockState newBlock, CallbackInfo ci) {
+    //$$     if (!hasBlock(oldBlock, pos) && hasBlock(newBlock, pos)) {
+    //$$         BlockPlaceEvent evt = new BlockPlaceEvent(pos, newBlock);
+    //$$         EventBus.publish(evt);
+    //$$     }
+    //$$ }
+    //#endif
 
 }

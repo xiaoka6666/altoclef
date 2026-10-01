@@ -1,6 +1,10 @@
 plugins {
     id("fabric-loom") version "1.15.5" apply false
-    id("com.replaymod.preprocess") version "c2041a34ae"
+    // Follow master so preprocess tracks upstream ReplayMod/preprocessor (JitPack builds the
+    // branch on demand; latest commit as of 2026-07-07: 221276c7d4 "Workaround Loom bug where
+    // all official mappings use the same file"). Pin to a commit SHA instead if reproducibility
+    // is ever required.
+    id("com.replaymod.preprocess") version "master"
 }
 
 subprojects {

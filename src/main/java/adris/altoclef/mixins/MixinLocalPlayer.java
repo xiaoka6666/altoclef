@@ -16,6 +16,16 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayerEntity {
         super(world, profile);
     }
 
+    //#if MC >= 260300
+    //$$ @Inject(method = "getXRot(F)", remap = false, at = @At("RETURN"), cancellable = true)
+    //$$ public void onPitch(float tickDelta, CallbackInfoReturnable<Float> cir) {
+    //$$     cir.setReturnValue(super.getXRot(tickDelta));
+    //$$ }
+    //$$ @Inject(method = "getYRot(F)", remap = false, at = @At("RETURN"), cancellable = true)
+    //$$ public void onYaw(float tickDelta, CallbackInfoReturnable<Float> cir) {
+    //$$     cir.setReturnValue(super.getYRot(tickDelta));
+    //$$ }
+    //#else
     @Inject(method = "getPitch", at = @At("RETURN"), cancellable = true)
     public void getPitch(float tickDelta, CallbackInfoReturnable<Float> cir) {
         cir.setReturnValue(super.getPitch(tickDelta));
@@ -25,4 +35,5 @@ public abstract class MixinLocalPlayer extends AbstractClientPlayerEntity {
     public void getYaw(float tickDelta, CallbackInfoReturnable<Float> cir) {
         cir.setReturnValue(super.getYaw(tickDelta));
     }
+    //#endif
 }
