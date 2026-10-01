@@ -7,6 +7,8 @@ versions/*/run/
 *.jar
 !libs/baritone-unoptimized-fabric-1.16.1.jar
 !libs/tungsten-fabric-*-1.16.1*.jar
+!libs/baritone-unoptimized-fabric-ostinato-26.3.jar
+!libs/baritone-unoptimized-fabric-ostinato-1.21.11.jar
 !gradle/wrapper/gradle-wrapper.jar
 run/
 saves/
