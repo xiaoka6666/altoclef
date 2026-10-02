@@ -224,9 +224,19 @@ public class BeatMinecraftTask extends Task {
                 a -> itemStorage.hasItem(Items.IRON_INGOT)
         ));
 
-        gatherResources.add(new CraftItemPriorityTask(300, mod.getCraftingRecipeTracker().getFirstRecipeTarget(Items.BUCKET, 2),
+        //#if MC >= 12102
+        // 1.21.2+/26.x: the crafting recipe tracker's item map is not populated on these
+        // versions, so getFirstRecipeTarget returns a null-recipe target and this task can
+        // never resolve a recipe (thrash). Bucket is catalogued (shapedRecipe3x3), so use
+        // the catalogue-backed recipe target like every other craft task here.
+        gatherResources.add(new CraftItemPriorityTask(300, getRecipeTarget(Items.BUCKET),
                 a -> itemStorage.getItemCount(Items.IRON_INGOT) >= 6)
         );
+        //#else
+        //$$ gatherResources.add(new CraftItemPriorityTask(300, mod.getCraftingRecipeTracker().getFirstRecipeTarget(Items.BUCKET, 2),
+        //$$         a -> itemStorage.getItemCount(Items.IRON_INGOT) >= 6)
+        //$$ );
+        //#endif
 
         gatherResources.add(new CraftItemPriorityTask(100, getRecipeTarget(Items.FLINT_AND_STEEL),
                 a -> itemStorage.hasItem(Items.IRON_INGOT) && itemStorage.hasItem(Items.FLINT)
