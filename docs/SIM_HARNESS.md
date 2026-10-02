@@ -55,11 +55,11 @@ Reproducible headless loop (Linux; `xvfb` required):
 
 ```
 # run/altoclef_settings.json: {"autoLoadWorld": true, "autoRunCommand": "pathbench search - 2"}
-JAVA_TOOL_OPTIONS="-Dtenorclef.seed=12345 -Dtenorclef.pathbench.exit=true" \
+JAVA_TOOL_OPTIONS="-Daltoclef.seed=12345 -Daltoclef.pathbench.exit=true" \
   xvfb-run -a ./gradlew :1.16.1:runClient
 ```
 
-- `tenorclef.seed` pins the auto-created world seed.
-- `tenorclef.pathbench.exit` closes the client when the bench finishes.
-- Optional: `tenorclef.pathbench.timeoutMs` (search, default 4000) and
-  `tenorclef.pathbench.travelTicks` (travel, default 1800).
+- `altoclef.seed` pins the auto-created world seed.
+- `altoclef.pathbench.exit` closes the client when the bench finishes.
+- Optional: `altoclef.pathbench.timeoutMs` (search, default 4000) and
+  `altoclef.pathbench.travelTicks` (travel, default 1800).

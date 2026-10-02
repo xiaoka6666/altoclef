@@ -14,6 +14,7 @@ import adris.altoclef.tasks.movement.RunAwayFromHostilesTask;
 import adris.altoclef.tasks.speedrun.DragonBreathTracker;
 import adris.altoclef.tasks.speedrun.testrun2.T2Log;
 import adris.altoclef.tasksystem.Task;
+import adris.altoclef.tasksystem.TaskChain;
 import adris.altoclef.tasksystem.TaskRunner;
 import adris.altoclef.util.baritone.CachedProjectile;
 import adris.altoclef.util.helpers.*;
@@ -554,6 +555,22 @@ public class MobDefenseChain extends SingleTaskChain {
 
                 // Depending on our weapons/armor, we may choose to straight up kill hostiles if we're not dodging their arrows.
                 // Melee damage for fight/flee gate may count axe; KillAura/equip still prefers sword.
+                //#if MC >= 260300
+                // 26.x: beatgame crafting thrash. While the bot is mid-craft (clearing the 2x2
+                // grid, filling slots, grabbing output, or inside a crafting table) an unarmed bot
+                // with a zombie/skeleton nearby kept getting preempted at priority 80 every few
+                // seconds (User Tasks <-> Mob Defense flap), so crafting never finished and no
+                // output was ever produced. Non-lethal "annoying hostiles" must not interrupt a
+                // craft that is almost done: genuinely lethal threats (creepers, arrows,
+                // isInDanger, low HP) are handled earlier in this method and still preempt.
+                if (mod.getPlayer().getHealth() > 12 && !mod.getPlayer().isOnFire()
+                        && toDealWithList.stream().noneMatch(e -> e instanceof Creeper)
+                        && isCraftTaskActive(mod)) {
+                    why = "craft-shield";
+                    clearEngagement(mod);
+                    return 0;
+                }
+                //#endif
                 float damage = getBestMeleeAttackDamage(mod);
 
                 int armor = mod.getPlayer().getArmor();
@@ -691,6 +708,28 @@ public class MobDefenseChain extends SingleTaskChain {
         why = "idle";
         runAwayTask = null;
         return 0;
+    }
+
+    /**
+     * 26.x craft-shield: true when the deepest active task in the current chain is a
+     * crafting-related task (2x2 grid clearing, slot filling, output pickup, table crafting).
+     */
+    private static boolean isCraftTaskActive(AltoClef mod) {
+        TaskChain chain = mod.getTaskRunner().getCurrentTaskChain();
+        if (chain == null) return false;
+        List<Task> tasks = chain.getTasks();
+        if (tasks.isEmpty()) return false;
+        Task leaf = tasks.get(tasks.size() - 1);
+        String cls = leaf.getClass().getSimpleName();
+        return cls.equals("EnsureFreePlayerCraftingGridTask")
+                || cls.equals("CraftGenericManuallyTask")
+                || cls.equals("ReceiveCraftingOutputSlotTask")
+                || cls.equals("DoCraftInTableTask")
+                || cls.equals("CraftInInventoryTask")
+                || cls.equals("CraftInTableTask")
+                || cls.equals("MoveItemToSlotTask")
+                || cls.equals("MoveItemToSlotFromInventoryTask")
+                || cls.equals("MoveItemToSlotFromContainerTask");
     }
 
     private static boolean hasShield(AltoClef mod) {

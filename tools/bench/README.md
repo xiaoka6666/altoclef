@@ -1,10 +1,10 @@
 # Bench tooling
 
-Scripts that drive TenorClef's `pathbench` command
+Scripts that drive AltoClef's `pathbench` command
 (`src/main/java/.../PathBench.java`) against the Ostinato / Baritone jar in
 `libs/`, plus a standalone elytra bench for Ostinato's 1.21.11 line.
 
-Layout: `TenorClef/` and `Ostinato/` side by side.
+Layout: `AltoClef/` and `Ostinato/` side by side.
 
 | Pairing | Ostinato checkout | Staged jar |
 | --- | --- | --- |
@@ -22,7 +22,7 @@ Ostinato `main` is 1.21.4. Do not treat `main` as a 1.21.11 tree.
 Each script rewrites `autoRunCommand` in
 `versions/1.16.1/run/altoclef/altoclef_settings.json`, launches
 `./gradlew --offline :1.16.1:runClient` with
-`-Dtenorclef.seed=12345 -Dtenorclef.warp=N -Dtenorclef.pathbench.exit=true`,
+`-Daltoclef.seed=12345 -Daltoclef.warp=N -Daltoclef.pathbench.exit=true`,
 waits for the CSV in `versions/1.16.1/run/pathbench/`, then prints it.
 `suite.sh` runs `pkill -9 java` between benches: don't run anything else Java
 at the time. `sum.sh` gives a compact summary of the latest wreck run.
@@ -30,11 +30,11 @@ at the time. `sum.sh` gives a compact summary of the latest wreck run.
 Rebuild the 1.16.1 jar (Java 8, Gradle 4.9) in the 1.16.1 checkout:
 
     JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 gradle build -x test
-    cp build/libs/baritone-unoptimized-fabric-1.16.5.jar ../TenorClef/libs/baritone-unoptimized-fabric-1.16.1.jar
+    cp build/libs/baritone-unoptimized-fabric-1.16.5.jar ../AltoClef/libs/baritone-unoptimized-fabric-1.16.1.jar
 
 ## Elytra bench (1.21.11, Ostinato branch `1.21.11`)
 
-TenorClef's 1.21.11 target does not compile yet, so `elytrabench/` is its own
+AltoClef's 1.21.11 target does not compile yet, so `elytrabench/` is its own
 Fabric mod. Ostinato `main` is 1.21.4; use branch `1.21.11` for this bench.
 
 1. In an Ostinato `1.21.11` checkout: `./gradlew :fabric:remapJar`, copy

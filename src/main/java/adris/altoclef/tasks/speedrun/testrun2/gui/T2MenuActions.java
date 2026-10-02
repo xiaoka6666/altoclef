@@ -146,11 +146,11 @@ final class T2MenuActions {
 
     static Text titleText() {
         try {
-            return (Text) Text.class.getMethod("literal", String.class).invoke(null, "TenorClef");
+            return (Text) Text.class.getMethod("literal", String.class).invoke(null, "AltoClef");
         } catch (Throwable t) {
             try {
                 return (Text) Class.forName("net.minecraft.text.LiteralText")
-                        .getConstructor(String.class).newInstance("TenorClef");
+                        .getConstructor(String.class).newInstance("AltoClef");
             } catch (Throwable t2) {
                 throw new IllegalStateException(t2);
             }

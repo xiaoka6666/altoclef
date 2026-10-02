@@ -30,7 +30,7 @@ public class TungstenSelfTestCommand extends Command {
     }
 
     private static void report(String s) {
-        System.out.println("TENORCLEF: TTEST " + s);
+        System.out.println("ALTOCLEF: TTEST " + s);
     }
 
     private static final class SelfTestTask extends Task {

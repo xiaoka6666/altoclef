@@ -28,6 +28,7 @@ import adris.altoclef.tasks.speedrun.beatgame.prioritytask.prioritycalculators.D
 import adris.altoclef.tasks.speedrun.beatgame.prioritytask.prioritycalculators.StaticItemPriorityCalculator;
 import adris.altoclef.tasks.speedrun.beatgame.prioritytask.tasks.*;
 import adris.altoclef.tasksystem.Task;
+import adris.altoclef.tasksystem.TaskChain;
 import adris.altoclef.trackers.EntityTracker;
 import adris.altoclef.trackers.storage.ItemStorageTracker;
 import adris.altoclef.util.*;
@@ -143,6 +144,10 @@ public class BeatMinecraftTask extends Task {
     private boolean pickupFurnace = false;
     private boolean pickupSmoker = false;
     private boolean pickupCrafting = false;
+    //#if MC >= 260300
+    private final TimerGame taskDebugTimer = new TimerGame(10);
+    private int taskDebugCount = 0;
+    //#endif
     private Task rePickupTask = null;
     private Task searchTask = null;
     private boolean hasRods = false;
@@ -1227,6 +1232,32 @@ public class BeatMinecraftTask extends Task {
     @Override
     protected Task onTick() {
         ItemStorageTracker itemStorage = mod.getItemStorage();
+        //#if MC >= 260300
+        taskDebugCount++;
+        if (taskDebugTimer.elapsed() || taskDebugCount <= 3) {
+            taskDebugTimer.reset();
+            // Real active child chain: this.getSub() (Task's live sub), not the chain stack
+            // (which is mid-tick and only shows beatgame itself).
+            StringBuilder chain = new StringBuilder();
+            Task t = getSub();
+            int depth = 0;
+            while (t != null && depth < 8) {
+                if (depth > 0) chain.append(" -> ");
+                chain.append(t.getClass().getSimpleName());
+                String dbg = t.getDebugState();
+                if (dbg != null && !dbg.isBlank()) chain.append("[").append(dbg).append("]");
+                t = t.getSub();
+                depth++;
+            }
+            if (chain.length() == 0) chain.append("(no sub)");
+            mod.log("T2DBG beatgame onTick #" + taskDebugCount + " dim=" + WorldHelper.getCurrentDimension()
+                    + " eyes=" + itemStorage.getItemCount(Items.ENDER_EYE)
+                    + " pearls=" + itemStorage.getItemCount(Items.ENDER_PEARL)
+                    + " blazeRod=" + itemStorage.getItemCount(Items.BLAZE_ROD)
+                    + " pickAxes=" + (itemStorage.hasItem(Items.WOODEN_PICKAXE) ? 1 : 0) + (itemStorage.hasItem(Items.STONE_PICKAXE) ? 1 : 0) + (itemStorage.hasItem(Items.IRON_PICKAXE) ? 1 : 0)
+                    + " lastGather=" + lastGather + " subChain=" + chain);
+        }
+        //#endif
 
         double blockPlacementPenalty = 10;
         if (StorageHelper.getNumberOfThrowawayBlocks(mod) > 128) {

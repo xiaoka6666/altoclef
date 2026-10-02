@@ -9,7 +9,7 @@ import adris.altoclef.tasks.speedrun.testrun2.gui.T2MenuScreen;
 public class T2MenuCommand extends Command {
 
     public T2MenuCommand() {
-        super("t2menu", "Open the TenorClef menu");
+        super("t2menu", "Open the AltoClef menu");
     }
 
     @Override

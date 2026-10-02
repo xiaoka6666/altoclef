@@ -7,7 +7,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-/** Linked TenorClef names. File: altoclef/fleet.txt one IGN per line. */
+/** Linked AltoClef names. File: altoclef/fleet.txt one IGN per line. */
 public final class Fleet {
 
     public static final String FILE = "fleet.txt";
@@ -28,7 +28,7 @@ public final class Fleet {
     }
 
     public static void save() {
-        StringBuilder b = new StringBuilder("# TenorClef fleet — one IGN per line\n");
+        StringBuilder b = new StringBuilder("# AltoClef fleet — one IGN per line\n");
         for (String n : NAMES) b.append(n).append('\n');
         GameFiles.write(FILE, b.toString());
     }

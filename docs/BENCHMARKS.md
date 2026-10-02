@@ -1,6 +1,6 @@
 # Benchmarks
 
-TenorClef records scenario / live-run metrics under `adris.altoclef.benchmark`.
+AltoClef records scenario / live-run metrics under `adris.altoclef.benchmark`.
 
 ## Phase 10 — offline harness
 

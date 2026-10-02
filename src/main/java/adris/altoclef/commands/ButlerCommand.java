@@ -18,7 +18,7 @@ import java.util.List;
 public class ButlerCommand extends Command {
 
     public ButlerCommand() {
-        super(List.of("butler", "tenorbutler"), "TenorClef butler whitelist helper",
+        super(List.of("butler", "altobutler"), "AltoClef butler whitelist helper",
                 new StringArg("args", "status"));
     }
 

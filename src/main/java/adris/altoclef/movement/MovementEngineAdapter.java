@@ -10,9 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import java.lang.reflect.Method;
 
 /**
- * Thin adapter from TenorClef travel tasks onto Ostinato {@code IMovementEngine}.
+ * Thin adapter from AltoClef travel tasks onto Ostinato {@code IMovementEngine}.
  * <p>
- * Uses reflection so TenorClef still compiles and runs against stock Baritone jars
+ * Uses reflection so AltoClef still compiles and runs against stock Baritone jars
  * that lack MovementEngine types (1.21.1 published artifact, 1.16.1 Baritone-only).
  * When the engine is unavailable, falls back to {@code getCustomGoalProcess()}.
  * <p>

@@ -23,7 +23,7 @@ param(
 $ErrorActionPreference = 'Continue'
 Set-Location $Repo
 if ($Warp -gt 1) {
-  $env:JAVA_TOOL_OPTIONS = ("$env:JAVA_TOOL_OPTIONS -Dtenorclef.warp=$Warp").Trim()
+  $env:JAVA_TOOL_OPTIONS = ("$env:JAVA_TOOL_OPTIONS -Daltoclef.warp=$Warp").Trim()
   Write-Host "WARP x$Warp (world + bot run $Warp times faster)"
 }
 
@@ -231,7 +231,7 @@ function Get-LogTail([int]$Lines = 300) {
 
 function Test-JoinSignal([string]$Text) {
   if ([string]::IsNullOrEmpty($Text)) { return $false }
-  # Title-screen AltoClef/TENORCLEF init is NOT join.
+  # Title-screen AltoClef/ALTOCLEF init is NOT join.
   return ($Text -match 'joined the game' -or
           $Text -match 'Loaded \d+ advancements' -or
           $Text -match 'TESRUN2 start' -or
@@ -354,7 +354,7 @@ function Test-MixinHealth([string]$Tail) {
 
   # 2. Positive evidence: the ClientTickMixin canary fired.
   #    Absence is only meaningful once we know the client booted.
-  if ($Tail -match 'TENORCLEF: Global Init' -and $Tail -notmatch 'TENORCLEF: MIXIN OK') {
+  if ($Tail -match 'ALTOCLEF: Global Init' -and $Tail -notmatch 'ALTOCLEF: MIXIN OK') {
     $out.ok = $false
     $out.reason = 'mixin_canary_missing'
     return $out

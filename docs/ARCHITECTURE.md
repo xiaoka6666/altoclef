@@ -1,6 +1,6 @@
-# TenorClef architecture (Phase 0 — current vs target)
+# AltoClef architecture (Phase 0 — current vs target)
 
-Audit date: 2026-09-19 (America/Phoenix). Repo audited: `vexrypt-rgb/TenorClef` (AltoClef fork).
+Audit date: 2026-09-19 (America/Phoenix). Repo audited: `vexrypt-rgb/AltoClef` (AltoClef fork).
 On the Windows machine this tree is `C:\Users\redfa\Documents\MinecraftDev\altoclef`.
 
 Phase 0 was docs-only. Phase 2 adds MovementEngine adapter for 2 travel tasks.
@@ -20,7 +20,7 @@ and exports a JSON summary (no live MC client required for mocks).
 
 | Layer | Role |
 |-------|------|
-| **TenorClef** | High-level autonomous agent: perception, world model, goals, planning, tasks, evaluation, recovery |
+| **AltoClef** | High-level autonomous agent: perception, world model, goals, planning, tasks, evaluation, recovery |
 | **Ostinato** | Low-level movement: nav, pathfinding, physics; backends **Baritone** + **Tungsten** |
 
 Target pipeline:
@@ -100,7 +100,7 @@ GetToEntity (TARGET_UNAVAILABLE / TIMEOUT), ResourceTask SUCCESS shim, PickupDro
 
 **Path B — Tungsten travel facade (optional).** `adris.altoclef.movement.TungstenMovement` + reflection `TungstenBridge` → `TungstenGotoTask` / `TungstenFollowTask`. Mining intentionally stays on Baritone (`docs/TUNGSTEN_BACKEND.md`).
 
-**Ostinato MovementEngine (Phase 2):** Ostinato tip exposes `IMovementEngine` / `HybridMovementEngine` (built on `IMovementBackend`). TenorClef routes **GetToBlockTask** and **GetToEntityTask** through `adris.altoclef.movement.MovementEngineAdapter` (reflection + CustomGoalProcess fallback). Other ~60 Baritone call sites unchanged. Mining/builder stay on Baritone processes.
+**Ostinato MovementEngine (Phase 2):** Ostinato tip exposes `IMovementEngine` / `HybridMovementEngine` (built on `IMovementBackend`). AltoClef routes **GetToBlockTask** and **GetToEntityTask** through `adris.altoclef.movement.MovementEngineAdapter` (reflection + CustomGoalProcess fallback). Other ~60 Baritone call sites unchanged. Mining/builder stay on Baritone processes.
 
 ### Phase 3 core split (incremental)
 
@@ -270,7 +270,7 @@ ReplayMod preprocess + Fabric Loom: `settings.gradle.kts` includes `1.21.11` …
 
 ```
 ┌──────────────────────────────────────────────┐
-│ TenorClef                                     │
+│ AltoClef                                     │
 │  Goal / Requirements / Planner                │
 │  WorldKnowledge (timestamped facts)           │
 │  TaskExecutor (TaskResult / FailureReason)    │
@@ -285,7 +285,7 @@ ReplayMod preprocess + Fabric Loom: `settings.gradle.kts` includes `1.21.11` …
 └──────────────────────────────────────────────┘
 ```
 
-Phase 2 should **evolve** Ostinato's `IMovementBackend` into the public MovementEngine surface and migrate 1–2 TenorClef call sites — not invent a second parallel API and not rewrite TenorClef.
+Phase 2 should **evolve** Ostinato's `IMovementBackend` into the public MovementEngine surface and migrate 1–2 AltoClef call sites — not invent a second parallel API and not rewrite AltoClef.
 
 ## Related docs
 

@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
  * and call {@link ModCompat#registerDamage} for items that do not
  * use vanilla attribute modifiers (guns, magic staves, …).
  */
-public interface TenorPlugin {
+public interface AltoPlugin {
 
     String id();
 

@@ -28,11 +28,11 @@ Audit date: 2026-09-19 (America/Phoenix). Phase 1 CI/Gradle notes updated 2026-0
 - `WorldSurvivalChain` handles drown/lava/fire/portal with priority bands but remains a special-case chain, not a unified threat model (Phase 8).
 - Root `TODO.md`: lava escape, endermen eye contact, piglin rules, bastion avoidance.
 
-## Baritone / Tungsten leakage into TenorClef
+## Baritone / Tungsten leakage into AltoClef
 
 - **~60** Java files `import baritone...`.
 - Travel helpers exist (`TungstenMovement`) but most movement/construction/speedrun tasks still speak Baritone process APIs directly.
-- Duplicate control planes: TenorClef Tungsten facade **and** Ostinato tip `IMovementBackend` / `movementBackend` setting — risk of divergent switches until Phase 2 unifies on Ostinato MovementEngine.
+- Duplicate control planes: AltoClef Tungsten facade **and** Ostinato tip `IMovementBackend` / `movementBackend` setting — risk of divergent switches until Phase 2 unifies on Ostinato MovementEngine.
 
 ## Version / build debt
 
@@ -48,13 +48,13 @@ Audit date: 2026-09-19 (America/Phoenix). Phase 1 CI/Gradle notes updated 2026-0
 - No `src/test` unit suite for tasksystem / movement facades.
 - “Tests” in-repo are mostly **in-game commands** (`TestCommand`, `TestRunCommand`, `Testrun2Command`, `CycleTestCommand`).
 - ~~CI does not stage Ostinato for 1.16.1.~~ **Fixed in Phase 1** — committed `libs/baritone-unoptimized-fabric-1.16.1.jar`; tip Ostinato built in the `1.21.11` job (experimental / non-blocking as of CI noise cleanup).
-- **Ostinato `1.16.1` branch Tests job** (JDK 8 / Gradle 4.9) has been failing independently. Not fixed in TenorClef; document + prefer `continue-on-error` on that Ostinato workflow until a quick JDK8 test fix is available.
+- **Ostinato `1.16.1` branch Tests job** (JDK 8 / Gradle 4.9) has been failing independently. Not fixed in AltoClef; document + prefer `continue-on-error` on that Ostinato workflow until a quick JDK8 test fix is available.
 
 ## Water / swim (recent, relevant)
 
 Documented in `docs/WATER_MINE_FIX.md` + Ostinato `docs/SWIM_PORT.md`:
 
-- TenorClef: `DestroyBlockTask` must not left-click while water-bobbing; escape via `GetOutOfWaterTask`; CollectWaterBucket prefers shore.
+- AltoClef: `DestroyBlockTask` must not left-click while water-bobbing; escape via `GetOutOfWaterTask`; CollectWaterBucket prefers shore.
 - Ostinato: port baritone#3988 sprint-swim / curb #2377 bob (`swimInWater`).
 - Reminder: 1.16.1 remains Baritone-only for movement backend.
 

@@ -72,7 +72,7 @@ No standalone `SIM.md` / `TESTING.md` / `HARNESS.md` / `OVERNIGHT.md` beyond the
 
 ---
 
-## Engineering state (box mirrors: TenorClef-main / e94-bootstrap-gate)
+## Engineering state (box mirrors: AltoClef-main / e94-bootstrap-gate)
 
 ### `PlaceBlockTask` cobble fallback — **OK (no BlockOptionalMeta)**
 

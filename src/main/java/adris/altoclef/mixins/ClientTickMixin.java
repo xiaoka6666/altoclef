@@ -35,7 +35,7 @@ public final class ClientTickMixin {
     private void clientTick(CallbackInfo ci) {
         if (!altoClefKtickProven) {
             altoClefKtickProven = true;
-            System.out.println("TENORCLEF: MIXIN OK ClientTickMixin injected into MinecraftClient.tick()");
+            System.out.println("ALTOCLEF: MIXIN OK ClientTickMixin injected into MinecraftClient.tick()");
         }
         // S174 — drive the reroll from HERE, not from TitleScreen.tick().
         //

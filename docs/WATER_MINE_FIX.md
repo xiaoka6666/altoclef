@@ -9,7 +9,7 @@ Bot bobbing in water while trying to break a block — crosshair never locks; bu
 1. **`GetOutOfWaterTask.isEqual` always returned `false`.** Parents (`CollectBucketLiquidTask`, `DestroyBlockTask`, `T2Solve` S102) return `new GetOutOfWaterTask()` every tick. Task system treated each as a different child → interrupt → `CustomBaritoneGoalTask.onStart` **forceCancel** → speed stays ≈0 → endless S102.
 2. **`T2Solve` S102 called `cancelPath` every tick** even while already escaping, plus `T2Input.swim()`, fighting pathing and reinforcing bob thrash.
 3. **Immediate scoop while standing in the liquid column** while bobbing (`!onGround`) never kept look lock.
-4. Ostinato/Baritone `Movement.update` JUMP-in-liquid bob (#2377) remains an engine-level issue; `swimInWater` exists in Ostinato source but TenorClef must still mitigate without relying on a jar rebuild.
+4. Ostinato/Baritone `Movement.update` JUMP-in-liquid bob (#2377) remains an engine-level issue; `swimInWater` exists in Ostinato source but AltoClef must still mitigate without relying on a jar rebuild.
 
 ## Fixes (this PR)
 

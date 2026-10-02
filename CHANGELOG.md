@@ -1,18 +1,18 @@
-# TenorClef 0.22.2
+# AltoClef 0.22.2
 
 Every build runs on [Ostinato](https://github.com/vexrypt-rgb/Ostinato) (the Baritone fork), not upstream Baritone.
 Fixes on top of 0.22.0. (0.22.1 was tagged with incomplete notes; use 0.22.2.)
 
 ## Downloads
 
-| Minecraft | TenorClef jar | Ostinato |
+| Minecraft | AltoClef jar | Ostinato |
 |---|---|---|
-| 1.21.4 | `tenorclef-mc1.21.4-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.21.4-*.jar` |
-| 1.16.1 | `tenorclef-mc1.16.1-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.16.1-*.jar` |
-| 1.21.11 (experimental) | `tenorclef-mc1.21.11-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.21.11-*.jar` |
-| 26.3 (experimental) | `tenorclef-mc26.3-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc26.3-*.jar` (Java 25) |
+| 1.21.4 | `altoclef-mc1.21.4-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.21.4-*.jar` |
+| 1.16.1 | `altoclef-mc1.16.1-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.16.1-*.jar` |
+| 1.21.11 (experimental) | `altoclef-mc1.21.11-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc1.21.11-*.jar` |
+| 26.3 (experimental) | `altoclef-mc26.3-v0.22.2.jar` | Ostinato v1.0.2 `ostinato-mc26.3-*.jar` (Java 25) |
 
-Install Fabric Loader, Fabric API, the TenorClef jar and the matching Ostinato jar. Do not add a second Baritone jar.
+Install Fabric Loader, Fabric API, the AltoClef jar and the matching Ostinato jar. Do not add a second Baritone jar.
 
 ## Fixes
 
@@ -20,7 +20,7 @@ Install Fabric Loader, Fabric API, the TenorClef jar and the matching Ostinato j
 - Swimming out onto a shallow shore ledge climbs it instead of sinking.
 - Chat logs a "swim stall" line when a swim movement is stuck, to make reports easier to diagnose.
 
-# TenorClef 0.22.0
+# AltoClef 0.22.0
 
 This release rolls up everything since 0.20.0 (the 0.21.0 tag was never published).
 

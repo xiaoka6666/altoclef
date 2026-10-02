@@ -19,7 +19,7 @@ import java.util.List;
 public class FleetCommand extends Command {
 
     public FleetCommand() {
-        super(List.of("fleet", "link"), "Link TenorClef butlers",
+        super(List.of("fleet", "link"), "Link AltoClef butlers",
                 new StringArg("args", "list"));
     }
 

@@ -42,7 +42,7 @@ package adris.altoclef.benchmark;
 //$$  * start before each trial and records game ticks to arrive and final distance.
 //$$  *
 //$$  * <p>Writes {@code pathbench/pathbench_<mode>_<time>.csv} and logs a {@code PATHBENCH}
-//$$  * summary. {@code -Dtenorclef.pathbench.exit=true} stops the client afterwards (headless loop).
+//$$  * summary. {@code -Daltoclef.pathbench.exit=true} stops the client afterwards (headless loop).
 //$$  */
 //$$ public final class PathBench {
 //$$
@@ -77,7 +77,7 @@ package adris.altoclef.benchmark;
 //$$                 e.printStackTrace();
 //$$             } finally {
 //$$                 running = null;
-//$$                 if (Boolean.getBoolean("tenorclef.pathbench.exit")) {
+//$$                 if (Boolean.getBoolean("altoclef.pathbench.exit")) {
 //$$                     Debug.logHarness("PATHBENCH exit requested");
 //$$                     mc.execute(mc::scheduleStop);
 //$$                 }
@@ -130,7 +130,7 @@ package adris.altoclef.benchmark;
 //$$             if (s == null) throw new IllegalArgumentException("unknown baritone setting " + key);
 //$$             original = SettingsUtil.settingValueToString(s);
 //$$         }
-//$$         long timeout = Long.getLong("tenorclef.pathbench.timeoutMs", 4000L);
+//$$         long timeout = Long.getLong("altoclef.pathbench.timeoutMs", 4000L);
 //$$         PrintWriter csv = open("search");
 //$$         csv.println("setting,value,goal,dx,dz,dist,rep,result,ms,nodes,pathLen,costTicks");
 //$$         try {
@@ -177,11 +177,11 @@ package adris.altoclef.benchmark;
 //$$             BlockPos from = mc.submit(() -> mc.player.getBlockPos()).get();
 //$$             CalculationContext ctx = mc.submit(() -> new CalculationContext(b, true)).get();
 //$$             AStarPathFinder pf = new AStarPathFinder(from.getX(), from.getY(), from.getZ(), new GoalBlock(g), new Favoring(null, ctx), ctx);
-//$$             long ms = Long.getLong("tenorclef.pathbench.guideMs", 1500L);
+//$$             long ms = Long.getLong("altoclef.pathbench.guideMs", 1500L);
 //$$             IPath p = pf.calculate(ms, ms * 2).getPath().orElse(null);
 //$$             if (p == null || p.positions().size() < 2) return TungstenMovement.requestPathTo(g);
 //$$             // Keep every Nth block plus every height change, so Tungsten is free to cut corners on flat runs.
-//$$             int stride = Integer.getInteger("tenorclef.pathbench.guideStride", 3);
+//$$             int stride = Integer.getInteger("altoclef.pathbench.guideStride", 3);
 //$$             List<? extends baritone.api.utils.BetterBlockPos> pos = p.positions();
 //$$             java.util.List<BlockPos> way = new java.util.ArrayList<>();
 //$$             for (int i = 0; i < pos.size(); i++) {
@@ -201,12 +201,12 @@ package adris.altoclef.benchmark;
 //$$         String mover = opt == null || opt.equals("-") ? "baritone" : opt.toLowerCase(Locale.ROOT);
 //$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
 //$$         List<BlockPos> goals = ring(mc, origin);
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 90);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 90);
 //$$         // End a trial early once it stops getting closer; 0 disables.
-//$$         long stallTicks = Long.getLong("tenorclef.pathbench.stallTicks", 400L);
-//$$         long idleTicks = Long.getLong("tenorclef.pathbench.idleTicks", 80L);
-//$$         // Optional goal subset, e.g. -Dtenorclef.pathbench.goals=8,9,10
-//$$         String goalSel = System.getProperty("tenorclef.pathbench.goals", "").trim();
+//$$         long stallTicks = Long.getLong("altoclef.pathbench.stallTicks", 400L);
+//$$         long idleTicks = Long.getLong("altoclef.pathbench.idleTicks", 80L);
+//$$         // Optional goal subset, e.g. -Daltoclef.pathbench.goals=8,9,10
+//$$         String goalSel = System.getProperty("altoclef.pathbench.goals", "").trim();
 //$$         java.util.Set<Integer> only = new java.util.HashSet<>();
 //$$         if (!goalSel.isEmpty()) for (String x : goalSel.split(",")) only.add(Integer.parseInt(x.trim()));
 //$$         // "ostinato": Baritone's custom goal with movementBackend=tungsten (Ostinato's own Tungsten bridge).
@@ -446,7 +446,7 @@ package adris.altoclef.benchmark;
 //$$         Thread.sleep(3000);
 //$$         BlockPos start = new BlockPos(ox - 5, by + 3, oz);
 //$$         BlockPos g = new BlockPos(ox + L + 5, by + 3, oz);
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 120);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 120);
 //$$         PrintWriter csv = open("boat_baritone");
 //$$         csv.println("mover,variant,rep,result,ticks,endDist");
 //$$         try {
@@ -491,7 +491,7 @@ package adris.altoclef.benchmark;
 //$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
 //$$         BaritoneAPI.getSettings().chatDebug.value = true;
 //$$         int by = 150, ox = origin.getX(), oz = origin.getZ();
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 90);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 90);
 //$$         PrintWriter csv = open("cliff_baritone");
 //$$         csv.println("mover,variant,height,rep,result,ticks,hp");
 //$$         try {
@@ -560,7 +560,7 @@ package adris.altoclef.benchmark;
 //$$         boolean glide = "glide".equalsIgnoreCase(opt);
 //$$         int ox = origin.getX(), oz = origin.getZ(), sy = glide ? 250 : 200;
 //$$         int[][] offs = glide ? new int[][]{{300, 0}, {0, -250}, {-200, 200}} : new int[][]{{1000, 0}, {0, -1000}, {-700, 700}, {1500, 800}};
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 180);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 180);
 //$$         PrintWriter csv = open(glide ? "elytra_glide" : "elytra");
 //$$         csv.println("goal,dx,dz,dist,rep,result,ticks,endDist,rockets,hp,minHp");
 //$$         int ok = 0, n = 0;
@@ -697,7 +697,7 @@ package adris.altoclef.benchmark;
 //$$         Thread.sleep(3000);
 //$$         BlockPos start = new BlockPos(ox, by + H - 2, oz);
 //$$         int[][] offs = {{10, 0, 10}, {-10, 0, 10}, {-10, 0, -10}, {10, 0, -10}, {10, 5, 0}, {0, 5, -10}, {-10, 9, 0}, {0, 2, 10}};
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 90);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 90);
 //$$         PrintWriter csv = open("swim_baritone");
 //$$         csv.println("mover,goal,dx,dy,dz,dist,rep,result,ticks,endDist,firstMoveTicks");
 //$$         int ok = 0, n = 0;
@@ -707,7 +707,7 @@ package adris.altoclef.benchmark;
 //$$                 for (int r = 0; r < reps; r++) {
 //$$                     teleport(mc, start);
 //$$                     // every rep starts on the same breath (full by default), otherwise results depend on the previous rep
-//$$                     int air0 = Integer.getInteger("tenorclef.pathbench.swimAir", 300);
+//$$                     int air0 = Integer.getInteger("altoclef.pathbench.swimAir", 300);
 //$$                     mc.getServer().execute(() -> mc.getServer().getPlayerManager().getPlayerList().forEach(p -> p.setAir(Math.min(air0, p.getMaxAir()))));
 //$$                     Thread.sleep(200);
 //$$                     long t0 = worldTime(mc);
@@ -755,15 +755,15 @@ package adris.altoclef.benchmark;
 //$$     private static void wreck(MinecraftClient mc, BlockPos origin, int count) throws Exception {
 //$$         IBaritone baritone = BaritoneAPI.getProvider().getPrimaryBaritone();
 //$$         BaritoneAPI.getSettings().chatDebug.value = true;
-//$$         long limitTicks = Long.getLong("tenorclef.pathbench.travelTicks", 20L * 120);
-//$$         long ptm = Long.getLong("tenorclef.wrecktimeout", 0);
+//$$         long limitTicks = Long.getLong("altoclef.pathbench.travelTicks", 20L * 120);
+//$$         long ptm = Long.getLong("altoclef.wrecktimeout", 0);
 //$$         if (ptm > 0) { BaritoneAPI.getSettings().primaryTimeoutMS.value = ptm; BaritoneAPI.getSettings().failureTimeoutMS.value = ptm * 4; }
 //$$         int[][] dirs = {{0, 0}, {800, 0}, {-800, 0}, {0, 800}, {0, -800}, {800, 800}, {-800, -800}, {800, -800}};
 //$$         PrintWriter csv = open("wreck_baritone");
 //$$         csv.println("wreck,x,y,z,startDist,result,ticks,endDist,opened,items");
 //$$         // Pathing test, not combat: drowned in the wrecks would otherwise decide the result.
 //$$         mc.getServer().submit(() -> mc.getServer().setDifficulty(net.minecraft.world.Difficulty.PEACEFUL, true)).get();
-//$$         if (!"false".equals(System.getProperty("tenorclef.wreckgear"))) {
+//$$         if (!"false".equals(System.getProperty("altoclef.wreckgear"))) {
 //$$             // Diver's kit: diamond tools + Aqua Affinity, so hull planks can be mined underwater.
 //$$             mc.getServer().submit(() -> {
 //$$                 net.minecraft.server.command.ServerCommandSource src = mc.getServer().getCommandSource();
@@ -803,7 +803,7 @@ package adris.altoclef.benchmark;
 //$$                     if (all) break;
 //$$                     Thread.sleep(100);
 //$$                 }
-//$$                 if (Boolean.getBoolean("tenorclef.wreckmap")) {
+//$$                 if (Boolean.getBoolean("altoclef.wreckmap")) {
 //$$                     net.minecraft.server.world.ServerWorld sw = mc.getServer().getOverworld();
 //$$                     for (int y = chest.getY() + 3; y >= chest.getY() - 1; y--) {
 //$$                         StringBuilder sb = new StringBuilder("MAP y=" + y + " ");

@@ -1,7 +1,7 @@
 package adris.altoclef.tasks.speedrun.testrun2.gui;
 
 /**
- * Paint for {@link T2MenuScreen}. Ostinato card language, TenorClef amber/rose.
+ * Paint for {@link T2MenuScreen}. Ostinato card language, AltoClef amber/rose.
  */
 final class T2MenuLook {
 
@@ -37,9 +37,9 @@ final class T2MenuLook {
         g.fill(s.px0 + 11, s.py0 + 8, s.px0 + 14, s.py0 + 21, C_ACCENT);
         g.fill(s.px0 + 14, s.py0 + 8, s.px0 + 22, s.py0 + 11, C_ACCENT);
         g.fill(s.px0 + 14, s.py0 + 14, s.px0 + 20, s.py0 + 16, C_ACCENT2);
-        drawLogo(s, g, "TenorClef", s.px0 + 26, s.py0 + 10);
+        drawLogo(s, g, "AltoClef", s.px0 + 26, s.py0 + 10);
         String chip = "control";
-        int cx = s.px0 + 26 + net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth("TenorClef") + 8;
+        int cx = s.px0 + 26 + net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth("AltoClef") + 8;
         int cw = net.minecraft.client.MinecraftClient.getInstance().textRenderer.getWidth(chip) + 10;
         g.fill(cx, s.py0 + 9, cx + cw, s.py0 + 20, 0x22E8C96A);
         g.drawText(net.minecraft.client.MinecraftClient.getInstance().textRenderer, chip, cx + 5, s.py0 + 11, C_ACCENT, false);

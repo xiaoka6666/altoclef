@@ -1,7 +1,7 @@
-# Phase 0 Inventory — TenorClef + Ostinato
+# Phase 0 Inventory — AltoClef + Ostinato
 
 Companion to [`BASELINE.md`](BASELINE.md). Audit date 2026-09-24.
-TenorClef = `altoclef/` @ `873e4d79` + dirty working tree. Ostinato tip = `Ostinato/` @ `99ee67ad`.
+AltoClef = `altoclef/` @ `873e4d79` + dirty working tree. Ostinato tip = `Ostinato/` @ `99ee67ad`.
 Ostinato 1.16.1 = `Ostinato-1.16.1/` @ `f5472de3` (+ dirty tree).
 
 **Live status** is relative to the Reported live entry `@testrun2` on MC 1.16.1
@@ -11,7 +11,7 @@ Gradle** (BASELINE §15), so "tested" below always means "a test source exists",
 
 ---
 
-## 1. Live execution spine (TenorClef)
+## 1. Live execution spine (AltoClef)
 
 | Component | Path | Exists | Purpose | Callers | Instantiation | Live | Tests | Version scope | Evidence / notes |
 |---|---|---|---|---|---|---|---|---|---|

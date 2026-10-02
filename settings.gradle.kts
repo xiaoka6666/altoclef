@@ -31,13 +31,13 @@ if (localPropsFile.exists()) {
         extra[key] = value
         if (key == "org.gradle.java.home") {
             println(
-                "[tenorclef] gradle.properties.local sets org.gradle.java.home — " +
+                "[altoclef] gradle.properties.local sets org.gradle.java.home — " +
                     "Gradle selects the daemon JDK from JAVA_HOME or ~/.gradle/gradle.properties; " +
                     "export JAVA_HOME=\"$value\" if this pin is required."
             )
         }
     }
-    println("[tenorclef] Loaded ${localProps.size} entries from gradle.properties.local")
+    println("[altoclef] Loaded ${localProps.size} entries from gradle.properties.local")
 }
 
 rootProject.name = "altoclef"

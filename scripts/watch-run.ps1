@@ -28,7 +28,7 @@ Write-Output ""
 Write-Output "=== MARKER CHAIN (latest.log) ==="
 if (Test-Path $latest) {
     $marks = @(
-        'TENORCLEF: Global Init',
+        'ALTOCLEF: Global Init',
         'AUTOWORLD: fresh-world create armed',
         'AUTOWORLD: creating fresh world',
         'AUTOWORLD: create call returned',

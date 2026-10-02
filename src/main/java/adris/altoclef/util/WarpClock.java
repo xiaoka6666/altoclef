@@ -47,10 +47,10 @@ public final class WarpClock {
         return f == 1f ? ms : ms / f;
     }
 
-    // -Dtenorclef.warp=5 lets the sim loop start warped without typing a command.
+    // -Daltoclef.warp=5 lets the sim loop start warped without typing a command.
     private static float initialFactor() {
         try {
-            String p = System.getProperty("tenorclef.warp");
+            String p = System.getProperty("altoclef.warp");
             if (p != null) {
                 float f = Float.parseFloat(p.trim());
                 if (f >= 1f) return Math.min(f, MAX);

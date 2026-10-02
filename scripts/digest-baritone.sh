@@ -50,7 +50,7 @@ function flush(   g, top, i, best, bk, out) {
     if (t < from || t > to) next
     b = int(secs(t) / win) * win
     if (b != lastb) { flush(); lastb = b; bucket = sprintf("[%02d:%02d:%02d]", b / 3600, (b % 3600) / 60, b % 60) }
-    m = $0; sub(/.*\[Baritone\] /, "", m); sub(/.*\[CHAT\] /, "", m); sub(/.*TENORCLEF: /, "", m)
+    m = $0; sub(/.*\[Baritone\] /, "", m); sub(/.*\[CHAT\] /, "", m); sub(/.*ALTOCLEF: /, "", m)
     if (m ~ /^Starting to search for path/) {
         srch++; g = m; sub(/.* to /, "", g); sub(/[{@ ].*/, "", g); sub(/.*\./, "", g); sub(/\$.*/, "", g); goals[g]++
     } else if (m ~ /^Finished finding a path/) ok++

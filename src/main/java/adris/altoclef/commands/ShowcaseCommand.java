@@ -123,8 +123,8 @@ public class ShowcaseCommand extends Command {
         Thread t = new Thread(() -> {
             try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
             mc.execute(() -> mod.getClientBaritone().getCustomGoalProcess().setGoalAndPath(new GoalBlock(g.getX(), g.getY(), g.getZ())));
-            // -Dtenorclef.show.trace=true: log the player's water/pose state twice a second while the demo runs.
-            for (int i = 0; Boolean.getBoolean("tenorclef.show.trace") && i < 80; i++) {
+            // -Daltoclef.show.trace=true: log the player's water/pose state twice a second while the demo runs.
+            for (int i = 0; Boolean.getBoolean("altoclef.show.trace") && i < 80; i++) {
                 try { Thread.sleep(500); } catch (InterruptedException ignored) {}
                 mc.execute(() -> {
                     var pl = mc.player;

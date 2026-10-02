@@ -1,8 +1,8 @@
-# Ostinato ↔ TenorClef boundary (Phase 0)
+# Ostinato ↔ AltoClef boundary (Phase 0)
 
 ## Rule of thumb
 
-| Lives in **Ostinato** | Lives in **TenorClef** |
+| Lives in **Ostinato** | Lives in **AltoClef** |
 |-----------------------|------------------------|
 | Pathfinding, movement execution, physics traversal | Goals, plans, task graphs, catalogue |
 | Baritone processes & path executor | World model / knowledge facts |
@@ -16,24 +16,24 @@
 
 - **Migrated:** `GetToBlockTask` / `GetToEntityTask` → `MovementEngineAdapter` → Ostinato `IMovementEngine` (fallback to CustomGoalProcess).
 - **Still direct:** most other tasks still call `getCustomGoalProcess` / `getPathingBehavior` / `getInputOverrideHandler`.
-- TenorClef still embeds `TungstenBridge` for its own TungstenGoto/Follow tasks; hybrid selection increasingly lives in Ostinato.
+- AltoClef still embeds `TungstenBridge` for its own TungstenGoto/Follow tasks; hybrid selection increasingly lives in Ostinato.
 - `AltoClef.initializeBaritoneSettings` still mutates Baritone settings (agent preferences; later via engine config).
 
 ## Phase 2 direction
 
 1. Expand Ostinato `IMovementBackend` → documented **MovementEngine** API (`MovementGoal`, status, path result, failures).
 2. Keep `BaritoneMovementBackend` + `TungstenMovementBackend` + hybrid auto-fallback inside Ostinato.
-3. Replace TenorClef travel call sites gradually (`GetToBlockTask` / `TungstenGotoTask` first).
+3. Replace AltoClef travel call sites gradually (`GetToBlockTask` / `TungstenGotoTask` first).
 4. Leave mining/building on Baritone processes until a later, explicit action-interface phase.
 
 ## Version matrix (boundary implications)
 
 | MC | Ostinato | Tungsten |
 |----|----------|----------|
-| 1.21.11 / 1.21.1 / 1.21 | Tip jars from `Ostinato/dist` | Optional jars on TenorClef 1.21.x modules only |
+| 1.21.11 / 1.21.1 / 1.21 | Tip jars from `Ostinato/dist` | Optional jars on AltoClef 1.21.x modules only |
 | 1.16.1 | `Ostinato-1.16.1` / ostinato-1.16.1 jar | **Not supported** — Baritone only |
 
 ## Pointers
 
-- TenorClef: `docs/ARCHITECTURE.md`, `docs/ROADMAP.md`, `docs/OSTINATO_WIRING.md`, `docs/TUNGSTEN_BACKEND.md`
-- Ostinato: `docs/SWIM_PORT.md` (+ short `docs/TENORCLEF.md` pointer added in Phase 0)
+- AltoClef: `docs/ARCHITECTURE.md`, `docs/ROADMAP.md`, `docs/OSTINATO_WIRING.md`, `docs/TUNGSTEN_BACKEND.md`
+- Ostinato: `docs/SWIM_PORT.md` (+ short `docs/ALTOCLEF.md` pointer added in Phase 0)

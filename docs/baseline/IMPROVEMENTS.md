@@ -2,7 +2,7 @@
 
 Follow-up to [`BASELINE.md`](BASELINE.md) and [`PHASE1_RESULT.md`](PHASE1_RESULT.md).
 Target: `@testrun2` on MC 1.16.1 (the owner's live bot).
-Pushed on branch `feat/testrun2-live-fixes` (TenorClef) and `fix/1161-runtime-jar-source` (Ostinato).
+Pushed on branch `feat/testrun2-live-fixes` (AltoClef) and `fix/1161-runtime-jar-source` (Ostinato).
 
 Evidence sources:
 - **Historical logs**: `versions/1.16.1/run/logs/2026-09-2[34]-*.log.gz` + `latest.log`.

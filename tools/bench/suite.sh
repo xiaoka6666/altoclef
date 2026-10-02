@@ -6,7 +6,7 @@ for b in "swim|pathbench swim - 2|17|8" "wreck|pathbench wreck - 5|6|8" "column|
   pkill -9 java; sleep 3
   sed -i "s/\"autoRunCommand\" : \"[^\"]*\"/\"autoRunCommand\" : \"$cmd\"/" $S
   start=$(date +%s)
-  ( export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Dtenorclef.seed=12345 -Dtenorclef.warp=$w -Dtenorclef.pathbench.exit=true"; xvfb-run -a -s "-screen 0 640x360x24" ./gradlew --offline :1.16.1:runClient > $O/suite_$m.log 2>&1 ) &
+  ( export JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -Daltoclef.seed=12345 -Daltoclef.warp=$w -Daltoclef.pathbench.exit=true"; xvfb-run -a -s "-screen 0 640x360x24" ./gradlew --offline :1.16.1:runClient > $O/suite_$m.log 2>&1 ) &
   sleep 60; f=
   while [ $(( $(date +%s) - start )) -lt 3000 ]; do
     f=$(find $D -name "pathbench_${m}_*" -newermt "@$start" | sort | tail -1)

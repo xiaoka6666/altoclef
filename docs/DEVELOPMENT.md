@@ -1,16 +1,16 @@
 # Development (Phase 1)
 
-Portable builds for TenorClef. No machine-specific paths in committed `gradle.properties`.
+Portable builds for AltoClef. No machine-specific paths in committed `gradle.properties`.
 
 ## JDKs
 
 | What you build | JDK | Notes |
 | --- | --- | --- |
-| TenorClef modules (`1.21.4`, `1.21.11`, `1.16.1`) | **JDK 21** | Root Loom build; `jvmdowngrader` lowers bytecode for older MC |
+| AltoClef modules (`1.21.4`, `1.21.11`, `1.16.1`) | **JDK 21** | Root Loom build; `jvmdowngrader` lowers bytecode for older MC |
 | Ostinato `main` (MC 1.21.4) and `1.21.11` | **JDK 21** | Gradle 8.x / Unimined |
 | Ostinato `1.16.1` branch | **JDK 8** | Gradle **4.9** — do not use JDK 21 for that checkout |
 
-Set `JAVA_HOME` (or your IDE Gradle JVM) to JDK 21 before running TenorClef Gradle.
+Set `JAVA_HOME` (or your IDE Gradle JVM) to JDK 21 before running AltoClef Gradle.
 
 ```bat
 REM Windows (example — adjust path to your Adoptium/Temurin install)
@@ -51,7 +51,7 @@ org.gradle.jvmargs=-Xmx8192M
 
 ## Ostinato jars
 
-TenorClef searches (first hit wins by newest mtime):
+AltoClef searches (first hit wins by newest mtime):
 
 | Layout | Path |
 | --- | --- |
@@ -92,7 +92,7 @@ Uses the committed `libs/baritone-unoptimized-fabric-1.21.4.jar` (Ostinato `main
 
 ### Other versions
 
-`1.21.1` down to `1.16.5` are preprocess-only nodes: TenorClef always runs on Ostinato and Ostinato has no build for them, so their compile, jar and test tasks are disabled. They keep upstream Baritone compile-only, only so the preprocessor can resolve types.
+`1.21.1` down to `1.16.5` are preprocess-only nodes: AltoClef always runs on Ostinato and Ostinato has no build for them, so their compile, jar and test tasks are disabled. They keep upstream Baritone compile-only, only so the preprocessor can resolve types.
 
 ## Tungsten (optional)
 
@@ -119,7 +119,7 @@ On push/PR to `main`, `.github/workflows/gradle.yml`:
 
 1. **1.21.4** (required) — JDK 21, committed `libs/baritone-unoptimized-fabric-1.21.4.jar`, `./gradlew :1.21.4:compileJava` then `:1.21.4:test`.
 2. **1.21.11** (experimental, `continue-on-error`) — JDK 21, checkout + `:fabric:build` of `vexrypt-rgb/Ostinato@1.21.11`, stage jars to `../Ostinato/dist` (and `libs/`), then `./gradlew :1.21.11:compileJava` **only if** staging succeeded. Does **not** block merge.
-3. **1.16.1** (required) — JDK 21 for TenorClef Gradle, uses committed `libs/baritone-unoptimized-fabric-1.16.1.jar`, `./gradlew :1.16.1:compileJava`.
+3. **1.16.1** (required) — JDK 21 for AltoClef Gradle, uses committed `libs/baritone-unoptimized-fabric-1.16.1.jar`, `./gradlew :1.16.1:compileJava`.
 
 `Deploy Javadoc` (`.github/workflows/javadoc-publish.yml`) is also **non-blocking** (`continue-on-error`) — generation/deploy failures must not red `main`.
 
@@ -127,4 +127,4 @@ Tungsten is never required. No `org.gradle.java.home` pin.
 
 ### Related: Ostinato `1.16.1` Tests
 
-Ostinato branch `1.16.1` runs `.github/workflows/run_tests.yml` on JDK 8. That job has been flaky/red independently of TenorClef. Prefer documenting + `continue-on-error` there until a dedicated JDK8/Gradle 4.9 test fix lands; TenorClef's `:1.16.1:compileJava` remains the required legacy gate.
+Ostinato branch `1.16.1` runs `.github/workflows/run_tests.yml` on JDK 8. That job has been flaky/red independently of AltoClef. Prefer documenting + `continue-on-error` there until a dedicated JDK8/Gradle 4.9 test fix lands; AltoClef's `:1.16.1:compileJava` remains the required legacy gate.

@@ -1,14 +1,14 @@
-# TenorClef + Ostinato — Engineering Roadmap
+# AltoClef + Ostinato — Engineering Roadmap
 
 Source: user Engineering Implementation Brief (2026-09-19). Incremental refactor; **do not rewrite**.
 
-Canonical workflow copy: `agent-data/workflows/tenorclef-ostinato/ROADMAP.md` (kept in sync with this file as of Phase 0).
+Canonical workflow copy: `agent-data/workflows/altoclef-ostinato/ROADMAP.md` (kept in sync with this file as of Phase 0).
 
 ## Target split
 
-- **TenorClef** — high-level autonomous Minecraft agent: perception → world model → goals → planning → task execution → evaluation → recovery/replanning.
+- **AltoClef** — high-level autonomous Minecraft agent: perception → world model → goals → planning → task execution → evaluation → recovery/replanning.
 - **Ostinato** — low-level movement/action layer: navigation → pathfinding → movement → physics traversal → backend abstraction (**Baritone** + **Tungsten**).
-- TenorClef must not know Baritone/Tungsten internals; Ostinato exposes a stable **MovementEngine** API.
+- AltoClef must not know Baritone/Tungsten internals; Ostinato exposes a stable **MovementEngine** API.
 
 ```
 Goal → Requirements → Plan → Tasks → Action Interface → Ostinato MovementEngine → Baritone | Tungsten
@@ -21,7 +21,7 @@ Goal → Requirements → Plan → Tasks → Action Interface → Ostinato Movem
 | 0 | Audit | `ARCHITECTURE` / `DEPENDENCIES` / `TECH_DEBT` / `PHASE0_AUDIT` / `OSTINATO_BOUNDARY` / this `ROADMAP` |
 | 1 | Stabilize | Reproducible builds, CI, pin versions, remove machine-specific Gradle |
 | 2 | Ostinato MovementEngine API | **First real code PR** — stable movement boundary |
-| 3 | TenorClef core split | Extract WorldKnowledge, controllers; shrink AltoClef god object |
+| 3 | AltoClef core split | Extract WorldKnowledge, controllers; shrink AltoClef god object |
 | 4 | Task / Failure model | TaskResult, FailureReason, structured TaskFailure, upward propagation |
 | 5 | World model | KnowledgeFact with timestamp/confidence/source |
 | 6 | Recovery | Retry, alternate path/resource, danger/death/inventory recovery |
@@ -37,12 +37,12 @@ Define and ship:
 - `MovementEngine`, `MovementGoal`, `MovementStatus`, `PathResult`, movement failures
 - `BaritoneMovementBackend`, `TungstenMovementBackend`, `HybridMovementEngine`
 - Preserve Tungsten-unavailable → Baritone fallback
-- Migrate 1–2 representative TenorClef tasks onto the API
+- Migrate 1–2 representative AltoClef tasks onto the API
 - Unit (+ integration where possible) tests + interface docs
 
 **Status (Phase 2):** Ostinato tip evolves the precursor SPI into `IMovementEngine` /
 `HybridMovementEngine` / `MovementGoal` / `PathResult` (see Ostinato `docs/MOVEMENT_ENGINE.md`).
-TenorClef adapter uses reflection so stock Baritone jars keep working. **Merged on main.**
+AltoClef adapter uses reflection so stock Baritone jars keep working. **Merged on main.**
 
 ## Phase 3 — Core split
 
@@ -165,7 +165,7 @@ Out of scope then: full in-game RSG harness, LLM eval loops.
 2. Don't mix architecture + feature + version migration in one change
 3. Every architectural change needs tests
 4. Keep Minecraft-specific code at the edges
-5. No direct backend leakage into TenorClef
+5. No direct backend leakage into AltoClef
 6. Failure is data (not false/null/bare exception)
 7. Prefer deterministic behavior
 8. LLMs are strategic, not motor control
@@ -182,7 +182,7 @@ User: "Get me a full set of iron armor and a shield." → goal → plan → Osti
 |-------|----------|
 | Foundation | CI matrix, JDK pins, Ostinato jar publish, remove `org.gradle.java.home` |
 | Ostinato movement | MovementEngine API, Baritone/Tungsten backends, Hybrid fallback |
-| TenorClef core | Split AltoClef god object, inject services, kill singleton creep |
+| AltoClef core | Split AltoClef god object, inject services, kill singleton creep |
 | Tasks / failure | TaskResult / FailureReason, catalogue cleanup |
 | Intelligence | World model, planner, agent protocol |
 | Testing / benchmarks | Scenario harness, metrics, mock world |

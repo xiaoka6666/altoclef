@@ -86,7 +86,7 @@ function Get-LogTail([int]$Lines = 250) {
 
 function Test-JoinSignal([string]$text) {
   if ([string]::IsNullOrEmpty($text)) { return $false }
-  # Title-screen init (TENORCLEF Global Init / Setting user) is NOT in-world.
+  # Title-screen init (ALTOCLEF Global Init / Setting user) is NOT in-world.
   return ($text -match 'joined the game' -or
           $text -match 'TESRUN2 start' -or
           $text -match 'User Task Set:.*ModernSpeedrun' -or
@@ -99,7 +99,7 @@ function Test-ClientUp([string]$text) {
   return ($text -match 'Sound engine started' -or
           $text -match 'FabricLoader' -or
           $text -match 'AltoClef' -or
-          $text -match 'TENORCLEF' -or
+          $text -match 'ALTOCLEF' -or
           $text -match 'Minecraft:')
 }
 

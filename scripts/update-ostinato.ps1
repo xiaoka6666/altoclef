@@ -7,8 +7,8 @@
 
   Gotchas (verified 2026-09-27):
    - Ostinato uses Gradle 4.9, which needs JDK 8. ~/.gradle/gradle.properties pins
-     org.gradle.java.home to JDK 21 for TenorClef, so it is overridden on the command line.
-   - The :proguard step produces the unoptimized jar TenorClef uses; :createDist fails and is skipped.
+     org.gradle.java.home to JDK 21 for AltoClef, so it is overridden on the command line.
+   - The :proguard step produces the unoptimized jar AltoClef uses; :createDist fails and is skipped.
    - The jar file is named ...-1.16.5.jar but fabric.mod.json targets minecraft 1.16.1.
 #>
 [CmdletBinding()]

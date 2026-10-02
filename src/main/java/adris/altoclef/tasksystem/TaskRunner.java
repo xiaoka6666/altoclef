@@ -44,7 +44,7 @@ public class TaskRunner {
                 var ts = maxChain.getTasks();
                 leaf = " task=" + ts.get(ts.size() - 1).getClass().getSimpleName();
             }
-            System.out.println("TENORCLEF: [CHAIN] " + (cachedCurrentTaskChain == null ? "none" : cachedCurrentTaskChain.getName())
+            System.out.println("ALTOCLEF: [CHAIN] " + (cachedCurrentTaskChain == null ? "none" : cachedCurrentTaskChain.getName())
                     + " -> " + (maxChain == null ? "none" : maxChain.getName()) + " pri=" + maxPriority + leaf);
         }
         if (cachedCurrentTaskChain != null && maxChain != cachedCurrentTaskChain) {

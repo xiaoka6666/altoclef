@@ -1,4 +1,4 @@
-# TenorClef + Ostinato — Phase 0 Baseline
+# AltoClef + Ostinato — Phase 0 Baseline
 
 Audit date: 2026-09-24. Scope: Phase 0 only (no source/build/test/CI changes).
 Supporting detail: [`inventory.md`](inventory.md).
@@ -8,7 +8,7 @@ observed by me) · **Reported-by-owner** · **Contradicted** · **Unknown** · *
 
 > **Headline.** The owner's live entry (inferred: `@testrun2` on 1.16.1) does reach the Phase-2
 > `MovementEngineAdapter`, but **every Baritone jar available to this machine lacks the Ostinato
-> MovementEngine classes**, so all of its travel falls back to `CustomGoalProcess`. TenorClef's 21 JUnit test
+> MovementEngine classes**, so all of its travel falls back to `CustomGoalProcess`. AltoClef's 21 JUnit test
 > classes **cannot compile** because JUnit is not on any test classpath. The working tree additionally
 > **breaks the required 1.21.1 CI gate** via one untracked mixin file.
 
@@ -16,9 +16,9 @@ observed by me) · **Reported-by-owner** · **Contradicted** · **Unknown** · *
 
 ## 1. Repository State
 
-| | TenorClef (`altoclef/`) | Ostinato tip (`Ostinato/`) | Ostinato 1.16.1 (`Ostinato-1.16.1/`, worktree of Ostinato) |
+| | AltoClef (`altoclef/`) | Ostinato tip (`Ostinato/`) | Ostinato 1.16.1 (`Ostinato-1.16.1/`, worktree of Ostinato) |
 |---|---|---|---|
-| Remote | `vexrypt-rgb/tenorclef` | `vexrypt-rgb/Ostinato` | same repo |
+| Remote | `vexrypt-rgb/Ostinato` | `vexrypt-rgb/Ostinato` | same repo |
 | Branch | `feat/tungsten-1161-fullport` | `feat/movement-engine` | `build/ci-noise-cleanup-tests` |
 | HEAD | `873e4d79f2bbd506fc3a467850734a4dd7cabce0` (`873e4d79`) | `99ee67ade114c34a7cf86e0279c4fef8dc8257f1` (`99ee67ad`) | `f5472de3567976abd26f8cbe274276caf47e1435` (`f5472de3`) |
 | HEAD date / subject | 2026-09-20 "ship full 1.16.1 physics A* port" | "add MovementEngine API on IMovementBackend precursor" | "continue-on-error for flaky 1.16.1 Tests job" |
@@ -27,14 +27,14 @@ observed by me) · **Reported-by-owner** · **Contradicted** · **Unknown** · *
 
 Verified via `git rev-parse`, `git status --porcelain`, `git diff --stat`.
 
-**TenorClef working-tree vs HEAD matters.** Uncommitted edits include +1388 lines in
+**AltoClef working-tree vs HEAD matters.** Uncommitted edits include +1388 lines in
 `ModernSpeedrunTask.java`, +642 in `T2Codes.java`, +551 in `HolePillar.java`, plus untracked
 `AutoWorldCreateMixin.java`, `AutoWorldLoadMixin.java`, `RuinedPortalFinishTask.java`, `T2Deadman.java`,
 `T2Trace.java`. `runClient` builds the working tree, so **this audit traces the working tree** and flags
 HEAD differences where they change a conclusion. The 1.16.1 Baritone jar in `libs/` is also modified
 vs HEAD (see §19).
 
-Modules (TenorClef): one source tree `src/` preprocessed (ReplayMod preprocessor `c2041a34ae`) into 14
+Modules (AltoClef): one source tree `src/` preprocessed (ReplayMod preprocessor `c2041a34ae`) into 14
 version projects `:1.21.11 … :1.16.1` (`settings.gradle.kts`, `root.gradle.kts`). `versions/mainProject`
 = `1.21.1`. Ostinato tip: root + `:fabric :forge :neoforge :tweaker`
 (`available_loaders`, `gradle.properties`); MC `1.21.11`, `java_version=21`.
@@ -44,9 +44,9 @@ version projects `:1.21.11 … :1.16.1` (`settings.gradle.kts`, `root.gradle.kts
 ## 2. Build and Toolchain
 
 **Toolchain (Verified).** JDKs present: 17.0.20, 21.0.12, 25.0.4 (PATH `java` = 25). No JDK 8 found.
-TenorClef: Gradle wrapper **9.4.1**, Loom 1.15.5, `options.release = 21`; `gradle.properties.local` pins
+AltoClef: Gradle wrapper **9.4.1**, Loom 1.15.5, `options.release = 21`; `gradle.properties.local` pins
 the daemon to JDK 21. Ostinato tip wrapper resolves Gradle 8.14.4. Ostinato-1.16.1 wrapper = Gradle 4.9,
-CI uses JDK 8. All TenorClef/Ostinato-tip commands below ran with `JAVA_HOME=jdk-21.0.12`.
+CI uses JDK 8. All AltoClef/Ostinato-tip commands below ran with `JAVA_HOME=jdk-21.0.12`.
 
 **Commands executed (Verified, 2026-09-24 ~19:58–20:02 local).**
 
@@ -79,7 +79,7 @@ Notes:
 | `build-1161` | `:1.16.1:compileJava` (requires committed `libs/baritone-unoptimized-fabric-1.16.1.jar`) | **Required** |
 | `build-12111` | builds Ostinato **`main` from GitHub**, then `:1.21.11:compileJava` | `continue-on-error: true` |
 
-No TenorClef CI job runs `test`. Ostinato tip CI runs `./gradlew test` (JDK 21) and `build`.
+No AltoClef CI job runs `test`. Ostinato tip CI runs `./gradlew test` (JDK 21) and `build`.
 Ostinato-1.16.1 CI runs `./gradlew test` on JDK 8 with `continue-on-error: true`.
 
 ---
@@ -121,7 +121,7 @@ TaskRunner.tick()  (AltoClef.onClientTick, every client tick)
 ThreatMonitor.tick()  (every tick; effects only on @goal GoalManager)
 ```
 
-- **WHAT (TenorClef)** is, on the live path, a single 2,773-line hand-written phase machine
+- **WHAT (AltoClef)** is, on the live path, a single 2,773-line hand-written phase machine
   (`ModernSpeedrunTask`: `BOOTSTRAP → LOOT → IRON → PORTAL → NETHER → EYES → STRONGHOLD → END`) with
   several watchdog overlays (`T2Brain/T2Probe/T2Solve`, freeze/water/surface bail, `stick()`).
   The Phase 7 planner (`GoalManager/PlanExecutor`) is **not** used by it.
@@ -222,12 +222,12 @@ call sites versus 198 `getClientBaritone()` call sites. This is a factual descri
 | Plane | Owner | Entry | Reached from `@testrun2`? | Backend actually used |
 |---|---|---|---|---|
 | `CustomGoalProcess.setGoalAndPath` (direct) | Baritone | 13 TC files, 13 `CustomBaritoneGoalTask` subclasses with `useMovementEngine()==false` | **Yes** (e.g., `GetToYTask`, `RunAway*` via `MobDefenseChain`) | Baritone |
-| `MovementController → MovementEngineAdapter` | TenorClef | `GetToBlockTask`, `GetToEntityTask` | **Yes** (`GetToBlockTask`) | **Baritone via fallback** (probe fails) |
+| `MovementController → MovementEngineAdapter` | AltoClef | `GetToBlockTask`, `GetToEntityTask` | **Yes** (`GetToBlockTask`) | **Baritone via fallback** (probe fails) |
 | Ostinato `IMovementEngine → HybridMovementEngine` | Ostinato | `MovementBackends.engine(IBaritone)` | **No** — classes absent from runtime jar | n/a |
 | Ostinato `CustomGoalProcess` Tungsten hand-off (`MovementBackends.preferTungstenTravel`) | Ostinato | inside `CustomGoalProcess` at tip | **No on 1.16.1** (Ostinato-1.16.1 has no `baritone/movement/*`) | n/a |
-| `TungstenMovement / TungstenBridge / TungstenGotoTask` | TenorClef | `@tgoto`, `TungstenFollowTask`, manhunt, `SpeedrunBeatMinecraftTask` | **No** (only `statusLine()`/`cancel()`) | Tungsten when used elsewhere |
+| `TungstenMovement / TungstenBridge / TungstenGotoTask` | AltoClef | `@tgoto`, `TungstenFollowTask`, manhunt, `SpeedrunBeatMinecraftTask` | **No** (only `statusLine()`/`cancel()`) | Tungsten when used elsewhere |
 | Mine/Explore/Builder processes | Baritone | `MineAndCollectTask`, `TimeoutWanderTask` (ExploreProcess), `PlaceBlockTask`, … | **Yes** | Baritone |
-| Raw input overrides (`McCompat.setMove`, `InputControls`, `setInputForceState`) | TenorClef | `ModernSpeedrunTask:744`, `T2Solve:201`, `CustomBaritoneGoalTask` portal handling | **Yes** | Vanilla input |
+| Raw input overrides (`McCompat.setMove`, `InputControls`, `setInputForceState`) | AltoClef | `ModernSpeedrunTask:744`, `T2Solve:201`, `CustomBaritoneGoalTask` portal handling | **Yes** | Vanilla input |
 
 **Jar inspection (Verified with `unzip -l`).**
 
@@ -336,7 +336,7 @@ AltoClefAgentRuntime`. Entries: `@agent` → `AgentLoopTask` (file-based JSON, w
 
 ## 15. Benchmarks and Tests
 
-**TenorClef tests (Verified).** `src/test/java`: 21 test classes + 2 fakes, JUnit **5** (`org.junit.jupiter`),
+**AltoClef tests (Verified).** `src/test/java`: 21 test classes + 2 fakes, JUnit **5** (`org.junit.jupiter`),
 ≥116 `@Test` methods. `build.gradle` declares **no** JUnit dependency and **no** `useJUnitPlatform()`;
 `:1.16.1` `testCompileClasspath` and `testRuntimeClasspath` resolve **zero** junit/jupiter artifacts.
 ⇒ These tests cannot compile via Gradle, and no CI job invokes them. (Additionally, in the current working
@@ -361,7 +361,7 @@ No test exercises `HybridMovementEngine` or `IMovementEngine`.
 
 | ID | Defect | Evidence | Scope |
 |---|---|---|---|
-| D1 | TenorClef JUnit tests cannot compile/run: no JUnit on any test classpath | §2 #6; `build.gradle` has no `testImplementation`/`useJUnitPlatform` | committed HEAD + working tree |
+| D1 | AltoClef JUnit tests cannot compile/run: no JUnit on any test classpath | §2 #6; `build.gradle` has no `testImplementation`/`useJUnitPlatform` | committed HEAD + working tree |
 | D2 | Working tree fails required CI gate `:1.21.1:compileJava` (and `:1.21.11`, `:1.16.5`) | §2 #3–#5; untracked `AutoWorldCreateMixin.java:9` | **working tree only** (file ABSENT FROM HEAD) |
 | D3 | Docs claim `GetToBlockTask/GetToEntityTask → MovementEngineAdapter → Ostinato IMovementEngine`; at runtime the engine is absent from every available jar and the adapter always falls back | `docs/ARCHITECTURE.md:103`, `docs/OSTINATO_BOUNDARY.md:17` vs §8 jar inspection | documentation vs runtime |
 | D4 | `docs/BENCHMARKS.md:16` instructs "Run offline unit tests: `BenchmarkAggregationTest`, `MockScenariosTest`" — impossible per D1 | §15 | documentation |
@@ -403,7 +403,7 @@ preprocess chain.
 | `@testrun2 → Testrun2Command → ModernSpeedrunTask → Task/TaskChain/TaskRunner` (brief §8) | **Verified** (source) | §5 |
 | Package namespace `adris.altoclef` (brief) | Verified | |
 | `WeaponPicker`, `AnyWeaponCombatTask` as top-level combat classes (brief §13) | Exist, but under `tasks/speedrun/testrun2/combat/` | `find` |
-| Movement flows TenorClef → Ostinato public interface → Baritone/Tungsten (brief §10 question) | **Contradicted at runtime**: flows TenorClef adapter → **fallback** `CustomGoalProcess` | §8 |
+| Movement flows AltoClef → Ostinato public interface → Baritone/Tungsten (brief §10 question) | **Contradicted at runtime**: flows AltoClef adapter → **fallback** `CustomGoalProcess` | §8 |
 | Ostinato `main` / 1.21.11 = hybrid Baritone/Tungsten engine (brief §17) | **Contradicted locally**: local `main` (`60cd3e84`) has `IMovementBackend/MovementBackends/TungstenMovementBackend` but no `IMovementEngine/HybridMovementEngine`; local branch `1.21.11` (`23723891`) has neither. `origin/main` (`ed157fb4`, last fetch) and HEAD `99ee67ad` have the engine. | `git ls-tree` |
 | `movementBackend=auto` performs automatic selection (brief §12) | **Verified in Ostinato tip source only**; not present/reachable for 1.16.1 | §8 |
 | 1.16.5 as possible owner play target (brief §17) | Unknown; last 1.16.5 run log 2026-09-16; `:1.16.5:compileJava` fails in working tree | §2 |
@@ -438,7 +438,7 @@ result for HEAD Unknown; runtime UNTESTED HERE). Version-scope decisions are the
 
 ## 20. Exactly One Recommended First Change
 
-**Class D — Make the existing TenorClef JUnit tests runnable, validated on `RecoveryManagerTest`.**
+**Class D — Make the existing AltoClef JUnit tests runnable, validated on `RecoveryManagerTest`.**
 
 Concretely (for Phase 1, not done here): in `build.gradle`, add a JUnit 5 `testImplementation`
 (+ `testRuntimeOnly` launcher) and `tasks.test { useJUnitPlatform() }`; no source or test edits.

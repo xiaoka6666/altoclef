@@ -131,10 +131,10 @@ public class AutoWorldCreateMixin {
     //$$     }
     //$$ }
     //$$
-    //$$ // -Dtenorclef.seed=N pins the world seed so benchmarks (e.g. @pathbench) replay the same terrain.
+    //$$ // -Daltoclef.seed=N pins the world seed so benchmarks (e.g. @pathbench) replay the same terrain.
     //$$ private static GeneratorOptions seededOptions() {
     //$$     GeneratorOptions def = GeneratorOptions.getDefaultOptions();
-    //$$     String seed = System.getProperty("tenorclef.seed");
+    //$$     String seed = System.getProperty("altoclef.seed");
     //$$     if (seed == null || seed.isEmpty()) return def;
     //$$     long v;
     //$$     try { v = Long.parseLong(seed.trim()); } catch (NumberFormatException e) { v = seed.trim().hashCode(); }

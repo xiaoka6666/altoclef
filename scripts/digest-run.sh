@@ -35,7 +35,7 @@ function emit(line,   key) {
     # Drop noise and duplicate channels.
     # T2 [NOW] heartbeats exist only on the chat channel; every other chat line is a copy.
     # T2 [HIST] notes (S292, S297, S298, CHILD, DIM, OUTCOME, WHY...) are chat-only too; keep them.
-    if (line ~ /\[CHAT\] \[TenorClef\]/ && line !~ /T2 \[(NOW|HIST)\]/) next
+    if (line ~ /\[CHAT\] \[AltoClef\]/ && line !~ /T2 \[(NOW|HIST)\]/) next
     # Nothing reads the HIST CHILD/JUMP/FLIP snapshot tail; cut it to the transition.
     if (line ~ /T2 \[HIST\] [0-9:.]+ CHILD /) sub(/ ph=.*/, "", line)
     if (line ~ /T2 \[HIST\] [0-9:.]+ (FORCE|SOLVE|SNAP|\[[ES][0-9])/) next
@@ -53,7 +53,7 @@ function emit(line,   key) {
     }
     keep = 0
     if (line ~ /ALTO CLEF: WARNING: /) { sub(/.*ALTO CLEF: WARNING: /, "", line); keep = 1 }
-    else if (line ~ /TENORCLEF: /) { sub(/.*TENORCLEF: /, "", line); keep = 1 }
+    else if (line ~ /ALTOCLEF: /) { sub(/.*ALTOCLEF: /, "", line); keep = 1 }
     else if (line ~ /T2 \[HIST\] [0-9:.]+ WHY /) {
         # WHY repeats every few seconds while the reason holds; print it only when it changes.
         w = line; sub(/.* WHY /, "", w); if (w == lastwhy) next; lastwhy = w
@@ -61,7 +61,7 @@ function emit(line,   key) {
     }
     else if (line ~ /T2 \[HIST\] /) { sub(/.*T2 \[HIST\] /, "HIST ", line); keep = 1 }
     else if (line ~ /\[Server thread\/INFO\].*(fell|was |drowned|burned|blew|tried to|suffocated|died|joined|left the game|Stopping)/) { sub(/.*\(Minecraft\) /, "", line); keep = 1 }
-    else if (line ~ /RESPAWNING|TESRUN2|AUTOWORLD|AUTORUN|Loading Minecraft|FAILED|Exception|Crash/) { sub(/^\[[0-9:]+\] \[[^]]*\] (\([^)]*\) )?(\[CHAT\] |\[STDOUT\]: )?/, "", line); sub(/.*\[TenorClef\] /, "", line); keep = 1 }
+    else if (line ~ /RESPAWNING|TESRUN2|AUTOWORLD|AUTORUN|Loading Minecraft|FAILED|Exception|Crash/) { sub(/^\[[0-9:]+\] \[[^]]*\] (\([^)]*\) )?(\[CHAT\] |\[STDOUT\]: )?/, "", line); sub(/.*\[AltoClef\] /, "", line); keep = 1 }
     if (keep) emit(ts " " substr(line, 1, 220))
 }
 END { flush() }'

@@ -11,7 +11,7 @@ import adris.altoclef.tasks.speedrun.testrun2.ModernSpeedrunTask;
 public class Testrun2Command extends Command {
 
     public Testrun2Command() {
-        super("testrun2", "Modern RSG speedrun (TenorClef)");
+        super("testrun2", "Modern RSG speedrun (AltoClef)");
     }
 
     @Override

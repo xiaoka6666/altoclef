@@ -6,13 +6,13 @@ Audit date: 2026-09-19 (America/Phoenix). Phase 1 Gradle/CI updates 2026-09-19 P
 
 | Path | Role |
 |------|------|
-| `C:\Users\redfa\Documents\MinecraftDev\altoclef` | TenorClef (this repo; remote `vexrypt-rgb/TenorClef`) |
+| `C:\Users\redfa\Documents\MinecraftDev\altoclef` | AltoClef (this repo; remote `vexrypt-rgb/AltoClef`) |
 | `C:\Users\redfa\Documents\MinecraftDev\Ostinato` | Ostinato `main` (MC 1.21.4; `1.21.11` on its own branch) |
 | `C:\Users\redfa\Documents\MinecraftDev\Ostinato-1.16.1` | Ostinato `1.16.1` branch checkout |
 
 This audit used clones of the same GitHub remotes on the agent box.
 
-## TenorClef modules / MC versions
+## AltoClef modules / MC versions
 
 - Root name: `altoclef` (`settings.gradle.kts`); build file per version: `versions/<mc>/` → `../../build.gradle`.
 - Preprocess nodes linked in `root.gradle.kts`: **1.21.11 → … → 1.16.1** (full chain required for ReplayMod preprocess even if you mostly build two endpoints).
@@ -23,7 +23,7 @@ This audit used clones of the same GitHub remotes on the agent box.
 
 Removed `org.gradle.java.home` from committed `gradle.properties`. Use:
 
-- `JAVA_HOME` → JDK 21 for TenorClef / Ostinato tip
+- `JAVA_HOME` → JDK 21 for AltoClef / Ostinato tip
 - Optional `~/.gradle/gradle.properties` or gitignored `gradle.properties.local` (see `docs/DEVELOPMENT.md`)
 - Default `org.gradle.jvmargs=-Xmx2G` (CI-friendly); raise locally for heavy builds
 
@@ -102,7 +102,7 @@ gradlew.bat build -Pbaritone.fabric_build
 
 Copy `dist/baritone-unoptimized-fabric-*.jar` to `../Ostinato/dist/baritone-unoptimized-fabric-ostinato-1.16.1.jar` (or `altoclef/libs/`).
 
-## Working TenorClef build commands
+## Working AltoClef build commands
 
 ```bat
 cd C:\Users\redfa\Documents\MinecraftDev\altoclef

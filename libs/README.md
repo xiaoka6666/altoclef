@@ -11,9 +11,9 @@ Ostinato Baritone jars (preferred):
 - `baritone-unoptimized-fabric-ostinato-1.16.1.jar` — Ostinato branch `1.16.1`
   (`method_30621` no-op + `AltoClefSettings`).
 - Legacy name: `baritone-unoptimized-fabric-1.16.1.jar` — same 1.16.1 lineage;
-  TenorClef also accepts this pattern.
+  AltoClef also accepts this pattern.
 
-Do not drop a 1.21.11 Ostinato jar into a 1.21.4 TenorClef build, or the
+Do not drop a 1.21.11 Ostinato jar into a 1.21.4 AltoClef build, or the
 reverse.
 
 ## Vibe coding / AI use

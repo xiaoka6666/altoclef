@@ -317,7 +317,7 @@ public class AltoClef implements ModInitializer {
     private int autoRunProbe = 0;
 
     private void maybeFireAutoRunCommand() {
-        if (!autoRunFired && ++autoRunProbe % 200 == 1 && Boolean.getBoolean("tenorclef.autorun.debug")) {
+        if (!autoRunFired && ++autoRunProbe % 200 == 1 && Boolean.getBoolean("altoclef.autorun.debug")) {
             adris.altoclef.Settings ds = getModSettings();
             Debug.logHarness("AUTORUN: probe inGame=" + inGame() + " settings=" + (ds != null)
                     + " cmd=" + (ds == null ? null : ds.getAutoRunCommand()));
@@ -363,8 +363,8 @@ public class AltoClef implements ModInitializer {
         autoRunWorld = getWorld();
         Debug.logHarness("AUTORUN: executing '" + cmd + "'");
         Debug.logMessage("AUTORUN: executing '" + cmd + "'");
-        // -Dtenorclef.autorun.freecam=true: start Ostinato's freecam first, for reproducing freecam issues headless.
-        if (Boolean.getBoolean("tenorclef.autorun.freecam")) {
+        // -Daltoclef.autorun.freecam=true: start Ostinato's freecam first, for reproducing freecam issues headless.
+        if (Boolean.getBoolean("altoclef.autorun.freecam")) {
             try {
                 getClientBaritone().getCommandManager().execute("freecam");
             } catch (Throwable t) {
@@ -415,10 +415,10 @@ public class AltoClef implements ModInitializer {
         // per run and s294t lost 15 hp to falls on a hilltop. Keep it off until it handles slopes.
         getClientBaritoneSettings().sprintJump.value = false;
         // S322: Ostinato kinematic travel (physics look-ahead) drives plain walking legs of Baritone paths.
-        // On by default for speed; -Dtenorclef.kinematic=false disables it.
-        try { getClientBaritoneSettings().kinematicTravel.value = !"false".equals(System.getProperty("tenorclef.kinematic")); } catch (Throwable ignored) {}
-        // s269t/s270t: path computed but never executed; -Dtenorclef.baritoneDebug=true surfaces PathExecutor cancel/pause reasons.
-        if (Boolean.getBoolean("tenorclef.baritoneDebug")) getClientBaritoneSettings().chatDebug.value = true;
+        // On by default for speed; -Daltoclef.kinematic=false disables it.
+        try { getClientBaritoneSettings().kinematicTravel.value = !"false".equals(System.getProperty("altoclef.kinematic")); } catch (Throwable ignored) {}
+        // s269t/s270t: path computed but never executed; -Daltoclef.baritoneDebug=true surfaces PathExecutor cancel/pause reasons.
+        if (Boolean.getBoolean("altoclef.baritoneDebug")) getClientBaritoneSettings().chatDebug.value = true;
         getClientBaritoneSettings().allowParkourAscend.value = false;
         getClientBaritoneSettings().allowParkourPlace.value = false;
         getClientBaritoneSettings().allowDiagonalDescend.value = false;

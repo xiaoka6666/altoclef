@@ -171,7 +171,7 @@ public final class T2Deadman {
                 + " for " + (driverProbeBehind / 20) + "s+ — the driver is latched stopped"
                 + " (look for 'Task STOP' with no matching restart). beating="
                 + driverBeats + " clientTicks=" + clientTicks;
-        System.out.println("TENORCLEF: " + msg);
+        System.out.println("ALTOCLEF: " + msg);
         Debug.logHarness(msg);
         try { T2Log.force("S176", msg); } catch (Throwable ignored) {}
         // S186 — RECOVER, do not just report.
@@ -206,7 +206,7 @@ public final class T2Deadman {
             String msg = "S186 driver latched for " + (driverProbeBehind / 20)
                     + "s while the client ticked — re-installing ModernSpeedrunTask"
                     + " (attempt " + recoverAttempts + "/" + LATCH_RECOVERY_MAX + ")";
-            System.out.println("TENORCLEF: " + msg);
+            System.out.println("ALTOCLEF: " + msg);
             Debug.logHarness(msg);
             try { T2Log.force("S186", msg); } catch (Throwable ignored) {}
             mod.runUserTask(new adris.altoclef.tasks.speedrun.testrun2.ModernSpeedrunTask());
@@ -302,7 +302,7 @@ public final class T2Deadman {
                 if (++n >= 30) break;
             }
         } catch (Throwable ignored) {}
-        System.out.println("TENORCLEF: " + sb);
+        System.out.println("ALTOCLEF: " + sb);
         Debug.logHarness(sb.toString());
         try {
             T2Log.force("S181", sb.toString());
@@ -371,7 +371,7 @@ public final class T2Deadman {
                 + " exiting with code " + EXIT_CODE + " instead of burning the timeout."
                 + " worstTick=" + worstTickMs + "ms (" + worstTickDesc + ")";
         // Print all three ways: harness stdout, game log, chat.
-        System.out.println("TENORCLEF: " + msg);
+        System.out.println("ALTOCLEF: " + msg);
         Debug.logHarness(msg);
         try {
             T2Log.force("S175", msg);

@@ -13,7 +13,7 @@ public class Debug {
 
     public static void logInternal(String message) {
         if (canLog(DEBUG_LOG_LEVEL)) {
-            System.out.println("TENORCLEF: " + message);
+            System.out.println("ALTOCLEF: " + message);
         }
     }
 
@@ -33,7 +33,7 @@ public class Debug {
      * Prefix is {@code HARNESS:} so a run can be reconstructed with one grep.
      */
     public static void logHarness(String message) {
-        System.out.println("TENORCLEF: HARNESS: " + message);
+        System.out.println("ALTOCLEF: HARNESS: " + message);
     }
 
     public static void logHarness(String format, Object... args) {
@@ -45,11 +45,11 @@ public class Debug {
         if (altoClef != null) {
             String p = altoClef.getModSettings().getChatLogPrefix();
             if (p != null && (p.contains("Alto") || p.contains("alto"))) {
-                return "[TenorClef] ";
+                return "[AltoClef] ";
             }
             if (p != null && !p.isBlank()) return p;
         }
-        return "[TenorClef] ";
+        return "[AltoClef] ";
     }
 
     public static void logMessage(String message, boolean prefix) {

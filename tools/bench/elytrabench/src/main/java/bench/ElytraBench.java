@@ -41,7 +41,7 @@ public class ElytraBench implements ClientModInitializer {
                     log("failed: " + e);
                     e.printStackTrace();
                 } finally {
-                    if (Boolean.getBoolean("tenorclef.pathbench.exit")) mc.execute(mc::scheduleStop);
+                    if (Boolean.getBoolean("altoclef.pathbench.exit")) mc.execute(mc::scheduleStop);
                 }
             }, "ElytraBench");
             t.setDaemon(true);

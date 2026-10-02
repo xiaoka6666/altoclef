@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TenorClef control panel. Same floating-card language as Ostinato
+ * AltoClef control panel. Same floating-card language as Ostinato
  * (centered glass, sidebar, header chip, drop shadow) but a warm
  * amber/rose palette so the two menus stay distinct in a paired
  * session. Widgets are only the Agent text fields; everything else
@@ -149,11 +149,11 @@ public class T2MenuScreen extends Screen {
 
     private static Text titleText() {
         try {
-            return (Text) Text.class.getMethod("literal", String.class).invoke(null, "TenorClef");
+            return (Text) Text.class.getMethod("literal", String.class).invoke(null, "AltoClef");
         } catch (Throwable t) {
             try {
                 return (Text) Class.forName("net.minecraft.text.LiteralText")
-                        .getConstructor(String.class).newInstance("TenorClef");
+                        .getConstructor(String.class).newInstance("AltoClef");
             } catch (Throwable t2) {
                 throw new IllegalStateException(t2);
             }

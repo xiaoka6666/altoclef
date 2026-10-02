@@ -1,13 +1,13 @@
-# TenorClef
+# AltoClef
 
-TenorClef is an autonomous Minecraft client bot derived from AltoClef. It
+AltoClef is an autonomous Minecraft client bot derived from AltoClef. It
 combines high-level objective tasks, survival and inventory behavior with the
 [Ostinato](https://github.com/vexrypt-rgb/Ostinato) pathfinding engine.
 
 Current focus: reliable autonomous play, speedrun-oriented tasks, and a modern
 Fabric target. Package name stays `adris.altoclef`.
 
-TenorClef is not affiliated with AltoClef, Marvion, or MiranCZ. Those projects
+AltoClef is not affiliated with AltoClef, Marvion, or MiranCZ. Those projects
 are the upstream history of this fork.
 
 Current release line is **0.20.0**. Sister repos: [Ostinato](https://github.com/vexrypt-rgb/Ostinato)
@@ -16,7 +16,7 @@ format Ostinato swarm uses).
 
 ## Supported versions
 
-TenorClef always runs on Ostinato. Build only the Minecraft versions Ostinato
+AltoClef always runs on Ostinato. Build only the Minecraft versions Ostinato
 is built for, and never mix jars across versions.
 
 | Minecraft | Status | Ostinato | Notes |
@@ -37,11 +37,11 @@ source (below) rather than downloading an upstream AltoClef jar.
 
 When a release *is* published:
 
-1. Download the TenorClef Fabric jar for your exact Minecraft version.
+1. Download the AltoClef Fabric jar for your exact Minecraft version.
 2. Place it in the instance `mods` directory with Fabric Loader and Fabric API.
 3. Install the matching Ostinato jar named in the release notes. Do not add a
    second Baritone jar unless the notes say to.
-4. Start a single-player test world first. Include the game version, TenorClef
+4. Start a single-player test world first. Include the game version, AltoClef
    and Ostinato versions, mod list, and `latest.log` when reporting a problem.
 
 Each release lists the matching Ostinato jar in its notes (see
@@ -49,7 +49,7 @@ Each release lists the matching Ostinato jar in its notes (see
 
 ## Build from source
 
-TenorClef uses Java 21 for the modern modules. On Windows:
+AltoClef uses Java 21 for the modern modules. On Windows:
 
 ```bat
 gradlew.bat :1.21.4:build
@@ -68,11 +68,11 @@ remapped.
 
 ## Commands (short list)
 
-TenorClef commands use `@`. Ostinato / Baritone commands use `#`.
+AltoClef commands use `@`. Ostinato / Baritone commands use `#`.
 
 | Command | What it does |
 | --- | --- |
-| `@help` | List TenorClef commands |
+| `@help` | List AltoClef commands |
 | `@gamer` | Beat the game |
 | `@testrun2` | Modern speedrun task (BOOTSTRAP → END). 1.16.1 lane. |
 | `@stop` / `Ctrl+K` | Cancel the current task |
@@ -133,13 +133,13 @@ runs, so compare runs taken together. Single-rep runs are noisy; re-run with
 
 ## Reporting issues
 
-Use the [TenorClef issue tracker](https://github.com/vexrypt-rgb/TenorClef/issues).
-Describe the goal, Minecraft version, TenorClef and Ostinato versions,
+Use the [AltoClef issue tracker](https://github.com/vexrypt-rgb/AltoClef/issues).
+Describe the goal, Minecraft version, AltoClef and Ostinato versions,
 installed mods, and attach a relevant log or reproduction steps.
 
 ## License and notices
 
-TenorClef is licensed under the [MIT License](LICENSE). Releases which bundle
+AltoClef is licensed under the [MIT License](LICENSE). Releases which bundle
 or depend on Ostinato must preserve Ostinato's LGPL-3.0 notices and provide a
 way to obtain its corresponding source. See [LICENSING.md](LICENSING.md).
 

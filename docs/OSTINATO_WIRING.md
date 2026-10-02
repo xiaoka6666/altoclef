@@ -1,11 +1,11 @@
 # Ostinato wiring
 
-TenorClef always runs on Ostinato. It is only compiled for the Minecraft versions Ostinato
+AltoClef always runs on Ostinato. It is only compiled for the Minecraft versions Ostinato
 is built for; never load a jar built for one Minecraft version into another.
 
 ## Compatibility
 
-| TenorClef module | Ostinato source | Status |
+| AltoClef module | Ostinato source | Status |
 | --- | --- | --- |
 | `1.21.4` | Ostinato `main` (MC 1.21.4), staged as `libs/baritone-unoptimized-fabric-1.21.4.jar` | Primary; compiles in CI |
 | `1.16.1` | Ostinato branch `1.16.1`, staged as `libs/baritone-unoptimized-fabric-1.16.1.jar` | Legacy pairing; compiles in CI |
@@ -32,13 +32,13 @@ To refresh a staged jar, build the matching Ostinato branch and copy its
 ## Tungsten
 
 Tungsten is optional and only affects travel/custom-goal movement on the modern target.
-Build its Fabric jar from `vendor/tungsten` and place it in TenorClef's `libs/` folder,
-or install it beside TenorClef and Ostinato in the Minecraft instance. If absent,
+Build its Fabric jar from `vendor/tungsten` and place it in AltoClef's `libs/` folder,
+or install it beside AltoClef and Ostinato in the Minecraft instance. If absent,
 Ostinato falls back to Baritone travel.
 
 ## Publishing follow-up
 
-Before making 1.21.11 a stable TenorClef target, finish its source port, publish a
+Before making 1.21.11 a stable AltoClef target, finish its source port, publish a
 tagged matching Ostinato Fabric artifact, and consume it through a pinned dependency
 coordinate. That makes an incorrect pairing fail at dependency resolution rather than
 at runtime.

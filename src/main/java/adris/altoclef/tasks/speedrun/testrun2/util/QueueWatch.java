@@ -39,7 +39,7 @@ public final class QueueWatch {
             McIdle();
             if (!announced) {
                 announced = true;
-                Debug.logMessage("QUEUE detected — TenorClef idle until you are in the world");
+                Debug.logMessage("QUEUE detected — AltoClef idle until you are in the world");
                 RunLog.line("queue wait");
             }
             // Queue messages usually refresh. If they stop and we have ground, we are in.

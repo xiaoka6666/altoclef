@@ -6,7 +6,7 @@ Date: 2026-09-19 (America/Phoenix). Branch intent: `docs/phase0-architecture-aud
 
 | Tree | Remote | Ref audited |
 |------|--------|-------------|
-| TenorClef | `vexrypt-rgb/TenorClef` | `origin/main` @ `feab389` (“Use verified 1.21.1 release target”) + local docs branch |
+| AltoClef | `vexrypt-rgb/AltoClef` | `origin/main` @ `feab389` (“Use verified 1.21.1 release target”) + local docs branch |
 | Ostinato tip | `vexrypt-rgb/Ostinato` | `main` (1.21.11, swim port commit present) |
 | Ostinato 1.16.1 | same | branch `1.16.1` (Gradle 4.9 / JDK 8 lineage) |
 
@@ -53,7 +53,7 @@ Windows paths from the brief were **not** mounted in this environment; audit use
 
 ## Ostinato tip movement precursor
 
-Already in Ostinato `main` (not wired through TenorClef tasks yet):
+Already in Ostinato `main` (not wired through AltoClef tasks yet):
 
 - `baritone.api.movement.IMovementBackend`
 - `baritone.movement.BaritoneMovementBackend` / `TungstenMovementBackend` / `MovementBackends`
@@ -76,13 +76,13 @@ cd C:\Users\redfa\Documents\MinecraftDev\Ostinato && gradlew.bat :fabric:build
 :: Ostinato 1.16.1 (JDK 8)
 cd C:\Users\redfa\Documents\MinecraftDev\Ostinato-1.16.1 && gradlew.bat build -Pbaritone.fabric_build
 
-:: TenorClef
+:: AltoClef
 cd C:\Users\redfa\Documents\MinecraftDev\altoclef
 gradlew.bat :1.21.11:compileJava
 gradlew.bat :1.16.1:compileJava
 ```
 
-## Top 10 coupling hotspots (TenorClef → Baritone / Ostinato / Tungsten)
+## Top 10 coupling hotspots (AltoClef → Baritone / Ostinato / Tungsten)
 
 1. `AltoClef.getClientBaritone()` + settings bootstrap — global Baritone ownership.
 2. `CustomBaritoneGoalTask` — shared goal/path + cancel/explore interrupt pattern.
@@ -107,7 +107,7 @@ gradlew.bat :1.16.1:compileJava
 ### Phase 2 (MovementEngine)
 
 - ~60 Baritone-import files; cannot migrate all at once — pick 1–2 tasks.
-- Dual Tungsten entrypoints (TenorClef facade vs Ostinato `IMovementBackend`) must converge.
+- Dual Tungsten entrypoints (AltoClef facade vs Ostinato `IMovementBackend`) must converge.
 - No `TaskResult` yet — MovementEngine failures need a place to surface.
 - 1.16.1 has **no** Tungsten — Hybrid engine must degrade cleanly.
 - Keep mining on Baritone while travel moves behind the API (locked product decision).
