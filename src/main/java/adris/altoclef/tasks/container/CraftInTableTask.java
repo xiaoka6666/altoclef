@@ -17,6 +17,7 @@ import adris.altoclef.util.RecipeTarget;
 import adris.altoclef.util.helpers.ItemHelper;
 import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.helpers.WorldHelper;
+import adris.altoclef.util.slots.CraftingTableSlot;
 import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
@@ -305,16 +306,32 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
         }
 
         // Check if the player inventory is open and the cursor slot is empty
-        if (StorageHelper.isPlayerInventoryOpen() && StorageHelper.getItemStackInCursorSlot().isEmpty()) {
+        //#if MC >= 260000
+        // 26.x: the 3x3 table's open handler is a CraftingMenu, not an InventoryMenu, so
+        // isPlayerInventoryOpen() is always false here. Read the 3x3 result slot directly
+        // whenever the table container is open and the cursor is free.
+        if (isContainerOpen(mod) && StorageHelper.getItemStackInCursorSlot().isEmpty()) {
             // Get the item in the craft output slot
-            Item outputItem = StorageHelper.getItemStackInSlot(PlayerSlot.CRAFT_OUTPUT_SLOT).getItem();
+            Item outputItem = StorageHelper.getItemStackInSlot(CraftingTableSlot.OUTPUT_SLOT).getItem();
             // Check if the output item matches any of the targets and the target count is not reached
             for (RecipeTarget target : _targets) {
                 if (target.getOutputItem() == outputItem && mod.getItemStorage().getItemCount(target.getOutputItem()) < target.getTargetCount()) {
-                    return new ReceiveCraftingOutputSlotTask(PlayerSlot.CRAFT_OUTPUT_SLOT, target.getTargetCount());
+                    return new ReceiveCraftingOutputSlotTask(CraftingTableSlot.OUTPUT_SLOT, target.getTargetCount());
                 }
             }
         }
+        //#else
+        //$$ if (StorageHelper.isPlayerInventoryOpen() && StorageHelper.getItemStackInCursorSlot().isEmpty()) {
+        //$$     // Get the item in the craft output slot
+        //$$     Item outputItem = StorageHelper.getItemStackInSlot(PlayerSlot.CRAFT_OUTPUT_SLOT).getItem();
+        //$$     // Check if the output item matches any of the targets and the target count is not reached
+        //$$     for (RecipeTarget target : _targets) {
+        //$$         if (target.getOutputItem() == outputItem && mod.getItemStorage().getItemCount(target.getOutputItem()) < target.getTargetCount()) {
+        //$$             return new ReceiveCraftingOutputSlotTask(PlayerSlot.CRAFT_OUTPUT_SLOT, target.getTargetCount());
+        //$$         }
+        //$$     }
+        //$$ }
+        //#endif
 
         // Check if we need to collect items and the collect task is not finished
         if (_collect && !_collectTask.isFinished() && !StorageHelper.hasRecipeMaterialsOrTarget(mod, _targets)) {
