@@ -89,9 +89,19 @@ public class CraftInInventoryTask extends ResourceTask {
         // No need to free inventory, output gets picked up.
 
         setDebugState("Crafting in inventory... for " + toGet);
-        return mod.getModSettings().shouldUseCraftingBookToCraft()
-                ? new CraftGenericWithRecipeBooksTask(_target)
-                : new CraftGenericManuallyTask(_target);
+        //#if MC >= 260300
+        // 26.x: recipe-book recipe clicks need a NetworkRecipeId and the recipe
+        // map is not synced on those versions, so the book task can never click.
+        // Use the manual slot-filling path instead.
+        return new CraftGenericManuallyTask(_target);
+        //#elseif MC >= 12102
+        //$$ // 1.21.2+: same limitation as 26.x.
+        //$$ return new CraftGenericManuallyTask(_target);
+        //#else
+        //$$ return mod.getModSettings().shouldUseCraftingBookToCraft()
+        //$$         ? new CraftGenericWithRecipeBooksTask(_target)
+        //$$         : new CraftGenericManuallyTask(_target);
+        //#endif
     }
 
     @Override
