@@ -1,6 +1,7 @@
 package adris.altoclef.control;
 
 import adris.altoclef.AltoClef;
+import adris.altoclef.util.helpers.ItemHelper;
 import adris.altoclef.util.helpers.LookHelper;
 import adris.altoclef.util.helpers.StlHelper;
 import adris.altoclef.util.helpers.StorageHelper;
@@ -41,10 +42,10 @@ public class KillAura {
             float handDamage = Float.NEGATIVE_INFINITY;
             for (ItemStack invStack : invStacks) {
                 if (invStack.getItem() instanceof SwordItem item) {
-                    float itemDamage = item.getMaterial().getAttackDamage();
+                    float itemDamage = ItemHelper.getMaterialAttackDamage(item);
                     Item handItem = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
                     if (handItem instanceof SwordItem handToolItem) {
-                        handDamage = handToolItem.getMaterial().getAttackDamage();
+                        handDamage = ItemHelper.getMaterialAttackDamage(handToolItem);
                     }
                     if (itemDamage > handDamage) {
                         mod.getSlotHandler().forceEquipItem(item);
@@ -80,12 +81,11 @@ public class KillAura {
                 !mod.getMLGBucketChain().isFallingOhNo(mod) && mod.getMLGBucketChain().doneMLG() &&
                 !mod.getMLGBucketChain().isChorusFruiting()) {
             PlayerSlot offhandSlot = PlayerSlot.OFFHAND_SLOT;
-            Item offhandItem = StorageHelper.getItemStackInSlot(offhandSlot).getItem();
             if (entities.get().getClass() != CreeperEntity.class && entities.get().getClass() != HoglinEntity.class &&
                     entities.get().getClass() != ZoglinEntity.class && entities.get().getClass() != WardenEntity.class &&
                     entities.get().getClass() != WitherEntity.class
                     && (mod.getItemStorage().hasItem(Items.SHIELD) || mod.getItemStorage().hasItemInOffhand(Items.SHIELD))
-                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(offhandItem)
+                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(StorageHelper.getItemStackInSlot(offhandSlot))
                     && mod.getClientBaritone().getPathingBehavior().isSafeToCancel()) {
                 LookHelper.lookAt(mod, entities.get().getEyePos());
                 ItemStack shieldSlot = StorageHelper.getItemStackInSlot(PlayerSlot.OFFHAND_SLOT);

@@ -23,7 +23,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeDisplayEntry;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.math.BlockPos;
@@ -394,7 +394,7 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
             }
 
             // Get the recipe to send based on the target recipe and output item
-            Optional<RecipeEntry<?>> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(target.getRecipe(), target.getOutputItem());
+            Optional<RecipeDisplayEntry> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(target.getRecipe(), target.getOutputItem());
 
             // Get the client player entity
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -402,7 +402,7 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
             // If crafting book is enabled, the recipe to send exists, and the player has the recipe in their recipe book, return a CraftGenericWithRecipeBooksTask
             if (mod.getModSettings().shouldUseCraftingBookToCraft() && recipeToSend.isPresent()) {
                 assert player != null;
-                if (player.getRecipeBook().contains(recipeToSend.get())) {
+                if (JankCraftingRecipeMapping.isRecipeDiscovered(recipeToSend.get())) {
                     return new CraftGenericWithRecipeBooksTask(target);
                 }
             }

@@ -183,14 +183,13 @@ public class MobDefenseChain extends SingleTaskChain {
 
         _doingFunkyStuff = false;
         PlayerSlot offhandSlot = PlayerSlot.OFFHAND_SLOT;
-        Item offhandItem = StorageHelper.getItemStackInSlot(offhandSlot).getItem();
         // Run away from creepers
         CreeperEntity blowingUp = getClosestFusingCreeper(mod);
         if (blowingUp != null) {
             if (!mod.getFoodChain().needsToEat() && (mod.getItemStorage().hasItem(Items.SHIELD) ||
                     mod.getItemStorage().hasItemInOffhand(Items.SHIELD)) &&
                     !mod.getEntityTracker().entityFound(PotionEntity.class) && _runAwayTask == null
-                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(offhandItem)
+                    && !mod.getPlayer().getItemCooldownManager().isCoolingDown(StorageHelper.getItemStackInSlot(offhandSlot))
                     && mod.getClientBaritone().getPathingBehavior().isSafeToCancel()) {
                 _doingFunkyStuff = true;
                 LookHelper.lookAt(mod, blowingUp.getEyePos());
@@ -216,7 +215,7 @@ public class MobDefenseChain extends SingleTaskChain {
         if (!mod.getFoodChain().needsToEat() && mod.getModSettings().isDodgeProjectiles() && isProjectileClose(mod) &&
                 (mod.getItemStorage().hasItem(Items.SHIELD) || mod.getItemStorage().hasItemInOffhand(Items.SHIELD)) &&
                 !mod.getEntityTracker().entityFound(PotionEntity.class) && _runAwayTask == null
-                && !mod.getPlayer().getItemCooldownManager().isCoolingDown(offhandItem)
+                && !mod.getPlayer().getItemCooldownManager().isCoolingDown(StorageHelper.getItemStackInSlot(offhandSlot))
                 && mod.getClientBaritone().getPathingBehavior().isSafeToCancel()) {
             ItemStack shieldSlot = StorageHelper.getItemStackInSlot(PlayerSlot.OFFHAND_SLOT);
             if (shieldSlot.getItem() != Items.SHIELD) {
@@ -306,7 +305,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 // full diamond has 8 bonus toughness
                 // full netherite has 12 bonus toughness
                 int armor = mod.getPlayer().getArmor();
-                float damage = bestSword == null ? 0 : (1 + bestSword.getMaterial().getAttackDamage());
+                float damage = bestSword == null ? 0 : (1 + ItemHelper.getMaterialAttackDamage(bestSword));
                 boolean hasShield = mod.getItemStorage().hasItem(Items.SHIELD) ||
                         mod.getItemStorage().hasItemInOffhand(Items.SHIELD);
                 int shield = hasShield ? 20 : 0;

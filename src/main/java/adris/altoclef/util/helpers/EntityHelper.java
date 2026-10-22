@@ -64,12 +64,14 @@ public class EntityHelper {
     public static double calculateResultingPlayerDamage(PlayerEntity player, DamageSource source, double damageAmount) {
         // Copied logic from `PlayerEntity.applyDamage`
 
-        if (player.isInvulnerableTo(source))
+        // 1.21.4: isInvulnerableTo(ServerWorld, DamageSource) is server-only; client-side we use the base check.
+        if (player.isInvulnerable())
             return 0;
 
         // Armor Base
         if (!source.isIn(DamageTypeTags.BYPASSES_ARMOR)) {
-            damageAmount = DamageUtil.getDamageLeft(player, (float) damageAmount, source, (float) player.getArmor(), (float) player.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));
+            // 1.21.4: GENERIC_ARMOR_TOUGHNESS renamed to ARMOR_TOUGHNESS (RegistryEntry form).
+            damageAmount = DamageUtil.getDamageLeft(player, (float) damageAmount, source, (float) player.getArmor(), (float) player.getAttributeValue(EntityAttributes.ARMOR_TOUGHNESS));
         }
 
         // Enchantments & Potions

@@ -11,6 +11,7 @@ import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import adris.altoclef.util.helpers.ToolItemDetect;
 import net.minecraft.item.*;
 import net.minecraft.screen.slot.SlotActionType;
 
@@ -124,7 +125,7 @@ public class SlotHandler {
     }
 
     public boolean forceDeequipHitTool() {
-        return forceDeequip(stack -> stack.getItem() instanceof ToolItem);
+        return forceDeequip(stack -> ToolItemDetect.isToolItem(stack.getItem()));
     }
 
     public void forceDeequipRightClickableItem() {
@@ -148,7 +149,7 @@ public class SlotHandler {
                             || item instanceof OnAStickItem
                             || item == Items.COMPASS
                             || item instanceof EmptyMapItem
-                            || item instanceof Equipment
+                            || item instanceof ArmorItem
                             || item == Items.LEAD
                             || item == Items.SHIELD;
                 }

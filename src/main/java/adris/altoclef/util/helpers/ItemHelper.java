@@ -12,6 +12,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -23,6 +24,39 @@ import java.util.*;
  * Helper functions and definitions for useful groupings of items
  */
 public class ItemHelper {
+    /**
+     * 1.21.4 中 SwordItem 不再暴露 {@code ToolMaterial}，无法调用
+     * {@code getMaterial().getAttackDamage()}。这里按具体物品常量映射 1.21
+     * 时代的 material 攻击伤害值（不含基础 1 的那部分）。
+     */
+    public static float getMaterialAttackDamage(Item item) {
+        if (item == Items.NETHERITE_SWORD) return 5f;
+        if (item == Items.DIAMOND_SWORD) return 4f;
+        if (item == Items.IRON_SWORD) return 3f;
+        if (item == Items.GOLDEN_SWORD) return 2f;
+        if (item == Items.STONE_SWORD) return 3f;
+        if (item == Items.WOODEN_SWORD) return 2f;
+        if (item instanceof SwordItem) return 3f;
+        return 0f;
+    }
+
+    /**
+     * 1.21.4: MiningToolItem no longer exposes ToolMaterial, so we can't call
+     * {@code getMaterial().getMiningSpeedMultiplier()}. Rank by concrete item class
+     * instead, preserving the same relative ordering used for mining-speed comparison
+     * in {@code MineAndCollectTask}. Returns -1 for unknown items.
+     */
+    public static float getMiningSpeedMultiplier(Item item) {
+        if (item == Items.WOODEN_PICKAXE) return 2.0f;
+        if (item == Items.STONE_PICKAXE) return 4.0f;
+        if (item == Items.IRON_PICKAXE) return 6.0f;
+        if (item == Items.GOLDEN_PICKAXE) return 12.0f;
+        if (item == Items.DIAMOND_PICKAXE) return 8.0f;
+        if (item == Items.NETHERITE_PICKAXE) return 10.0f;
+        if (item instanceof SwordItem) return 1.5f; // swords can mine stone/iron-ish but slower
+        return -1f;
+    }
+
     public static final Item[] COPPER_BLOCKS = new Item[]{Items.COPPER_BLOCK, Items.EXPOSED_COPPER,
             Items.WEATHERED_COPPER, Items.OXIDIZED_COPPER, Items.CUT_COPPER, Items.EXPOSED_CUT_COPPER,
             Items.WEATHERED_CUT_COPPER, Items.OXIDIZED_CUT_COPPER, Items.WAXED_COPPER_BLOCK,
@@ -386,7 +420,8 @@ public class ItemHelper {
     }
 
     public static boolean isOfBlockType(Block b, TagKey<Block> tag) {
-        return Registries.BLOCK.getKey(b).map(e -> Registries.BLOCK.entryOf(e).streamTags().anyMatch(t -> t == tag)).orElse(false);
+        // 1.21.4: use the registry entry's isIn(tag) directly instead of manual key/streamTags lookup.
+        return Registries.BLOCK.getEntry(b).isIn(tag);
     }
 
     private static boolean isStackProtected(AltoClef mod, ItemStack stack) {
@@ -415,7 +450,26 @@ public class ItemHelper {
 
     private static Map<Item, Integer> getFuelTimeMap() {
         if (_fuelTimeMap == null) {
-            _fuelTimeMap = AbstractFurnaceBlockEntity.createFuelTimeMap();
+            _fuelTimeMap = new HashMap<>();
+            // 1.21.4 removed AbstractFurnaceBlockEntity.createFuelTimeMap().
+            // Approximate vanilla fuel times so Altoclef can estimate furnace work.
+            _fuelTimeMap.put(Items.HAY_BLOCK, 20 * 100);
+            _fuelTimeMap.put(Items.COAL_BLOCK, 20 * 80);
+            _fuelTimeMap.put(Items.COAL, 20 * 80);
+            _fuelTimeMap.put(Items.LAVA_BUCKET, 20 * 1000);
+            _fuelTimeMap.put(Items.BLAZE_ROD, 20 * 40);
+            _fuelTimeMap.put(Items.CAMPFIRE, 20 * 15);
+            _fuelTimeMap.put(Items.SOUL_CAMPFIRE, 20 * 15);
+            _fuelTimeMap.put(Items.BOOK, 20 * 15);
+            _fuelTimeMap.put(Items.WRITABLE_BOOK, 20 * 15);
+            _fuelTimeMap.put(Items.DIRT, 20);
+            _fuelTimeMap.put(Items.SAND, 20);
+            for (Item p : ItemHelper.PLANKS)
+                _fuelTimeMap.put(p, 20 * 30);
+            for (Item l : ItemHelper.LOG)
+                _fuelTimeMap.put(l, 20 * 30);
+            for (Item w : ItemHelper.WOOD)
+                _fuelTimeMap.put(w, 20 * 15);
         }
         return _fuelTimeMap;
     }

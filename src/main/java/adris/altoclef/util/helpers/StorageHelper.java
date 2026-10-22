@@ -1,4 +1,14 @@
 package adris.altoclef.util.helpers;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.MiningToolItem;
+import net.minecraft.item.OnAStickItem;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShearsItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
+import net.minecraft.entity.EquipmentSlot;
 
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
@@ -144,7 +154,7 @@ public class StorageHelper {
                 if (!slot.isSlotInPlayerInventory())
                     continue;
                 ItemStack stack = getItemStackInSlot(slot);
-                if (stack.getItem() instanceof ToolItem) {
+                if (ToolItemDetect.isToolItem(stack.getItem())) {
                     if (stack.isSuitableFor(state)) {
                         double speed = ToolSet.calculateSpeedVsBlock(stack, state);
                         if (speed > highestSpeed) {
@@ -202,19 +212,22 @@ public class StorageHelper {
                 if (!ItemHelper.canThrowAwayStack(mod, stack))
                     continue;
                 Item item = stack.getItem();
-                if (item instanceof ToolItem tool) {
-                    Class c = tool.getClass();
-                    int level = tool.getMaterial().getDurability();
+                if (item instanceof SwordItem sword) {
+                    // 1.21.4: SwordItem no longer exposes ToolMaterial, rank by class only
+                    Class c = sword.getClass();
                     int prevBest = bestMaterials.getOrDefault(c, 0);
-                    if (level > prevBest) {
-                        // We had a WORSE tool before.
-                        if (bestTool.containsKey(c)) {
-                            return Optional.of(bestTool.get(c));
-                        }
-                        bestMaterials.put(c, level);
+                    if (prevBest < 1) {
+                        bestMaterials.put(c, 1);
                         bestTool.put(c, slot);
-                    } else if (level < prevBest) {
-                        // We found something WORSE!
+                        return Optional.of(slot);
+                    }
+                } else if (item instanceof MiningToolItem mining) {
+                    // 1.21.4: MiningToolItem also lacks ToolMaterial, rank by class
+                    Class c = mining.getClass();
+                    int prevBest = bestMaterials.getOrDefault(c, 0);
+                    if (prevBest < 1) {
+                        bestMaterials.put(c, 1);
+                        bestTool.put(c, slot);
                         return Optional.of(slot);
                     }
                 }
@@ -255,8 +268,8 @@ public class StorageHelper {
                 return possibleSlots.stream().min((leftSlot, rightSlot) -> {
                     ItemStack left = StorageHelper.getItemStackInSlot(leftSlot),
                             right = StorageHelper.getItemStackInSlot(rightSlot);
-                    boolean leftIsTool = left.getItem() instanceof ToolItem;
-                    boolean rightIsTool = right.getItem() instanceof ToolItem;
+                    boolean leftIsTool = ToolItemDetect.isToolItem(left.getItem());
+                    boolean rightIsTool = ToolItemDetect.isToolItem(right.getItem());
                     // Prioritize tools over materials.
                     if (rightIsTool && !leftIsTool) {
                         return -1;
@@ -264,11 +277,11 @@ public class StorageHelper {
                         return 1;
                     }
                     if (rightIsTool && leftIsTool) {
-                        // Prioritize material type, then durability.
-                        ToolItem leftTool = (ToolItem) left.getItem();
-                        ToolItem rightTool = (ToolItem) right.getItem();
-                        if (leftTool.getMaterial().getDurability() != rightTool.getMaterial().getDurability()) {
-                            return (int) (leftTool.getMaterial().getDurability() - rightTool.getMaterial().getDurability());
+                        // 1.21.4: tools no longer expose ToolMaterial, rank by class + damage only
+                        Class leftClass = left.getItem().getClass();
+                        Class rightClass = right.getItem().getClass();
+                        if (leftClass != rightClass) {
+                            return leftClass.getName().compareTo(rightClass.getName());
                         }
                         // We want less damage.
                         return left.getDamage() - right.getDamage();
@@ -333,10 +346,14 @@ public class StorageHelper {
 
     public static boolean isArmorEquipped(AltoClef mod, Item... any) {
         for (Item item : any) {
-            if (item instanceof ArmorItem armor) {
-                ItemStack equippedStack = mod.getPlayer().getInventory().getArmorStack(armor.getSlotType().getEntitySlotId());
-                if (equippedStack.getItem().equals(item))
-                    return true;
+            if (item instanceof ArmorItem) {
+                // 1.21.4: ArmorItem no longer exposes getSlotType(); map by translation key suffix.
+                int armorSlotIndex = armorItemToArmorIndex(item);
+                if (armorSlotIndex >= 0) {
+                    ItemStack equippedStack = mod.getPlayer().getInventory().getArmorStack(armorSlotIndex);
+                    if (equippedStack.getItem().equals(item))
+                        return true;
+                }
             }
             if (item instanceof ShieldItem shield) {
                 ItemStack equippedStack = mod.getPlayer().getInventory().getStack(PlayerInventory.OFF_HAND_SLOT);
@@ -345,6 +362,34 @@ public class StorageHelper {
             }
         }
         return false;
+    }
+
+    /**
+     * Maps an armor {@code Item} to the index used by {@code PlayerInventory.getArmorStack(int)}.
+     * In 1.21.4 the armor list order is boots(0), leggings(1), chestplate(2), helmet(3).
+     * Derived from the item's translation key suffix; returns -1 if not a recognised armor piece.
+     */
+    private static int armorItemToArmorIndex(Item item) {
+        String key = item.getTranslationKey();
+        if (key.endsWith(".boots")) return 0;
+        if (key.endsWith(".leggings")) return 1;
+        if (key.endsWith(".chestplate")) return 2;
+        if (key.endsWith(".helmet")) return 3;
+        return -1;
+    }
+
+    /**
+     * 1.21.4 helper: derive the {@link EquipmentSlot} for an armor item from its translation key.
+     * Used by {@code EquipArmorTask} to route armor pieces to the correct equip slot.
+     */
+    public static EquipmentSlot armorItemToEquipSlot(Item item) {
+        switch (armorItemToArmorIndex(item)) {
+            case 0: return EquipmentSlot.FEET;
+            case 1: return EquipmentSlot.LEGS;
+            case 2: return EquipmentSlot.CHEST;
+            case 3: return EquipmentSlot.HEAD;
+            default: return null;
+        }
     }
 
     public static int getBuildingMaterialCount(AltoClef mod) {

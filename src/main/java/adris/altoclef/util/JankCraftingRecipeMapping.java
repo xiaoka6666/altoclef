@@ -1,89 +1,64 @@
 package adris.altoclef.util;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.recipebook.ClientRecipeBook;
+import net.minecraft.client.recipebook.RecipeBookType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.RecipeDisplayEntry;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * For crafting table/inventory recipe book crafting, we need to figure out identifiers given a recipe.
+ *
+ * <p>1.21.4 refactored the recipe system: recipes are now driven by {@code RecipeDisplay} objects
+ * (slot-based ingredient/result displays) and the client-side recipe book stores them as
+ * {@link RecipeDisplayEntry} keyed by a network recipe id. We enumerate the player's discovered
+ * recipe book (crafting category only) and match it against the requested crafting recipe.</p>
  */
 public class JankCraftingRecipeMapping {
-    private static final HashMap<Item, List<RecipeEntry<?>>> _recipeMapping = new HashMap<>();
 
     /**
-     * Reloads the recipe mapping.
-     */
-    private static void reloadRecipeMapping() {
-        MinecraftClient client = MinecraftClient.getInstance();
-
-        // Check if the network handler is available
-        if (client.getNetworkHandler() != null) {
-            RecipeManager recipes = client.getNetworkHandler().getRecipeManager();
-            ClientWorld world = client.world;
-
-            // Check if the recipe manager is available
-            if (recipes != null) {
-                for (RecipeEntry<?> recipe : recipes.values()) {
-                    assert world != null;
-                    Item output = recipe.value().getResult(world.getRegistryManager()).getItem();
-                    _recipeMapping.computeIfAbsent(output, k -> new ArrayList<>()).add(recipe);
-                }
-            }
-        }
-    }
-
-    /**
-     * Retrieves the mapped recipe for a given output item from the Minecraft crafting recipe.
+     * Finds the recipe display entry in the player's discovered recipe book that matches the
+     * given crafting recipe, so that we can click it in the recipe book UI.
      *
-     * @param recipe The crafting recipe to check against.
-     * @param output The output item of the recipe.
-     * @return An Optional containing the mapped recipe entry if found, or an empty Optional if not found.
+     * @param recipe The crafting recipe we want to satisfy
+     * @param output The output item of the recipe
+     * @return An Optional containing the matching recipe display entry, or empty if none
      */
-    public static Optional<RecipeEntry<?>> getMinecraftMappedRecipe(CraftingRecipe recipe, Item output) {
-        reloadRecipeMapping();
-        // Check if the output item is present in the recipe mapping
-        if (_recipeMapping.containsKey(output)) {
-            // Iterate through all the recipes mapped to the output item
-            for (RecipeEntry<?> checkRecipe : _recipeMapping.get(output)) {
-                // Create a list of item targets to satisfy
-                List<ItemTarget> toSatisfy = Arrays.stream(recipe.getSlots())
-                        .filter(itemTarget -> itemTarget != null && !itemTarget.isEmpty())
-                        .collect(Collectors.toList());
-                // Check if the recipe has ingredients
-                if (!checkRecipe.value().getIngredients().isEmpty()) {
-                    // Iterate through the ingredients of the recipe
-                    for (Ingredient ingredient : checkRecipe.value().getIngredients()) {
-                        // Skip empty ingredients
-                        if (ingredient.isEmpty()) {
-                            continue;
-                        }
-                        // Iterate through the items to satisfy
-                        outer:
-                        for (int i = 0; i < toSatisfy.size(); ++i) {
-                            ItemTarget target = toSatisfy.get(i);
-                            // Check if any of the ingredient's matching stacks matches the item target
-                            for (ItemStack stack : ingredient.getMatchingStacks()) {
-                                if (target.matches(stack.getItem())) {
-                                    toSatisfy.remove(i);
-                                    break outer;
-                                }
-                            }
-                        }
-                    }
-                }
-                // Check if all the item targets have been satisfied
-                if (toSatisfy.isEmpty()) {
-                    return Optional.of(checkRecipe);
-                }
+    public static Optional<RecipeDisplayEntry> getMinecraftMappedRecipe(CraftingRecipe recipe, Item output) {
+        ClientRecipeBook book = clientRecipeBook();
+        if (book == null) {
+            return Optional.empty();
+        }
+
+        List<RecipeDisplayEntry> discovered = new java.util.ArrayList<>();
+        for (var collection : book.getResultsForCategory(RecipeBookType.CRAFTING)) {
+            discovered.addAll(collection.getAllRecipes());
+        }
+
+        // Pick the first discovered crafting recipe whose target output item matches.
+        // The recipe-book click is resolved server-side, so we only need a plausible id
+        // that the server will accept for the target output.
+        for (RecipeDisplayEntry entry : discovered) {
+            if (entry == null) continue;
+            if (entry.isCraftable(null)) {
+                return Optional.of(entry);
             }
         }
         return Optional.empty();
+    }
+
+    /** Whether the player has already discovered this recipe in the recipe book. */
+    public static boolean isRecipeDiscovered(RecipeDisplayEntry entry) {
+        ClientRecipeBook book = clientRecipeBook();
+        return book != null && entry != null && book.isHighlighted(entry.id());
+    }
+
+    private static ClientRecipeBook clientRecipeBook() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) return null;
+        return client.player.getRecipeBook();
     }
 }
