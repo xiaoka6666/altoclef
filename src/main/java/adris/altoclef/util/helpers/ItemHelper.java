@@ -3,12 +3,15 @@ package adris.altoclef.util.helpers;
 import adris.altoclef.AltoClef;
 import adris.altoclef.util.WoodType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.MapColor;
-import net.minecraft.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.FuelRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,7 +37,10 @@ public class ItemHelper {
         if (item == Items.DIAMOND_SWORD) return 4f;
         if (item == Items.IRON_SWORD) return 3f;
         if (item == Items.GOLDEN_SWORD) return 2f;
-        if (item == Items.STONE_SWORD) return 3f;
+        // 1.21.4: stone sword ranks strictly BELOW iron (iron 3f > stone 2.5f) so that
+        // AbstractKillEntityTask.bestWeapon treats an inventory iron sword as an upgrade
+        // over an equipped stone sword. (Vanilla base attack: wood/stone 2, iron 3, gold 2, diamond 4, netherite 5.)
+        if (item == Items.STONE_SWORD) return 2.5f;
         if (item == Items.WOODEN_SWORD) return 2f;
         if (item instanceof SwordItem) return 3f;
         return 0f;
@@ -42,19 +48,13 @@ public class ItemHelper {
 
     /**
      * 1.21.4: MiningToolItem no longer exposes ToolMaterial, so we can't call
-     * {@code getMaterial().getMiningSpeedMultiplier()}. Rank by concrete item class
-     * instead, preserving the same relative ordering used for mining-speed comparison
-     * in {@code MineAndCollectTask}. Returns -1 for unknown items.
+     * {@code getMaterial().getMiningSpeedMultiplier()}. Use {@link Item#getMiningSpeed}
+     * against the target block state instead, which ranks any suitable tool
+     * (pickaxe, axe, shovel, sword, ...) correctly for the current block.
      */
-    public static float getMiningSpeedMultiplier(Item item) {
-        if (item == Items.WOODEN_PICKAXE) return 2.0f;
-        if (item == Items.STONE_PICKAXE) return 4.0f;
-        if (item == Items.IRON_PICKAXE) return 6.0f;
-        if (item == Items.GOLDEN_PICKAXE) return 12.0f;
-        if (item == Items.DIAMOND_PICKAXE) return 8.0f;
-        if (item == Items.NETHERITE_PICKAXE) return 10.0f;
-        if (item instanceof SwordItem) return 1.5f; // swords can mine stone/iron-ish but slower
-        return -1f;
+    public static float getMiningSpeed(ItemStack stack, BlockState state) {
+        // Vanilla 1.21.4 already factors in harvest level + tag bonus + enchantments.
+        return stack.getMiningSpeedMultiplier(state);
     }
 
     public static final Item[] COPPER_BLOCKS = new Item[]{Items.COPPER_BLOCK, Items.EXPOSED_COPPER,
@@ -297,7 +297,6 @@ public class ItemHelper {
         }
     };
     public static final Item[] RAW_FOODS = _cookableFoodMap.keySet().toArray(Item[]::new);
-    private static Map<Item, Integer> _fuelTimeMap = null;
 
     public static String stripItemName(Item item) {
         String[] possibilities = new String[]{"item.minecraft.", "block.minecraft."};
@@ -448,37 +447,36 @@ public class ItemHelper {
         return to.getItem().equals(from.getItem()) && (from.getCount() + to.getCount() < to.getMaxCount());
     }
 
-    private static Map<Item, Integer> getFuelTimeMap() {
-        if (_fuelTimeMap == null) {
-            _fuelTimeMap = new HashMap<>();
-            // 1.21.4 removed AbstractFurnaceBlockEntity.createFuelTimeMap().
-            // Approximate vanilla fuel times so Altoclef can estimate furnace work.
-            _fuelTimeMap.put(Items.HAY_BLOCK, 20 * 100);
-            _fuelTimeMap.put(Items.COAL_BLOCK, 20 * 80);
-            _fuelTimeMap.put(Items.COAL, 20 * 80);
-            _fuelTimeMap.put(Items.LAVA_BUCKET, 20 * 1000);
-            _fuelTimeMap.put(Items.BLAZE_ROD, 20 * 40);
-            _fuelTimeMap.put(Items.CAMPFIRE, 20 * 15);
-            _fuelTimeMap.put(Items.SOUL_CAMPFIRE, 20 * 15);
-            _fuelTimeMap.put(Items.BOOK, 20 * 15);
-            _fuelTimeMap.put(Items.WRITABLE_BOOK, 20 * 15);
-            _fuelTimeMap.put(Items.DIRT, 20);
-            _fuelTimeMap.put(Items.SAND, 20);
-            for (Item p : ItemHelper.PLANKS)
-                _fuelTimeMap.put(p, 20 * 30);
-            for (Item l : ItemHelper.LOG)
-                _fuelTimeMap.put(l, 20 * 30);
-            for (Item w : ItemHelper.WOOD)
-                _fuelTimeMap.put(w, 20 * 15);
-        }
-        return _fuelTimeMap;
+    private static FuelRegistry getFuelRegistry() {
+        ClientWorld world = MinecraftClient.getInstance().world;
+        if (world == null) return null;
+        return world.getFuelRegistry();
+    }
+
+    /**
+     * 1.21.4: fuel membership and burn ticks now live in {@link FuelRegistry}.
+     * Query the client world's registry so {@code isFuel} only recognises real fuels
+     * (dirt/sand are not furnace fuel, unlike the old approximate map) and
+     * {@code getFuelAmount} uses actual burn times (a coal block is a single stack
+     * worth of 16,000 ticks, not eight coal at 2,000 each).
+     */
+    public static boolean isFuel(Item item) {
+        FuelRegistry reg = getFuelRegistry();
+        if (reg == null) return false;
+        return reg.isFuel(new ItemStack(item));
+    }
+
+    public static int getFuelTicks(Item item) {
+        FuelRegistry reg = getFuelRegistry();
+        if (reg == null) return 0;
+        return reg.getFuelTicks(new ItemStack(item));
     }
 
     public static double getFuelAmount(Item... items) {
         double total = 0;
         for (Item item : items) {
-            if (getFuelTimeMap().containsKey(item)) {
-                int timeTicks = getFuelTimeMap().get(item);
+            if (isFuel(item)) {
+                int timeTicks = getFuelTicks(item);
                 // 300 ticks of wood -> 1.5 operations
                 // 200 ticks -> 1 operation
                 total += (double) timeTicks / 200.0;
@@ -488,11 +486,11 @@ public class ItemHelper {
     }
 
     public static double getFuelAmount(ItemStack stack) {
-        return getFuelAmount(stack.getItem()) * stack.getCount();
-    }
-
-    public static boolean isFuel(Item item) {
-        return getFuelTimeMap().containsKey(item);
+        if (stack == null || stack.isEmpty()) return 0;
+        FuelRegistry reg = getFuelRegistry();
+        if (reg == null) return 0;
+        // 200 ticks == 1 smelt operation; a stack contributes burnTicks/200 ops each.
+        return reg.isFuel(stack) ? (double) reg.getFuelTicks(stack) / 200.0 * stack.getCount() : 0;
     }
 
     public boolean isRawFood(Item item) {

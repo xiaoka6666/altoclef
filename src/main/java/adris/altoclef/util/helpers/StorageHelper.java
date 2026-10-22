@@ -347,7 +347,8 @@ public class StorageHelper {
     public static boolean isArmorEquipped(AltoClef mod, Item... any) {
         for (Item item : any) {
             if (item instanceof ArmorItem) {
-                // 1.21.4: ArmorItem no longer exposes getSlotType(); map by translation key suffix.
+                // 1.21.4: ArmorItem no longer exposes getSlotType(); derive the armor-list index
+                // via the item's EQUIPPABLE component slot, not the translation-key suffix.
                 int armorSlotIndex = armorItemToArmorIndex(item);
                 if (armorSlotIndex >= 0) {
                     ItemStack equippedStack = mod.getPlayer().getInventory().getArmorStack(armorSlotIndex);
@@ -366,29 +367,33 @@ public class StorageHelper {
 
     /**
      * Maps an armor {@code Item} to the index used by {@code PlayerInventory.getArmorStack(int)}.
-     * In 1.21.4 the armor list order is boots(0), leggings(1), chestplate(2), helmet(3).
-     * Derived from the item's translation key suffix; returns -1 if not a recognised armor piece.
+     * 1.21.4: read the item's {@code EQUIPPABLE} data component and use its slot instead of
+     * matching translation-key suffixes (vanilla keys end in {@code _helmet}, not {@code .helmet},
+     * so suffix matching returned -1 for ordinary armor). The armor list order is
+     * boots(0), leggings(1), chestplate(2), helmet(3).
      */
     private static int armorItemToArmorIndex(Item item) {
-        String key = item.getTranslationKey();
-        if (key.endsWith(".boots")) return 0;
-        if (key.endsWith(".leggings")) return 1;
-        if (key.endsWith(".chestplate")) return 2;
-        if (key.endsWith(".helmet")) return 3;
-        return -1;
+        int idx = armorSlotIndex(item.getComponents().get(DataComponentTypes.EQUIPPABLE));
+        return idx >= 0 ? idx : -1;
     }
 
     /**
-     * 1.21.4 helper: derive the {@link EquipmentSlot} for an armor item from its translation key.
+     * Derive the {@link EquipmentSlot} for an armor item from its {@code EQUIPPABLE} component's slot.
      * Used by {@code EquipArmorTask} to route armor pieces to the correct equip slot.
      */
     public static EquipmentSlot armorItemToEquipSlot(Item item) {
-        switch (armorItemToArmorIndex(item)) {
-            case 0: return EquipmentSlot.FEET;
-            case 1: return EquipmentSlot.LEGS;
-            case 2: return EquipmentSlot.CHEST;
-            case 3: return EquipmentSlot.HEAD;
-            default: return null;
+        net.minecraft.component.type.EquippableComponent eq = item.getComponents().get(DataComponentTypes.EQUIPPABLE);
+        return eq != null ? eq.slot() : null;
+    }
+
+    private static int armorSlotIndex(net.minecraft.component.type.EquippableComponent eq) {
+        if (eq == null) return -1;
+        switch (eq.slot()) {
+            case FEET: return 0;
+            case LEGS: return 1;
+            case CHEST: return 2;
+            case HEAD: return 3;
+            default: return -1;
         }
     }
 

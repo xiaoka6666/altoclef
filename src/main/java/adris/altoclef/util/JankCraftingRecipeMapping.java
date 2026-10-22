@@ -4,8 +4,13 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.recipebook.ClientRecipeBook;
 import net.minecraft.client.recipebook.RecipeBookType;
 import net.minecraft.item.Item;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeDisplayEntry;
+import net.minecraft.recipe.display.RecipeDisplay;
+import net.minecraft.recipe.display.SlotDisplayContexts;
+import net.minecraft.util.context.ContextParameterMap;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,19 +38,27 @@ public class JankCraftingRecipeMapping {
             return Optional.empty();
         }
 
-        List<RecipeDisplayEntry> discovered = new java.util.ArrayList<>();
+        ContextParameterMap ctx = clientContext();
+        if (ctx == null) {
+            return Optional.empty();
+        }
+
+        List<ItemTarget> toSatisfy = new ArrayList<>();
+        for (ItemTarget target : recipe.getSlots()) {
+            if (target != null && !target.isEmpty()) {
+                toSatisfy.add(target);
+            }
+        }
+
+        List<RecipeDisplayEntry> discovered = new ArrayList<>();
         for (var collection : book.getResultsForCategory(RecipeBookType.CRAFTING)) {
             discovered.addAll(collection.getAllRecipes());
         }
 
-        // Pick the first discovered crafting recipe whose target output item matches.
-        // The recipe-book click is resolved server-side, so we only need a plausible id
-        // that the server will accept for the target output.
         for (RecipeDisplayEntry entry : discovered) {
-            if (entry == null) continue;
-            if (entry.isCraftable(null)) {
-                return Optional.of(entry);
-            }
+            if (entry == null || !matchesOutput(entry, ctx, output)) continue;
+            if (!matchesIngredients(entry, toSatisfy)) continue;
+            return Optional.of(entry);
         }
         return Optional.empty();
     }
@@ -60,5 +73,55 @@ public class JankCraftingRecipeMapping {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return null;
         return client.player.getRecipeBook();
+    }
+
+    private static ContextParameterMap clientContext() {
+        if (MinecraftClient.getInstance().world == null) return null;
+        // 1.21.4: build a context param map with REGISTRIES + FUEL_REGISTRY so display slots
+        // can resolve their result stacks.
+        var builder = new net.minecraft.util.context.ContextParameterMap.Builder()
+                .add(SlotDisplayContexts.REGISTRIES, MinecraftClient.getInstance().world.getRegistryManager())
+                .add(SlotDisplayContexts.FUEL_REGISTRY, MinecraftClient.getInstance().world.getFuelRegistry());
+        var type = new net.minecraft.util.context.ContextType.Builder()
+                .require(SlotDisplayContexts.REGISTRIES)
+                .allow(SlotDisplayContexts.FUEL_REGISTRY)
+                .build();
+        return builder.build(type);
+    }
+
+    /**
+     * Check whether the display's result item matches the target output item.
+     */
+    private static boolean matchesOutput(RecipeDisplayEntry entry, ContextParameterMap ctx, Item output) {
+        RecipeDisplay display = entry.display();
+        if (display == null || display.result() == null) return false;
+        return display.result().getStacks(ctx).stream().anyMatch(s -> s.getItem().equals(output));
+    }
+
+    /**
+     * Check whether the display's crafting-requirement ingredients satisfy the requested
+     * crafting slots. We use the entry's {@link RecipeDisplayEntry#craftingRequirements()} so
+     * that we don't need to resolve display-slot stacks.
+     */
+    private static boolean matchesIngredients(RecipeDisplayEntry entry, List<ItemTarget> toSatisfy) {
+        if (toSatisfy.isEmpty()) return true;
+        List<Ingredient> requirements = entry.craftingRequirements().orElse(List.of());
+        if (requirements.isEmpty()) return true;
+
+        List<ItemTarget> remaining = new ArrayList<>(toSatisfy);
+        for (Ingredient ingredient : requirements) {
+            if (ingredient.isEmpty()) continue;
+            for (int i = 0; i < remaining.size(); i++) {
+                ItemTarget target = remaining.get(i);
+                // A target is satisfied if ANY of its matching items is accepted by this ingredient slot.
+                for (Item match : target.getMatches()) {
+                    if (ingredient.test(new net.minecraft.item.ItemStack(match))) {
+                        remaining.remove(i);
+                        break;
+                    }
+                }
+            }
+        }
+        return remaining.isEmpty();
     }
 }
