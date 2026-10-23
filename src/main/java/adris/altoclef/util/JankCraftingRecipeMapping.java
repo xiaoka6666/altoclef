@@ -63,12 +63,6 @@ public class JankCraftingRecipeMapping {
         return Optional.empty();
     }
 
-    /** Whether the player has already discovered this recipe in the recipe book. */
-    public static boolean isRecipeDiscovered(RecipeDisplayEntry entry) {
-        ClientRecipeBook book = clientRecipeBook();
-        return book != null && entry != null && book.isHighlighted(entry.id());
-    }
-
     private static ClientRecipeBook clientRecipeBook() {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) return null;

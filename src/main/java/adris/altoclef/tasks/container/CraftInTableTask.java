@@ -399,12 +399,14 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
             // Get the client player entity
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
 
-            // If crafting book is enabled, the recipe to send exists, and the player has the recipe in their recipe book, return a CraftGenericWithRecipeBooksTask
+            // If crafting book is enabled and a matching recipe-book entry exists, use the recipe-book
+            // crafting path. getMinecraftMappedRecipe only returns entries already present in the
+            // client recipe book, so its presence is the "known recipe" check. (1.21.4's
+            // ClientRecipeBook.isHighlighted is only the transient "new recipe" badge flag, not a
+            // known/discovered marker, so it must not gate this decision.)
             if (mod.getModSettings().shouldUseCraftingBookToCraft() && recipeToSend.isPresent()) {
                 assert player != null;
-                if (JankCraftingRecipeMapping.isRecipeDiscovered(recipeToSend.get())) {
-                    return new CraftGenericWithRecipeBooksTask(target);
-                }
+                return new CraftGenericWithRecipeBooksTask(target);
             }
 
             // Return a CraftGenericManuallyTask by default
