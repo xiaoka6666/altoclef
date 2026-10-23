@@ -107,6 +107,11 @@ public class JankCraftingRecipeMapping {
         if (toSatisfy.isEmpty()) return true;
         List<Ingredient> requirements = entry.craftingRequirements().orElse(List.of());
         if (requirements.isEmpty()) return true;
+        // 1.21.4: reject entries whose non-empty requirement count differs from the
+        // requested slot count — otherwise a surplus requirement could be silently
+        // dropped and the wrong display entry's id would reach clickRecipe.
+        long nonEmpty = requirements.stream().filter(i -> !i.isEmpty()).count();
+        if (nonEmpty != toSatisfy.size()) return false;
 
         List<ItemTarget> remaining = new ArrayList<>(toSatisfy);
         for (Ingredient ingredient : requirements) {
