@@ -11,7 +11,9 @@ import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import adris.altoclef.util.helpers.ToolItemDetect;
 import net.minecraft.item.*;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.List;
@@ -124,7 +126,7 @@ public class SlotHandler {
     }
 
     public boolean forceDeequipHitTool() {
-        return forceDeequip(stack -> stack.getItem() instanceof ToolItem);
+        return forceDeequip(stack -> ToolItemDetect.isToolItem(stack.getItem()));
     }
 
     public void forceDeequipRightClickableItem() {
@@ -148,7 +150,10 @@ public class SlotHandler {
                             || item instanceof OnAStickItem
                             || item == Items.COMPASS
                             || item instanceof EmptyMapItem
-                            || item instanceof Equipment
+                            // 1.21.4: also catch non-armor equippables (elytra, ...) so we don't
+                            // leave one equipped and miss a right-click interaction.
+                            || stack.getComponents().contains(DataComponentTypes.EQUIPPABLE)
+                            || item instanceof ArmorItem
                             || item == Items.LEAD
                             || item == Items.SHIELD;
                 }

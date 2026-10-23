@@ -23,7 +23,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeDisplayEntry;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.math.BlockPos;
@@ -394,17 +394,19 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
             }
 
             // Get the recipe to send based on the target recipe and output item
-            Optional<RecipeEntry<?>> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(target.getRecipe(), target.getOutputItem());
+            Optional<RecipeDisplayEntry> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(target.getRecipe(), target.getOutputItem());
 
             // Get the client player entity
             ClientPlayerEntity player = MinecraftClient.getInstance().player;
 
-            // If crafting book is enabled, the recipe to send exists, and the player has the recipe in their recipe book, return a CraftGenericWithRecipeBooksTask
+            // If crafting book is enabled and a matching recipe-book entry exists, use the recipe-book
+            // crafting path. getMinecraftMappedRecipe only returns entries already present in the
+            // client recipe book, so its presence is the "known recipe" check. (1.21.4's
+            // ClientRecipeBook.isHighlighted is only the transient "new recipe" badge flag, not a
+            // known/discovered marker, so it must not gate this decision.)
             if (mod.getModSettings().shouldUseCraftingBookToCraft() && recipeToSend.isPresent()) {
                 assert player != null;
-                if (player.getRecipeBook().contains(recipeToSend.get())) {
-                    return new CraftGenericWithRecipeBooksTask(target);
-                }
+                return new CraftGenericWithRecipeBooksTask(target);
             }
 
             // Return a CraftGenericManuallyTask by default

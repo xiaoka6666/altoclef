@@ -257,7 +257,16 @@ public class PlaceBedAndSetSpawnTask extends Task {
             if (nearestBed.get().isWithinDistance(mod.getPlayer().getPos(), 40)) {
                 // Check if there are monsters nearby
                 Vec3d vec3d = Vec3d.ofBottomCenter(nearestBed.get());
-                List<HostileEntity> list = mod.getWorld().getEntitiesByClass(HostileEntity.class, new Box(vec3d.getX() - 8.0, vec3d.getY() - 5.0, vec3d.getZ() - 8.0, vec3d.getX() + 8.0, vec3d.getY() + 5.0, vec3d.getZ() + 8.0), (entity) -> entity.isAngryAt(mod.getPlayer()));
+                List<HostileEntity> list = mod.getWorld().getEntitiesByType(net.minecraft.util.TypeFilter.instanceOf(HostileEntity.class), new Box(vec3d.getX() - 8.0, vec3d.getY() - 5.0, vec3d.getZ() - 8.0, vec3d.getX() + 8.0, vec3d.getY() + 5.0, vec3d.getZ() + 8.0), (entity) -> {
+                    // 1.21.4: isAngryAt(ServerWorld, PlayerEntity) is server-only. Use a client-safe
+                    // threat check instead: an Enderman is only a threat when actually aggro'd
+                    // (EndermanEntity.isAngry() is client-safe); other hostiles count if they have
+                    // an active target. This avoids killing a calm Enderman that is merely nearby.
+                    if (entity instanceof net.minecraft.entity.mob.EndermanEntity enderman) {
+                        return enderman.isAngry();
+                    }
+                    return entity.getTarget() != null;
+                });
                 if (!list.isEmpty()) {
                     for (HostileEntity entity : list) {
                         setDebugState("Killing monster nearby");

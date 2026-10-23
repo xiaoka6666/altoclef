@@ -383,7 +383,7 @@ public class EntityTracker extends Tracker {
                         boolean inGround = false;
                         // Get projectile "inGround" variable
                         if (entity instanceof PersistentProjectileEntity) {
-                            inGround = ((PersistentProjectileEntityAccessor) entity).isInGround();
+                            inGround = entity.getDataTracker().get(((PersistentProjectileEntityAccessor) entity).getInGround());
                         }
 
                         // Ignore some of the harlmess projectiles

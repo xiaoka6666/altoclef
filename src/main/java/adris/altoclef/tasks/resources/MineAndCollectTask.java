@@ -9,6 +9,7 @@ import adris.altoclef.tasks.movement.PickupDroppedItemTask;
 import adris.altoclef.tasksystem.Task;
 import adris.altoclef.util.ItemTarget;
 import adris.altoclef.util.MiningRequirement;
+import adris.altoclef.util.helpers.ItemHelper;
 import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.helpers.WorldHelper;
 import adris.altoclef.util.progresscheck.MovementProgressChecker;
@@ -16,6 +17,7 @@ import adris.altoclef.util.slots.CursorSlot;
 import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
@@ -131,16 +133,15 @@ public class MineAndCollectTask extends ResourceTask {
                 // We have something in our cursor stack
                 if (cursorStack.isSuitableFor(mod.getWorld().getBlockState(_subtask.miningPos()))) {
                     // Our cursor stack would help us mine our current block
-                    Item currentlyEquipped = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
                     if (cursorStack.getItem() instanceof MiningToolItem) {
-                        if (currentlyEquipped instanceof MiningToolItem currentPick) {
-                            MiningToolItem swapPick = (MiningToolItem) cursorStack.getItem();
-                            if (swapPick.getMaterial().getMiningSpeedMultiplier() > currentPick.getMaterial().getMiningSpeedMultiplier()) {
-                                // We can equip a better pickaxe.
-                                mod.getSlotHandler().forceEquipSlot(CursorSlot.SLOT);
-                            }
-                        } else {
-                            // We're not equipped with a pickaxe...
+                        // 1.21.4: rank tools by their actual mining speed for the target block
+                        // (any suitable MiningToolItem, not just pickaxes).
+                        BlockState targetBlockState = mod.getWorld().getBlockState(_subtask.miningPos());
+                        float cursorSpeed = ItemHelper.getMiningSpeed(cursorStack, targetBlockState);
+                        ItemStack equipStack = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot());
+                        float equipSpeed = ItemHelper.getMiningSpeed(equipStack, targetBlockState);
+                        if (cursorSpeed > equipSpeed) {
+                            // We can equip a better tool.
                             mod.getSlotHandler().forceEquipSlot(CursorSlot.SLOT);
                         }
                     }

@@ -8,7 +8,12 @@ import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.slots.PlayerSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShearsItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import org.apache.commons.lang3.ArrayUtils;
 
 public class DepositCommand extends Command {
@@ -25,7 +30,12 @@ public class DepositCommand extends Command {
             // Ignore tools
             if (!stack.isEmpty()) {
                 Item item = stack.getItem();
-                return !(item instanceof ToolItem);
+                return !(item instanceof SwordItem)
+                        && !(item instanceof PickaxeItem)
+                        && !(item instanceof ShovelItem)
+                        && !(item instanceof HoeItem)
+                        && !(item instanceof AxeItem)
+                        && !(item instanceof ShearsItem);
             }
             return false;
         });

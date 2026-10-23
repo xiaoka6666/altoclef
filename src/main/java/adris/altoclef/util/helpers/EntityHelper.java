@@ -15,6 +15,7 @@ import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.server.world.ServerWorld;
 
 import java.util.Objects;
 
@@ -64,12 +65,16 @@ public class EntityHelper {
     public static double calculateResultingPlayerDamage(PlayerEntity player, DamageSource source, double damageAmount) {
         // Copied logic from `PlayerEntity.applyDamage`
 
-        if (player.isInvulnerableTo(source))
+        // 1.21.4: isInvulnerableTo(ServerWorld, DamageSource) is server-only; client-side we use the
+        // base check plus the abilities flag (creative/gamemode invulnerability is stored there, not in
+        // the entity's invulnerable field, so the base check alone would miss it).
+        if (player.isInvulnerable() || (player.getAbilities() != null && player.getAbilities().invulnerable))
             return 0;
 
         // Armor Base
         if (!source.isIn(DamageTypeTags.BYPASSES_ARMOR)) {
-            damageAmount = DamageUtil.getDamageLeft(player, (float) damageAmount, source, (float) player.getArmor(), (float) player.getAttributeValue(EntityAttributes.GENERIC_ARMOR_TOUGHNESS));
+            // 1.21.4: GENERIC_ARMOR_TOUGHNESS renamed to ARMOR_TOUGHNESS (RegistryEntry form).
+            damageAmount = DamageUtil.getDamageLeft(player, (float) damageAmount, source, (float) player.getArmor(), (float) player.getAttributeValue(EntityAttributes.ARMOR_TOUGHNESS));
         }
 
         // Enchantments & Potions
@@ -87,9 +92,15 @@ public class EntityHelper {
             if (damageAmount <= 0.0) {
                 damageAmount = 0.0;
             } else {
-                k = EnchantmentHelper.getProtectionAmount(Objects.requireNonNull(player.getServer()).getWorld(player.getWorld().getRegistryKey()), player, source);
-                if (k > 0) {
-                    damageAmount = DamageUtil.getInflictedDamage((float) damageAmount, k);
+                // 1.21.4 client-side: player.getServer() is null (client entity), so this protection
+                // lookup can't run here. Skip it rather than NPE — the caller only needs an estimate.
+                net.minecraft.server.MinecraftServer server = player.getServer();
+                if (server != null) {
+                    ServerWorld serverWorld = server.getWorld(player.getWorld().getRegistryKey());
+                    k = EnchantmentHelper.getProtectionAmount(serverWorld, player, source);
+                    if (k > 0) {
+                        damageAmount = DamageUtil.getInflictedDamage((float) damageAmount, k);
+                    }
                 }
             }
         }

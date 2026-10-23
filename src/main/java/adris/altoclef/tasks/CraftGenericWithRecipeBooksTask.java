@@ -16,7 +16,7 @@ import adris.altoclef.util.slots.Slot;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.RecipeDisplayEntry;
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.Optional;
@@ -135,13 +135,13 @@ public class CraftGenericWithRecipeBooksTask extends Task implements ITaskUsesCr
             }
         }
 
-        Optional<RecipeEntry<?>> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(_target.getRecipe(), _target.getOutputItem());
+        Optional<RecipeDisplayEntry> recipeToSend = JankCraftingRecipeMapping.getMinecraftMappedRecipe(_target.getRecipe(), _target.getOutputItem());
         if (recipeToSend.isPresent()) {
             if (mod.getSlotHandler().canDoSlotAction()) {
                 ClientPlayerEntity player = MinecraftClient.getInstance().player;
                 assert player != null;
-                // Click the recipe to send it
-                mod.getController().clickRecipe(player.currentScreenHandler.syncId, recipeToSend.get(), true);
+                // 1.21.4: clickRecipe takes a NetworkRecipeId (from the discovered display entry).
+                mod.getController().clickRecipe(player.currentScreenHandler.syncId, recipeToSend.get().id(), true);
                 mod.getSlotHandler().registerSlotAction();
             }
         }
