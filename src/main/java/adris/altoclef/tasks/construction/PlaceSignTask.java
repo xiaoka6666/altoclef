@@ -12,7 +12,11 @@ import adris.altoclef.util.slots.Slot;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.input.CharInput;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.gui.screen.ingame.SignEditScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.SlotActionType;
@@ -102,12 +106,12 @@ public class PlaceSignTask extends Task {
                 }
 
                 // Add newline
-                screen.keyPressed(257, 36, 0);
+                screen.keyPressed(new net.minecraft.client.input.KeyInput(257, 36, 0));
                 //Debug.logMessage("NEW LINE ADDED BEFORE: " + c);
             }
             // keycode don't matter
             //int keyCode = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(c);
-            screen.charTyped(c, -1);
+            screen.charTyped(new net.minecraft.client.input.CharInput((int) c, -1));
             //screen.keyPressed(keyCode, -1, )
         }
         screen.close();

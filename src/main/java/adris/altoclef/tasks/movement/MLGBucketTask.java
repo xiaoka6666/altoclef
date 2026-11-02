@@ -13,6 +13,7 @@ import baritone.api.utils.input.Input;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.minecraft.block.Block;
+import net.minecraft.registry.Registries;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
@@ -186,7 +187,7 @@ public class MLGBucketTask extends Task {
             setDebugState("Performing MLG");
             LookHelper.lookAt(mod, reachable.get());
             // Try water by default
-            boolean hasClutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+            boolean hasClutch = (mod.getWorld().getDimension().infiniburn() == null && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
             if (!hasClutch) {
                 // Go through our "clutch" items and see if any fit
                 if (!_config.clutchItems.isEmpty()) {
@@ -416,7 +417,7 @@ public class MLGBucketTask extends Task {
     }
 
     private boolean hasClutchItem(AltoClef mod) {
-        if (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+        if (mod.getWorld().getDimension().infiniburn() == null && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
             return true;
         }
         return _config.clutchItems.stream().anyMatch(item -> mod.getItemStorage().hasItem(item));

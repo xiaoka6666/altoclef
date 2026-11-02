@@ -43,14 +43,14 @@ public abstract class AbstractKillEntityTask extends AbstractDoToEntityTask {
             float handDamage = Float.NEGATIVE_INFINITY;
             Item bestItem = null;
             for (ItemStack invStack : invStacks) {
-                if (invStack.getItem().is(ItemTags.SWORDS)) {
+                if (invStack.isIn(ItemTags.SWORDS)) {
                     float itemDamage = ItemHelper.getMaterialAttackDamage(invStack.getItem());
                     Item handItem = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
                     if (ItemHelper.isSword(handItem)) {
                         handDamage = ItemHelper.getMaterialAttackDamage(handItem);
                     }
                     if (itemDamage > handDamage) {
-                        bestItem = item;
+                        bestItem = invStack.getItem();
                     } else {
                         bestItem = handItem;
                     }

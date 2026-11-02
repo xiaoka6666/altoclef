@@ -528,7 +528,7 @@ public class TaskCatalogue {
                 String i = "iron_nugget";
                 shapedRecipe3x3("lantern", Items.LANTERN, 1, i, i, i, i, "torch", i, i, i, i);
                 shapedRecipe3x3("soul_lantern", Items.SOUL_LANTERN, 1, i, i, i, i, "soul_torch", i, i, i, i);
-                shapedRecipe3x3("chain", Items.CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
+                shapedRecipe3x3("chain", Items.IRON_CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
             }
             {
                 String c = "chiseled_stone_bricks";
@@ -880,9 +880,9 @@ public class TaskCatalogue {
         String o = null;
         //noinspection UnnecessaryLocalVariable
         String m = material;
-        shapedRecipe3x3(toolMaterialName + "_pickaxe", Item, 1, m, m, m, o, s, o, o, s, o);
+        shapedRecipe3x3(toolMaterialName + "_pickaxe", pickaxeItem, 1, m, m, m, o, s, o, o, s, o);
         shapedRecipe3x3(toolMaterialName + "_shovel", shovelItem, 1, o, m, o, o, s, o, o, s, o);
-        shapedRecipe3x3(toolMaterialName + "_sword", Item, 1, o, m, o, o, m, o, o, s, o);
+        shapedRecipe3x3(toolMaterialName + "_sword", swordItem, 1, o, m, o, o, m, o, o, s, o);
         shapedRecipe3x3(toolMaterialName + "_axe", axeItem, 1, m, m, o, m, s, o, o, s, o);
         shapedRecipe3x3(toolMaterialName + "_hoe", hoeItem, 1, m, m, o, o, s, o, o, s, o);
     }

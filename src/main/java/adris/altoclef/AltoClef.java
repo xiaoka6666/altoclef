@@ -29,7 +29,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.network.ClientPlayerInteractionManager;
-import net.minecraft.client.util.math.MatrixStack;
+import org.joml.Matrix3x2fStack;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -213,7 +213,7 @@ public class AltoClef implements ModInitializer {
 
     /// GETTERS AND SETTERS
 
-    private void onClientRenderOverlay(MatrixStack matrixStack) {
+    private void onClientRenderOverlay(Matrix3x2fStack matrixStack) {
         _commandStatusOverlay.render(this, matrixStack);
     }
 

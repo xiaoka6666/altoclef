@@ -140,7 +140,7 @@ public class MineAndCollectTask extends ResourceTask {
                 // We have something in our cursor stack
                 if (cursorStack.isSuitableFor(mod.getWorld().getBlockState(_subtask.miningPos()))) {
                     // Our cursor stack would help us mine our current block
-                    if (cursorStack.getItem() .is(ItemTags.PICKAXES)) {
+                    if (cursorStack.isIn(ItemTags.PICKAXES)) {
                         // 1.21.4: rank tools by their actual mining speed for the target block
                         // (any suitable Item, not just pickaxes).
                         BlockState targetBlockState = mod.getWorld().getBlockState(_subtask.miningPos());

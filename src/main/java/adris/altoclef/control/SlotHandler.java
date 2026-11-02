@@ -109,7 +109,7 @@ public class SlotHandler {
         if (StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem() == toEquip) return true;
 
         // Always equip to the second slot. First + last is occupied by baritone.
-        _mod.getPlayer().getInventory().selectedSlot = 1;
+        _mod.getPlayer().getInventory().setSelectedSlot(1);
 
         // If our item is in our cursor, simply move it to the hotbar.
         boolean inCursor = StorageHelper.getItemStackInSlot(CursorSlot.SLOT).getItem() == toEquip;
@@ -243,7 +243,7 @@ public class SlotHandler {
     public void refreshInventory() {
         if (MinecraftClient.getInstance().player == null)
             return;
-        for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().main.size(); ++i) {
+        for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().getMainStacks().size(); ++i) {
             Slot slot = Slot.getFromCurrentScreenInventory(i);
             clickSlotForce(slot, 0, SlotActionType.PICKUP);
             clickSlotForce(slot, 0, SlotActionType.PICKUP);

@@ -46,14 +46,14 @@ public class KillAura {
         if (!invStacks.isEmpty()) {
             float handDamage = Float.NEGATIVE_INFINITY;
             for (ItemStack invStack : invStacks) {
-                if (invStack.getItem().is(ItemTags.SWORDS)) {
-                    float itemDamage = ItemHelper.getMaterialAttackDamage(item);
+                if (invStack.isIn(ItemTags.SWORDS)) {
+                    float itemDamage = ItemHelper.getMaterialAttackDamage(invStack.getItem());
                     Item handItem = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
                     if (ItemHelper.isSword(handItem)) {
-                        handDamage = ItemHelper.getMaterialAttackDamage(handToolItem);
+                        handDamage = ItemHelper.getMaterialAttackDamage(handItem);
                     }
                     if (itemDamage > handDamage) {
-                        mod.getSlotHandler().forceEquipItem(item);
+                        mod.getSlotHandler().forceEquipItem(invStack.getItem());
                     } else {
                         mod.getSlotHandler().forceEquipItem(handItem);
                     }

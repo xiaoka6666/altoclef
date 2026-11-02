@@ -606,7 +606,7 @@ public class ItemHelper {
     }
 
     public static boolean isAxe(Item item) {
-        return item instanceof AxeItem;
+        return item == Items.STONE_AXE || item == Items.IRON_AXE || item == Items.GOLDEN_AXE || item == Items.DIAMOND_AXE || item == Items.NETHERITE_AXE;
     }
 
     public static boolean isMiningTool(Item item) {

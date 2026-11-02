@@ -17,6 +17,8 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -30,8 +32,8 @@ public class EntityHelper {
     }
 
     public static boolean isGenerallyHostileToPlayer(AltoClef mod, Entity entity) {
-        if (entity instanceof Tameable tameable && tameable.getOwnerUuid() != null
-                && tameable.getOwnerUuid().equals(mod.getPlayer().getUuid())) return false;
+        if (entity instanceof Tameable tameable && tameable.getOwnerReference() != null
+                && tameable.getOwnerReference().getUuid().equals(mod.getPlayer().getUuid())) return false;
         if (entity instanceof SlimeEntity slime && mod.getPlayer().isInRange(slime, 3)) return true;
         if (entity instanceof RaiderEntity raider && mod.getPlayer().isInRange(raider, 16)) return true;
         if (entity instanceof WardenEntity warden && mod.getPlayer().isInRange(warden, 16)) return true;
@@ -46,12 +48,13 @@ public class EntityHelper {
 
     public static boolean isTradingPiglin(Entity entity) {
         if (entity instanceof PiglinEntity pig) {
-            if (pig.getHandItems() != null) {
-                for (ItemStack stack : pig.getHandItems()) {
-                    if (stack.getItem().equals(Items.GOLD_INGOT)) {
-                        // We're trading with this one, ignore it.
-                        return true;
-                    }
+            List<ItemStack> handItems = new ArrayList<>();
+            if (!pig.getMainHandStack().isEmpty()) handItems.add(pig.getMainHandStack());
+            if (!pig.getOffHandStack().isEmpty()) handItems.add(pig.getOffHandStack());
+            for (ItemStack stack : handItems) {
+                if (stack.getItem().equals(Items.GOLD_INGOT)) {
+                    // We're trading with this one, ignore it.
+                    return true;
                 }
             }
         }
@@ -94,7 +97,7 @@ public class EntityHelper {
             } else {
                 // 1.21.4 client-side: player.getServer() is null (client entity), so this protection
                 // lookup can't run here. Skip it rather than NPE — the caller only needs an estimate.
-                net.minecraft.server.MinecraftServer server = player.getServer();
+                var server = net.minecraft.client.MinecraftClient.getInstance().getServer();
                 if (server != null) {
                     ServerWorld serverWorld = server.getWorld(player.getEntityWorld().getRegistryKey());
                     k = EnchantmentHelper.getProtectionAmount(serverWorld, player, source);

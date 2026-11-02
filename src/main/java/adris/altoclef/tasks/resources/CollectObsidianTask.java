@@ -166,7 +166,7 @@ public class CollectObsidianTask extends ResourceTask {
         if (_placeObsidianTask != null && !mod.getItemStorage().hasItem(Items.LAVA_BUCKET)) {
             // We've moved sort of far away from our post, and this will STOP running when we grab our lava
             // (which is exactly when we want it to run and no more!
-            if (!_placeObsidianTask.getEntityPos().isWithinDistance(mod.getPlayer().getEntityPos(), 4)) {
+            if (!_placeObsidianTask.getPos().isWithinDistance(mod.getPlayer().getEntityPos(), 4)) {
                 BlockPos goodPos = getGoodObsidianPosition(mod);
                 if (goodPos != null) {
                     Debug.logMessage("(nudged obsidian target closer)");

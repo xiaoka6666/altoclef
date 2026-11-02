@@ -66,7 +66,7 @@ public class MobDefenseChain extends SingleTaskChain {
 
     public static double getCreeperSafety(Vec3d pos, CreeperEntity creeper) {
         double distance = creeper.squaredDistanceTo(pos);
-        float fuse = creeper.getClientFuseTime(1);
+        float fuse = creeper.getLerpedFuseTime(1.0f);
 
         // Not fusing.
         if (fuse <= 0.001f) return distance;
@@ -204,7 +204,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 //Debug.logMessage("RUNNING AWAY!");
                 _runAwayTask = new RunAwayFromCreepersTask(CREEPER_KEEP_DISTANCE);
                 setTask(_runAwayTask);
-                return 50 + blowingUp.getClientFuseTime(1) * 50;
+                return 50 + blowingUp.getLerpedFuseTime(1.0f) * 50;
             }
         } else {
             if (!isProjectileClose(mod)) {
@@ -429,7 +429,7 @@ public class MobDefenseChain extends SingleTaskChain {
             Optional<Entity> creeper = mod.getEntityTracker().getClosestEntity(CreeperEntity.class);
             if (creeper.isPresent()) {
                 CreeperEntity creeperEntity = (CreeperEntity) creeper.get();
-                if (!(creeperEntity.getClientFuseTime(1) < 0.001)) {
+                if (!(creeperEntity.getLerpedFuseTime(1.0f) < 0.001)) {
                     // We want to pick the closest creeper, but FIRST pick creepers about to blow
                     // At max fuse, the cost goes to basically zero.
                     double safety = getCreeperSafety(mod.getPlayer().getEntityPos(), creeperEntity);

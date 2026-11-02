@@ -62,7 +62,7 @@ abstract class ChunkSearchTask extends Task {
         if (_first) {
             _finished = false;
             _first = false;
-            ChunkPos startPos = mod.getWorld().getChunk(_startPoint).getEntityPos();
+            ChunkPos startPos = mod.getWorld().getChunk(_startPoint).getPos();
             synchronized (_searchMutex) {
                 searchChunkOrQueueSearch(mod, startPos);
             }
@@ -72,8 +72,8 @@ abstract class ChunkSearchTask extends Task {
             WorldChunk chunk = evt.chunk;
             if (chunk == null) return;
             synchronized (_searchMutex) {
-                if (!_searchedAlready.contains(chunk.getEntityPos())) {
-                    _justLoaded.add(chunk.getEntityPos());
+                if (!_searchedAlready.contains(chunk.getPos())) {
+                    _justLoaded.add(chunk.getPos());
                 }
             }
         });

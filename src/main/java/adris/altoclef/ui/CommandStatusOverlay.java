@@ -5,7 +5,7 @@ import adris.altoclef.tasksystem.Task;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.util.math.MatrixStack;
+import org.joml.Matrix3x2fStack;
 import org.joml.Matrix4f;
 
 import java.time.Instant;
@@ -22,7 +22,7 @@ public class CommandStatusOverlay {
     private long _lastTime = 0;
     private DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss.SSS").withZone(ZoneId.from(ZoneOffset.of("+00:00"))); // The date formatter
 
-    public void render(AltoClef mod, MatrixStack matrixstack) {
+    public void render(AltoClef mod, Matrix3x2fStack matrixstack) {
         if (mod.getModSettings().shouldShowTaskChain()) {
             List<Task> tasks = Collections.emptyList();
             if (mod.getTaskRunner().getCurrentTaskChain() != null) {
@@ -31,13 +31,13 @@ public class CommandStatusOverlay {
 
             int color = 0xFFFFFFFF;
             drawTaskChain(MinecraftClient.getInstance().textRenderer, 0, 0, color, false,
-                    matrixstack.peek().getPositionMatrix(),
+                    new org.joml.Matrix4f(matrixstack.m00(), matrixstack.m01(), 0, matrixstack.m20(), matrixstack.m10(), matrixstack.m11(), 0, matrixstack.m21(), 0, 0, 1, 0, 0, 0, 0, 1),
                     MinecraftClient.getInstance().getBufferBuilders().getOutlineVertexConsumers(),
                     TextRenderer.TextLayerType.NORMAL, 0, 255, 10, tasks, mod);
         }
     }
 
-    private void drawTaskChain(TextRenderer renderer, float x, float y, int color, boolean shadow, Matrix4f matrix, VertexConsumerProvider vertexConsumers, TextRenderer.TextLayerType layerType, int backgroundColor, int light, int maxLines, List<Task> tasks, AltoClef mod) {
+    private void drawTaskChain(TextRenderer renderer, float x, float y, int color, boolean shadow, org.joml.Matrix4f matrix, VertexConsumerProvider vertexConsumers, TextRenderer.TextLayerType layerType, int backgroundColor, int light, int maxLines, List<Task> tasks, AltoClef mod) {
         if (tasks.size() == 0) {
             renderer.draw(" (no task running) ", x, y, color, shadow, matrix, vertexConsumers, layerType, backgroundColor, light);
             if (_lastTime + 10000 < Instant.now().toEpochMilli() && mod.getModSettings().shouldShowTimer()) {//if it doesn't run any task in 10 secs

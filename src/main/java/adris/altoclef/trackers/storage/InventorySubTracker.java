@@ -110,9 +110,9 @@ public class InventorySubTracker extends Tracker {
         if (includeCursor) {
             result.add(StorageHelper.getItemStackInCursorSlot());
         }
-        result.addAll(inv.main);
-        result.addAll(inv.armor);
-        result.addAll(inv.offHand);
+        result.addAll(inv.getMainStacks());
+        for (int i = 36; i < 40; i++) { result.add(inv.getStack(i)); };
+        result.add(inv.getStack(net.minecraft.entity.player.PlayerInventory.OFF_HAND_SLOT));
         return result;
     }
 

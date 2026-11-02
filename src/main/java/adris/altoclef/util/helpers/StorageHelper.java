@@ -85,7 +85,7 @@ public class StorageHelper {
         PlayerInventory inv = player.getInventory();
         if (inv != null) {
             if (slot.equals(PlayerSlot.OFFHAND_SLOT))
-                return inv.offHand.stream().findFirst().orElse(ItemStack.EMPTY);
+                return inv.getStack(net.minecraft.entity.player.PlayerInventory.OFF_HAND_SLOT);
             if (slot.equals(PlayerSlot.ARMOR_HELMET_SLOT))
                 return inv.getStack(3 + 5);
             if (slot.equals(PlayerSlot.ARMOR_CHESTPLATE_SLOT))
@@ -224,7 +224,7 @@ public class StorageHelper {
                 Item item = stack.getItem();
                 if (ItemHelper.isSword(item)) {
                     // 1.21.4: Item no longer exposes ToolMaterial, rank by class only
-                    Class c = sword.getClass();
+                    Class c = item.getClass();
                     int prevBest = bestMaterials.getOrDefault(c, 0);
                     if (prevBest < 1) {
                         bestMaterials.put(c, 1);
