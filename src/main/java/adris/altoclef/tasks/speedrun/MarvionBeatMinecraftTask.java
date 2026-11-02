@@ -885,7 +885,7 @@ public class MarvionBeatMinecraftTask extends Task {
                 mod.getBlockTracker().requestBlockUnreachable(craftingTables.get(), 0);
                 BlockState craftingTablePosUp = mod.getWorld().getBlockState(craftingTables.get().up(2));
                 Optional<Entity> witch = mod.getEntityTracker().getClosestEntity(WitchEntity.class);
-                if (witch.isPresent() && craftingTables.get().isWithinDistance(witch.get().getPos(), 15)) {
+                if (witch.isPresent() && craftingTables.get().isWithinDistance(witch.get().getEntityPos(), 15)) {
                     Debug.logMessage("Blacklisting witch crafting table.");
                     mod.getBlockTracker().requestBlockUnreachable(craftingTables.get(), 0);
                 }
@@ -937,7 +937,7 @@ public class MarvionBeatMinecraftTask extends Task {
                     Iterable<Entity> entities = mod.getWorld().getEntities();
                     for (Entity entity : entities) {
                         if (entity instanceof PillagerEntity && !mod.getBlockTracker().unreachable(logs.get())
-                                && logs.get().isWithinDistance(entity.getPos(), 40)) {
+                                && logs.get().isWithinDistance(entity.getEntityPos(), 40)) {
                             Debug.logMessage("Blacklisting pillage log.");
                             mod.getBlockTracker().requestBlockUnreachable(logs.get(), 0);
                         }

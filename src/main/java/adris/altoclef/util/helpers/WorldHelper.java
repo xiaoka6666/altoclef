@@ -92,7 +92,7 @@ public interface WorldHelper {
     }
 
     static boolean inRangeXZ(Entity entity, Vec3d to, double range) {
-        return inRangeXZ(entity.getPos(), to, range);
+        return inRangeXZ(entity.getEntityPos(), to, range);
     }
 
     static boolean inRangeXZ(Entity entity, BlockPos to, double range) {
@@ -100,14 +100,14 @@ public interface WorldHelper {
     }
 
     static boolean inRangeXZ(Entity entity, Entity to, double range) {
-        return inRangeXZ(entity, to.getPos(), range);
+        return inRangeXZ(entity, to.getEntityPos(), range);
     }
 
     static Dimension getCurrentDimension() {
         ClientWorld world = MinecraftClient.getInstance().world;
         if (world == null) return Dimension.OVERWORLD;
-        if (world.getDimension().ultrawarm()) return Dimension.NETHER;
-        if (world.getDimension().natural()) return Dimension.OVERWORLD;
+        if (world.getDimension().infiniburn() != null) return Dimension.NETHER;
+        if (world.getDimension().ambientLight() > 0.5f) return Dimension.OVERWORLD;
         return Dimension.END;
     }
 
@@ -307,7 +307,7 @@ public interface WorldHelper {
     }
 
     static boolean isInsidePlayer(AltoClef mod, BlockPos pos) {
-        return pos.isWithinDistance(mod.getPlayer().getPos(), 2);
+        return pos.isWithinDistance(mod.getPlayer().getEntityPos(), 2);
     }
 
     static Iterable<BlockPos> getBlocksTouchingPlayer(AltoClef mod) {

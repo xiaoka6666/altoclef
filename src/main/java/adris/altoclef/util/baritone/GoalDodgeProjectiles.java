@@ -60,7 +60,7 @@ public class GoalDodgeProjectiles implements Goal {
                 }
             }
         }
-        //Debug.logMessage("COMFY: " + p.subtract(MinecraftClient.getInstance().player.getPos()));
+        //Debug.logMessage("COMFY: " + p.subtract(MinecraftClient.getInstance().player.getEntityPos()));
         return true;
     }
 

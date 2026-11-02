@@ -89,15 +89,15 @@ public class LocateStrongholdCoordinatesTask extends Task {
                     _cachedEyeDirection = null;
                     _cachedEyeDirection2 = null;
                 } else if (_cachedEyeDirection == null) {
-                    _cachedEyeDirection = new EyeDirection(_currentThrownEye.getPos());
+                    _cachedEyeDirection = new EyeDirection(_currentThrownEye.getEntityPos());
                 } else {
-                    _cachedEyeDirection2 = new EyeDirection(_currentThrownEye.getPos());
+                    _cachedEyeDirection2 = new EyeDirection(_currentThrownEye.getEntityPos());
                 }
             }
             if (_cachedEyeDirection2 != null) {
-                _cachedEyeDirection2.updateEyePos(_currentThrownEye.getPos());
+                _cachedEyeDirection2.updateEyePos(_currentThrownEye.getEntityPos());
             } else if (_cachedEyeDirection != null) {
-                _cachedEyeDirection.updateEyePos(_currentThrownEye.getPos());
+                _cachedEyeDirection.updateEyePos(_currentThrownEye.getEntityPos());
             }
 
             if (mod.getEntityTracker().getClosestEntity(EyeOfEnderEntity.class).isPresent() &&
@@ -124,14 +124,14 @@ public class LocateStrongholdCoordinatesTask extends Task {
 
 
                 _strongholdEstimatePos = calculateIntersection(throwOrigin, throwDelta, throwOrigin2, throwDelta2); // stronghold estimate
-                Debug.logMessage("Stronghold is at " + (int) _strongholdEstimatePos.getX() + ", " + (int) _strongholdEstimatePos.getZ() + " (" + (int) mod.getPlayer().getPos().distanceTo(Vec3d.of(_strongholdEstimatePos)) + " blocks away)");
+                Debug.logMessage("Stronghold is at " + (int) _strongholdEstimatePos.getX() + ", " + (int) _strongholdEstimatePos.getZ() + " (" + (int) mod.getPlayer().getEntityPos().distanceTo(Vec3d.of(_strongholdEstimatePos)) + " blocks away)");
             }
         }
 
 
         // Re-throw the eyes after reaching the estimation to get a more accurate estimate of where the stronghold is.
         if (_strongholdEstimatePos != null) {
-            if (((mod.getPlayer().getPos().distanceTo(Vec3d.of(_strongholdEstimatePos)) < EYE_RETHROW_DISTANCE) && WorldHelper.getCurrentDimension() == Dimension.OVERWORLD)) {
+            if (((mod.getPlayer().getEntityPos().distanceTo(Vec3d.of(_strongholdEstimatePos)) < EYE_RETHROW_DISTANCE) && WorldHelper.getCurrentDimension() == Dimension.OVERWORLD)) {
                 _strongholdEstimatePos = null;
                 _cachedEyeDirection = null;
                 _cachedEyeDirection2 = null;

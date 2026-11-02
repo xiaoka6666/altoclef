@@ -57,7 +57,7 @@ public class MLGBucketFallChain extends SingleTaskChain implements ITaskOverride
                         isPlacedWater = false;
                     }
                     //Debug.logInternal("PLACED: " + placed);
-                    if (placed != null && placed.isWithinDistance(mod.getPlayer().getPos(), 5.5) && isPlacedWater) {
+                    if (placed != null && placed.isWithinDistance(mod.getPlayer().getEntityPos(), 5.5) && isPlacedWater) {
                         BlockPos toInteract = placed;
                         // Allow looking at fluids
                         mod.getBehaviour().push();

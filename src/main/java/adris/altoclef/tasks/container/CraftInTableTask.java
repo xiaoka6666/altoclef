@@ -440,7 +440,7 @@ class DoCraftInTableTask extends DoStuffInContainerTask {
         Optional<BlockPos> closestCraftingTable = mod.getBlockTracker().getNearestTracking(Blocks.CRAFTING_TABLE);
 
         // If a crafting table is within 40 blocks of the player, return positive infinity.
-        if (closestCraftingTable.isPresent() && closestCraftingTable.get().isWithinDistance(mod.getPlayer().getPos(), 40)) {
+        if (closestCraftingTable.isPresent() && closestCraftingTable.get().isWithinDistance(mod.getPlayer().getEntityPos(), 40)) {
             return Double.POSITIVE_INFINITY;
         }
 

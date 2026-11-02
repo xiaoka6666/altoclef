@@ -123,7 +123,7 @@ public class KillEnderDragonWithBedsTask extends Task {
                     setDebugState("Going to position for bed cycle...");
                     return _positionTask;
                 }
-                if ((!WorldHelper.inRangeXZ(WorldHelper.toVec3d(targetStandPosition), mod.getPlayer().getPos(), 0.50))
+                if ((!WorldHelper.inRangeXZ(WorldHelper.toVec3d(targetStandPosition), mod.getPlayer().getEntityPos(), 0.50))
 //                            && mod.getPlayer().getVelocity().getX() == 0 && mod.getPlayer().getVelocity().getY() == 0 && mod.getPlayer().getVelocity().getZ() == 0
                 ) {
                     _positionTask = new GetToBlockTask(targetStandPosition);
@@ -166,7 +166,7 @@ public class KillEnderDragonWithBedsTask extends Task {
                     // Wait for dragon head to be close enough to the bed's head...
                     BlockPos bedfoot = WorldHelper.getBedFoot(mod, bedTargetPosition);
                     assert bedfoot != null;
-                    Vec3d headPos = dragonEntity.head.getBoundingBox().getCenter(); // dragon.head.getPos();
+                    Vec3d headPos = dragonEntity.head.getBoundingBox().getCenter(); // dragon.head.getEntityPos();
                     double dist = headPos.distanceTo(WorldHelper.toVec3d(bedfoot));
                     Debug.logMessage("Dist: " + dist + " Health: " + dragonEntity.getHealth());
 

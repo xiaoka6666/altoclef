@@ -46,7 +46,7 @@ public class KillEndermanTask extends ResourceTask {
         if (enderman.isPresent()) {
             EndermanEntity endermanEntity = (EndermanEntity) enderman.get();
             final int TOO_FAR_AWAY = 256;
-            if (endermanEntity.isAngry() && endermanEntity.getPos().isInRange(mod.getPlayer().getPos(), TOO_FAR_AWAY)) {
+            if (endermanEntity.isAngry() && endermanEntity.getEntityPos().isInRange(mod.getPlayer().getEntityPos(), TOO_FAR_AWAY)) {
                 return new KillEntityTask(endermanEntity);
             }
         }

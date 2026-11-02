@@ -248,7 +248,7 @@ public class PlaceObsidianBucketTask extends Task {
         // Check if the other task is an instance of PlaceObsidianBucketTask
         if (other instanceof PlaceObsidianBucketTask task) {
             // Check if the positions are equal
-            boolean isEqual = task.getPos().equals(getPos());
+            boolean isEqual = task.getEntityPos().equals(getPos());
             // Return the result
             return isEqual;
         }

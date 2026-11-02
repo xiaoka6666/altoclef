@@ -1,0 +1,786 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.13.3
+Build file 'D:\MC\altoclef\build.gradle': line 7
+The org.gradle.api.plugins.JavaPluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#java_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:7)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 8
+The org.gradle.api.plugins.JavaPluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#java_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:8)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 10
+The org.gradle.api.plugins.BasePluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#base_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 10
+The BasePluginExtension.archivesBaseName property has been deprecated. This is scheduled to be removed in Gradle 9.0. Please use the archivesName property instead. For more information, please refer to https://docs.gradle.org/8.14/dsl/org.gradle.api.plugins.BasePluginExtension.html#org.gradle.api.plugins.BasePluginExtension:archivesName in the Gradle documentation.
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 79
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('duplicatesStrategy = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5$_closure14.doCall$original(D:\MC\altoclef\build.gradle:79)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5.doCall$original(D:\MC\altoclef\build.gradle:76)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 83
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('duplicatesStrategy = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5$_closure15.doCall$original(D:\MC\altoclef\build.gradle:83)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5.doCall$original(D:\MC\altoclef\build.gradle:82)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Not publishing sources jar as it was not created by the java plugin. Use java.withSourcesJar() to fix.
+
+> Task :compileJava
+.\gradlew : D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:34: 閿欒: 鎵句笉鍒扮鍙?import net.minecra
+ft.item.SwordItem;
+所在位置 行:1 字符: 104
++ ... \altoclef"; .\gradlew compileJava "-Pmod_version=1.21.11" --no-daemon ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\MC\altoclef\...item.SwordItem;:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:21: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:13: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Pic
+kaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:16: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Swo
+rdItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.ArmorI
+tem;
+                         ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:18: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Swo
+rdItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:12: 閿欒: 鎵句笉鍒扮鍙?import net.minecr
+aft.item.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:26: 閿欒: 鎵句笉鍒扮鍙?import net.minecra
+ft.item.MiningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:5: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.M
+iningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.P
+ickaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:10: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+MiningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:9: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+PickaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:12: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item
+.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:69: 閿欒: 鎵句笉鍒扮鍙?        float fuse = creeper.g
+etClientFuseTime(1);
+                            ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeper
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:207: 閿欒: 鎵句笉鍒扮鍙?                return 50 + b
+lowingUp.getClientFuseTime(1) * 50;
+                                     ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?blowingUp
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:256: 閿欒: 鎵句笉鍒扮鍙?            SwordItem bestSwo
+rd = null;
+            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?MobDefenseChain
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:261: 閿欒: 鎵句笉鍒扮鍙?                    bestSword
+ = (SwordItem) item;
+                                 ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?MobDefenseChain
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:432: 閿欒: 鎵句笉鍒扮鍙?                if (!(creeper
+Entity.getClientFuseTime(1) < 0.001)) {
+                                   ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeperEntity
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:33: 閿欒: 鎵句笉鍒扮鍙?        EventBus.subscrib
+e(ChunkLoadEvent.class, evt -> onLoad(evt.chunk.getEntityPos()));
+                                                                        ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:110: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 priva
+te 璁块棶鎺у埗
+        _mod.getPlayer().getInventory().selectedSlot = 1;
+                                       ^
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:156: 閿欒: 鎵句笉鍒扮鍙?                            || i
+tem instanceof ArmorItem
+                                               ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?SlotHandler
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:244: 閿欒: main 鍦?PlayerInventory 涓槸 private 璁块棶鎺у
+埗
+        for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().main.size(); ++i) {
+                                                                               ^
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:44: 閿欒: 鎵句笉鍒扮鍙?                if (invStack.getItem
+() instanceof SwordItem item) {
+                                                  ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?KillAura
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:47: 閿欒: 鎵句笉鍒扮鍙?                    if (handItem ins
+tanceof SwordItem handToolItem) {
+                                            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?KillAura
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:113: 閿欒: main 鍦?PlayerInventory 
+涓槸 private 璁块棶鎺у埗
+        result.addAll(inv.main);
+                         ^
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:114: 閿欒: 鎵句笉鍒扮鍙?        result.
+addAll(inv.armor);
+                         ^
+  绗﹀彿:   鍙橀噺 armor
+  浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:115: 閿欒: 鎵句笉鍒扮鍙?        result.
+addAll(inv.offHand);
+                         ^
+  绗﹀彿:   鍙橀噺 offHand
+  浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 鎵句笉鍒扮鍙?            boolean has
+Clutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(
+null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                               ^
+  绗﹀彿:   鏂规硶 getRegistryEntry()
+  浣嶇疆: 绫?DimensionType
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?            
+boolean hasClutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nethe
+r").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                                                                ^
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 鎵句笉鍒扮鍙?        if (!mod.getWor
+ld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.getItem
+Storage().hasItem(Items.WATER_BUCKET)) {
+                                          ^
+  绗﹀彿:   鏂规硶 getRegistryEntry()
+  浣嶇疆: 绫?DimensionType
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?        if (
+!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && 
+mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+                                                                           ^
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 鎵句笉鍒扮鍙?            if (!(_mainTask
+ instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer().hasStatusE
+ffect(StatusEffects.FIRE_RESISTANCE) && !mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.
+getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                 ^
+  绗﹀彿:   鏂规硶 getRegistryEntry()
+  浣嶇疆: 绫?DimensionType
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?            if (
+!(_mainTask instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer()
+.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIME
+NSION_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                                       
+           ^
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:33: 閿欒: 鎵句笉鍒扮鍙?                return !(item
+ instanceof SwordItem)
+                                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?DepositCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:34: 閿欒: 鎵句笉鍒扮鍙?                        && !(
+item instanceof PickaxeItem)
+                                             ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绫?DepositCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:52: 閿欒: 鎵句笉鍒扮鍙?                if (!(i instanc
+eof ArmorItem)) {
+                                   ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?EquipCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\eventbus\events\ChatMessageEvent.java:25: 閿欒: 鎵句笉鍒扮鍙?        return sende
+r.getName();
+                     ^
+  绗﹀彿:   鏂规硶 getName()
+  浣嶇疆: 绫诲瀷涓篏ameProfile鐨勫彉閲?sender
+D:\MC\altoclef\src\main\java\adris\altoclef\mixins\ClientUIMixin.java:20: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: Matrix3x2fStack鏃犳硶杞崲涓篗atrixS
+tack
+        EventBus.publish(new ClientRenderEvent(context.getMatrices(), tickDelta));
+                                                                  ^
+D:\MC\altoclef\src\main\java\adris\altoclef\TaskCatalogue.java:531: 閿欒: 鎵句笉鍒扮鍙?                shapedRecipe3x3("chain
+", Items.CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
+                                              ^
+  绗﹀彿:   鍙橀噺 CHAIN
+  浣嶇疆: 绫?Items
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:45: 閿欒: 鎵句笉鍒扮鍙?        if (item instanceof S
+wordItem) return 3f;
+                            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?ItemHelper
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceObsidianBucketTask.java:251: 閿欒: 鎵句笉鍒扮鍙?         
+   boolean isEqual = task.getEntityPos().equals(getPos());
+                                  ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篜laceObsidianBucketTask鐨勫彉閲?task
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceSignTask.java:105: 閿欒: 鏃犳硶灏嗙被 AbstractSignEditScre
+en涓殑鏂规硶 keyPressed搴旂敤鍒扮粰瀹氱被鍨?
+                screen.keyPressed(257, 36, 0);
+                      ^
+  闇€瑕? KeyInput
+  鎵惧埌:    int,int,int
+  鍘熷洜: 瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceSignTask.java:110: 閿欒: 鏃犳硶灏嗙被 AbstractSignEditScre
+en涓殑鏂规硶 charTyped搴旂敤鍒扮粰瀹氱被鍨?
+            screen.charTyped(c, -1);
+                  ^
+  闇€瑕? CharInput
+  鎵惧埌:    char,int
+  鍘熷洜: 瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:43: 閿欒: 鎵句笉鍒扮鍙?                i
+f (invStack.getItem() instanceof SwordItem item) {
+                                                  ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?AbstractKillEntityTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:46: 閿欒: 鎵句笉鍒扮鍙?                 
+   if (handItem instanceof SwordItem handToolItem) {
+                                            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?AbstractKillEntityTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\misc\EquipArmorTask.java:92: 閿欒: 鎵句笉鍒扮鍙?                ArmorItem i
+tem = (ArmorItem) Objects.requireNonNull(targetArmor.getMatches())[0];
+                ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?EquipArmorTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\misc\EquipArmorTask.java:92: 閿欒: 鎵句笉鍒扮鍙?                ArmorItem i
+tem = (ArmorItem) Objects.requireNonNull(targetArmor.getMatches())[0];
+                                  ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?EquipArmorTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:65: 閿欒: 鎵句笉鍒扮鍙?            ChunkPos s
+tartPos = mod.getWorld().getChunk(_startPoint).getEntityPos();
+                                                                    ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫?Chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:75: 閿欒: 鎵句笉鍒扮鍙?                if (!_
+searchedAlready.contains(chunk.getEntityPos())) {
+                                                    ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:76: 閿欒: 鎵句笉鍒扮鍙?                    _j
+ustLoaded.add(chunk.getEntityPos());
+                                         ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\SearchChunksExploreTask.java:40: 閿欒: 鎵句笉鍒扮鍙?        _chunk
+LoadedSubscription = EventBus.subscribe(ChunkLoadEvent.class, evt -> onChunkLoad(evt.chunk.getEntityPos()));
+                                                                                                        ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:136: 閿欒: 鎵句笉鍒扮鍙?                 
+   if (cursorStack.getItem() instanceof MiningToolItem) {
+                                                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绫?MineAndCollectTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\CollectObsidianTask.java:169: 閿欒: 鎵句笉鍒扮鍙?            if (
+!_placeObsidianTask.getEntityPos().isWithinDistance(mod.getPlayer().getEntityPos(), 4)) {
+                                   ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篜laceObsidianBucketTask鐨勫彉閲?_placeObsidianTask
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\speedrun\MarvionBeatMinecraftTask.java:840: 閿欒: 鎵句笉鍒扮鍙?            
+    if (item instanceof SwordItem) {
+                                    ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?MarvionBeatMinecraftTask
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:33: 閿欒: 鎵句笉鍒扮鍙?        if (entity instance
+of Tameable tameable && tameable.getOwnerUuid() != null
+                                                           ^
+  绗﹀彿:   鏂规硶 getOwnerUuid()
+  浣嶇疆: 绫诲瀷涓篢ameable鐨勫彉閲?tameable
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:34: 閿欒: 鎵句笉鍒扮鍙?                && tameable
+.getOwnerUuid().equals(mod.getPlayer().getUuid())) return false;
+                           ^
+  绗﹀彿:   鏂规硶 getOwnerUuid()
+  浣嶇疆: 绫诲瀷涓篢ameable鐨勫彉閲?tameable
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:49: 閿欒: 鎵句笉鍒扮鍙?            if (pig.getHand
+Items() != null) {
+                   ^
+  绗﹀彿:   鏂规硶 getHandItems()
+  浣嶇疆: 绫诲瀷涓篜iglinEntity鐨勫彉閲?pig
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:50: 閿欒: 鎵句笉鍒扮鍙?                for (ItemSt
+ack stack : pig.getHandItems()) {
+                                          ^
+  绗﹀彿:   鏂规硶 getHandItems()
+  浣嶇疆: 绫诲瀷涓篜iglinEntity鐨勫彉閲?pig
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:97: 閿欒: 鎵句笉鍒扮鍙?                net.minecra
+ft.server.MinecraftServer server = player.getServer();
+                                                                    ^
+  绗﹀彿:   鏂规硶 getServer()
+  浣嶇疆: 绫诲瀷涓篜layerEntity鐨勫彉閲?player
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\InputHelper.java:9: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: long鏃犳硶杞崲涓篧indow
+        return InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), code);
+                                                                                         ^
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:78: 閿欒: 鎵句笉鍒扮鍙?                return inv
+.offHand.stream().findFirst().orElse(ItemStack.EMPTY);
+                          ^
+  绗﹀彿:   鍙橀噺 offHand
+  浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:215: 閿欒: 鎵句笉鍒扮鍙?                if (item 
+instanceof SwordItem sword) {
+                                    ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?StorageHelper
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:224: 閿欒: 鎵句笉鍒扮鍙?                } else if
+ (item instanceof MiningToolItem mining) {
+                                           ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绫?StorageHelper
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:349: 閿欒: 鎵句笉鍒扮鍙?            if (item inst
+anceof ArmorItem) {
+                                ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?StorageHelper
+D:\MC\altoclef\src\main\java\adris\altoclef\util\slots\PlayerSlot.java:45: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 priv
+ate 璁块棶鎺у埗
+                return Slot.getFromCurrentScreenInventory(MinecraftClient.getInstance().player.getInventory().selectedS
+lot);
+                                                                                                             ^
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:24: 閿欒: 鎵句笉鍒扮鍙?        return item insta
+nceof SwordItem
+                               ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?ToolItemDetect
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:25: 閿欒: 鎵句笉鍒扮鍙?                || item i
+nstanceof MiningToolItem
+                                   ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绫?ToolItemDetect
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:30: 閿欒: 鎵句笉鍒扮鍙?                || item i
+nstanceof PickaxeItem
+                                   ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绫?ToolItemDetect
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\WorldHelper.java:109: 閿欒: 鎵句笉鍒扮鍙?        if (world.getDimens
+ion().getType().infiniburn() != null) return Dimension.NETHER;
+                                ^
+  绗﹀彿:   鏂规硶 getType()
+  浣嶇疆: 绫?DimensionType
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\WorldHelper.java:110: 閿欒: 鎵句笉鍒扮鍙?        if (world.getDimens
+ion().getType().ambientLight() > 0.5f) return Dimension.OVERWORLD;
+                                ^
+  绗﹀彿:   鏂规硶 getType()
+  浣嶇疆: 绫?DimensionType
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤浜嗘湭缁忔鏌ユ垨涓嶅畨鍏ㄧ殑鎿嶄綔銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:unchecked 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺娑堟伅宸茬粡杩囩畝鍖? 璇蜂娇鐢?-Xdiags:verbose 閲嶆柊缂栬瘧浠ヨ幏寰楀畬鏁磋緭鍑?
+71 涓敊璇?
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///D:/MC/altoclef/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceSignTask.java:105: 閿欒: 鏃犳硶灏嗙被 AbstractSignEditSc
+reen涓殑鏂规硶 keyPressed搴旂敤鍒扮粰瀹氱被鍨?
+                  screen.keyPressed(257, 36, 0);
+                        ^
+    闇€瑕? KeyInput
+    鎵惧埌:    int,int,int
+    鍘熷洜: 瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceSignTask.java:110: 閿欒: 鏃犳硶灏嗙被 AbstractSignEditSc
+reen涓殑鏂规硶 charTyped搴旂敤鍒扮粰瀹氱被鍨?
+              screen.charTyped(c, -1);
+                    ^
+    闇€瑕? CharInput
+    鎵惧埌:    char,int
+    鍘熷洜: 瀹為檯鍙傛暟鍒楄〃鍜屽舰寮忓弬鏁板垪琛ㄩ暱搴︿笉鍚?
+  娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+  D:\MC\altoclef\src\main\java\adris\altoclef\mixins\ClientUIMixin.java:20: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: Matrix3x2fStack鏃犳硶杞崲涓篗atri
+xStack
+          EventBus.publish(new ClientRenderEvent(context.getMatrices(), tickDelta));
+                                                                    ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\InputHelper.java:9: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: long鏃犳硶杞崲涓篧indow
+          return InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), code);
+                                                                                           ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:34: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.
+SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:21: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.SwordI
+tem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:13: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:16: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.Ar
+morItem;
+                           ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:18: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:12: 閿欒: 鎵句笉鍒扮鍙?  import net.mi
+necraft.item.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:26: 閿欒: 鎵句笉鍒扮鍙?  import net.min
+ecraft.item.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:5: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.it
+em.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.it
+em.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:10: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:9: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:12: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.
+item.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:256: 閿欒: 鎵句笉鍒扮鍙?              SwordItem bes
+tSword = null;
+              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?MobDefenseChain
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:261: 閿欒: 鎵句笉鍒扮鍙?                      bestS
+word = (SwordItem) item;
+                                   ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?MobDefenseChain
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:156: 閿欒: 鎵句笉鍒扮鍙?                              
+|| item instanceof ArmorItem
+                                                 ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?SlotHandler
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:44: 閿欒: 鎵句笉鍒扮鍙?                  if (invStack.get
+Item() instanceof SwordItem item) {
+                                                    ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?KillAura
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:47: 閿欒: 鎵句笉鍒扮鍙?                      if (handItem
+ instanceof SwordItem handToolItem) {
+                                              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?KillAura
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:114: 閿欒: 鎵句笉鍒扮鍙?          res
+ult.addAll(inv.armor);
+                           ^
+    绗﹀彿:   鍙橀噺 armor
+    浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:115: 閿欒: 鎵句笉鍒扮鍙?          res
+ult.addAll(inv.offHand);
+                           ^
+    绗﹀彿:   鍙橀噺 offHand
+    浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:33: 閿欒: 鎵句笉鍒扮鍙?                  return !(
+item instanceof SwordItem)
+                                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?DepositCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:34: 閿欒: 鎵句笉鍒扮鍙?                          &
+& !(item instanceof PickaxeItem)
+                                               ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绫?DepositCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:52: 閿欒: 鎵句笉鍒扮鍙?                  if (!(i ins
+tanceof ArmorItem)) {
+                                     ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?EquipCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\TaskCatalogue.java:531: 閿欒: 鎵句笉鍒扮鍙?                  shapedRecipe3x3("c
+hain", Items.CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
+                                                ^
+    绗﹀彿:   鍙橀噺 CHAIN
+    浣嶇疆: 绫?Items
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:45: 閿欒: 鎵句笉鍒扮鍙?          if (item instance
+of SwordItem) return 3f;
+                              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?ItemHelper
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:43: 閿欒: 鎵句笉鍒扮鍙?               
+   if (invStack.getItem() instanceof SwordItem item) {
+                                                    ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?AbstractKillEntityTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:46: 閿欒: 鎵句笉鍒扮鍙?               
+       if (handItem instanceof SwordItem handToolItem) {
+                                              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?AbstractKillEntityTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\misc\EquipArmorTask.java:92: 閿欒: 鎵句笉鍒扮鍙?                  ArmorIt
+em item = (ArmorItem) Objects.requireNonNull(targetArmor.getMatches())[0];
+                  ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?EquipArmorTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\misc\EquipArmorTask.java:92: 閿欒: 鎵句笉鍒扮鍙?                  ArmorIt
+em item = (ArmorItem) Objects.requireNonNull(targetArmor.getMatches())[0];
+                                    ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?EquipArmorTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:136: 閿欒: 鎵句笉鍒扮鍙?               
+       if (cursorStack.getItem() instanceof MiningToolItem) {
+                                                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绫?MineAndCollectTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\speedrun\MarvionBeatMinecraftTask.java:840: 閿欒: 鎵句笉鍒扮鍙?          
+        if (item instanceof SwordItem) {
+                                      ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?MarvionBeatMinecraftTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:78: 閿欒: 鎵句笉鍒扮鍙?                  return
+ inv.offHand.stream().findFirst().orElse(ItemStack.EMPTY);
+                            ^
+    绗﹀彿:   鍙橀噺 offHand
+    浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:215: 閿欒: 鎵句笉鍒扮鍙?                  if (i
+tem instanceof SwordItem sword) {
+                                      ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?StorageHelper
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:224: 閿欒: 鎵句笉鍒扮鍙?                  } els
+e if (item instanceof MiningToolItem mining) {
+                                             ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绫?StorageHelper
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:349: 閿欒: 鎵句笉鍒扮鍙?              if (item 
+instanceof ArmorItem) {
+                                  ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?StorageHelper
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:24: 閿欒: 鎵句笉鍒扮鍙?          return item i
+nstanceof SwordItem
+                                 ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?ToolItemDetect
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:25: 閿欒: 鎵句笉鍒扮鍙?                  || it
+em instanceof MiningToolItem
+                                     ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绫?ToolItemDetect
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:30: 閿欒: 鎵句笉鍒扮鍙?                  || it
+em instanceof PickaxeItem
+                                     ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绫?ToolItemDetect
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:110: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 pri
+vate 璁块棶鎺у埗
+          _mod.getPlayer().getInventory().selectedSlot = 1;
+                                         ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:244: 閿欒: main 鍦?PlayerInventory 涓槸 private 璁块棶
+鎺у埗
+          for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().main.size(); ++i) {
+                                                                                 ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:113: 閿欒: main 鍦?PlayerInventor
+y 涓槸 private 璁块棶鎺у埗
+          result.addAll(inv.main);
+                           ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\slots\PlayerSlot.java:45: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 pr
+ivate 璁块棶鎺у埗
+                  return Slot.getFromCurrentScreenInventory(MinecraftClient.getInstance().player.getInventory().selecte
+dSlot);
+                                                                                                               ^
+  娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:unchecked 閲嶆柊缂栬瘧銆?
+  娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+  娉? 鏌愪簺娑堟伅宸茬粡杩囩畝鍖? 璇蜂娇鐢?-Xdiags:verbose 閲嶆柊缂栬瘧浠ヨ幏寰楀畬鏁磋緭鍑?
+  娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤浜嗘湭缁忔鏌ユ垨涓嶅畨鍏ㄧ殑鎿嶄綔銆?
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?          
+    boolean hasClutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_n
+ether").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                                                                  ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?          
+if (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null))
+ && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+                                                                             ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?              
+if (!(_mainTask instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlay
+er().hasStatusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getWorld().getDimension().getRegistryEntry().is(Registries.
+DIMENSION_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                                       
+             ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:69: 閿欒: 鎵句笉鍒扮鍙?          float fuse = creep
+er.getClientFuseTime(1);
+                              ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeper
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:207: 閿欒: 鎵句笉鍒扮鍙?                  return 50
+ + blowingUp.getClientFuseTime(1) * 50;
+                                       ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?blowingUp
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:432: 閿欒: 鎵句笉鍒扮鍙?                  if (!(cre
+eperEntity.getClientFuseTime(1) < 0.001)) {
+                                     ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeperEntity
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:33: 閿欒: 鎵句笉鍒扮鍙?          EventBus.subs
+cribe(ChunkLoadEvent.class, evt -> onLoad(evt.chunk.getEntityPos()));
+                                                                          ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 鎵句笉鍒扮鍙?              boolean
+ hasClutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orE
+lse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                                 ^
+    绗﹀彿:   鏂规硶 getRegistryEntry()
+    浣嶇疆: 绫?DimensionType
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 鎵句笉鍒扮鍙?          if (!mod.ge
+tWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.get
+ItemStorage().hasItem(Items.WATER_BUCKET)) {
+                                            ^
+    绗﹀彿:   鏂规硶 getRegistryEntry()
+    浣嶇疆: 绫?DimensionType
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 鎵句笉鍒扮鍙?              if (!(_main
+Task instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer().hasSta
+tusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_T
+YPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                   ^
+    绗﹀彿:   鏂规硶 getRegistryEntry()
+    浣嶇疆: 绫?DimensionType
+  D:\MC\altoclef\src\main\java\adris\altoclef\eventbus\events\ChatMessageEvent.java:25: 閿欒: 鎵句笉鍒扮鍙?          return s
+ender.getName();
+                       ^
+    绗﹀彿:   鏂规硶 getName()
+    浣嶇疆: 绫诲瀷涓篏ameProfile鐨勫彉閲?sender
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceObsidianBucketTask.java:251: 閿欒: 鎵句笉鍒扮鍙?       
+       boolean isEqual = task.getEntityPos().equals(getPos());
+                                    ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篜laceObsidianBucketTask鐨勫彉閲?task
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:65: 閿欒: 鎵句笉鍒扮鍙?              ChunkP
+os startPos = mod.getWorld().getChunk(_startPoint).getEntityPos();
+                                                                      ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫?Chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:75: 閿欒: 鎵句笉鍒扮鍙?                  if
+ (!_searchedAlready.contains(chunk.getEntityPos())) {
+                                                      ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\ChunkSearchTask.java:76: 閿欒: 鎵句笉鍒扮鍙?                    
+  _justLoaded.add(chunk.getEntityPos());
+                                           ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\SearchChunksExploreTask.java:40: 閿欒: 鎵句笉鍒扮鍙?          _c
+hunkLoadedSubscription = EventBus.subscribe(ChunkLoadEvent.class, evt -> onChunkLoad(evt.chunk.getEntityPos()));
+                                                                                                          ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\CollectObsidianTask.java:169: 閿欒: 鎵句笉鍒扮鍙?              
+if (!_placeObsidianTask.getEntityPos().isWithinDistance(mod.getPlayer().getEntityPos(), 4)) {
+                                     ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篜laceObsidianBucketTask鐨勫彉閲?_placeObsidianTask
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:33: 閿欒: 鎵句笉鍒扮鍙?          if (entity inst
+anceof Tameable tameable && tameable.getOwnerUuid() != null
+                                                             ^
+    绗﹀彿:   鏂规硶 getOwnerUuid()
+    浣嶇疆: 绫诲瀷涓篢ameable鐨勫彉閲?tameable
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:34: 閿欒: 鎵句笉鍒扮鍙?                  && tame
+able.getOwnerUuid().equals(mod.getPlayer().getUuid())) return false;
+                             ^
+    绗﹀彿:   鏂规硶 getOwnerUuid()
+    浣嶇疆: 绫诲瀷涓篢ameable鐨勫彉閲?tameable
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:49: 閿欒: 鎵句笉鍒扮鍙?              if (pig.get
+HandItems() != null) {
+                     ^
+    绗﹀彿:   鏂规硶 getHandItems()
+    浣嶇疆: 绫诲瀷涓篜iglinEntity鐨勫彉閲?pig
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:50: 閿欒: 鎵句笉鍒扮鍙?                  for (It
+emStack stack : pig.getHandItems()) {
+                                            ^
+    绗﹀彿:   鏂规硶 getHandItems()
+    浣嶇疆: 绫诲瀷涓篜iglinEntity鐨勫彉閲?pig
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\EntityHelper.java:97: 閿欒: 鎵句笉鍒扮鍙?                  net.min
+ecraft.server.MinecraftServer server = player.getServer();
+                                                                      ^
+    绗﹀彿:   鏂规硶 getServer()
+    浣嶇疆: 绫诲瀷涓篜layerEntity鐨勫彉閲?player
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\WorldHelper.java:109: 閿欒: 鎵句笉鍒扮鍙?          if (world.getDi
+mension().getType().infiniburn() != null) return Dimension.NETHER;
+                                  ^
+    绗﹀彿:   鏂规硶 getType()
+    浣嶇疆: 绫?DimensionType
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\WorldHelper.java:110: 閿欒: 鎵句笉鍒扮鍙?          if (world.getDi
+mension().getType().ambientLight() > 0.5f) return Dimension.OVERWORLD;
+                                  ^
+    绗﹀彿:   鏂规硶 getType()
+    浣嶇疆: 绫?DimensionType
+  71 涓敊璇?
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 11s
+1 actionable task: 1 executed

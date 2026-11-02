@@ -345,15 +345,15 @@ public class CollectFoodTask extends Task {
             if (!WorldHelper.canBreak(mod, blockPos)) return false;
             return accept.test(blockPos);
         };
-        Optional<BlockPos> nearestBlock = mod.getBlockTracker().getNearestTracking(mod.getPlayer().getPos(), acceptPlus, blockToCheck);
+        Optional<BlockPos> nearestBlock = mod.getBlockTracker().getNearestTracking(mod.getPlayer().getEntityPos(), acceptPlus, blockToCheck);
 
-        if (nearestBlock.isPresent() && !nearestBlock.get().isWithinDistance(mod.getPlayer().getPos(), maxRange)) {
+        if (nearestBlock.isPresent() && !nearestBlock.get().isWithinDistance(mod.getPlayer().getEntityPos(), maxRange)) {
             nearestBlock = Optional.empty();
         }
 
         Optional<ItemEntity> nearestDrop = Optional.empty();
         if (mod.getEntityTracker().itemDropped(itemToGrab)) {
-            nearestDrop = mod.getEntityTracker().getClosestItemDrop(mod.getPlayer().getPos(), itemToGrab);
+            nearestDrop = mod.getEntityTracker().getClosestItemDrop(mod.getPlayer().getEntityPos(), itemToGrab);
         }
         boolean spotted = nearestBlock.isPresent() || nearestDrop.isPresent();
         // Collect hay until we have enough.
@@ -382,7 +382,7 @@ public class CollectFoodTask extends Task {
     private Task pickupTaskOrNull(AltoClef mod, Item itemToGrab, double maxRange) {
         Optional<ItemEntity> nearestDrop = Optional.empty();
         if (mod.getEntityTracker().itemDropped(itemToGrab)) {
-            nearestDrop = mod.getEntityTracker().getClosestItemDrop(mod.getPlayer().getPos(), itemToGrab);
+            nearestDrop = mod.getEntityTracker().getClosestItemDrop(mod.getPlayer().getEntityPos(), itemToGrab);
         }
         if (nearestDrop.isPresent()) {
             if (nearestDrop.get().isInRange(mod.getPlayer(), maxRange)) {

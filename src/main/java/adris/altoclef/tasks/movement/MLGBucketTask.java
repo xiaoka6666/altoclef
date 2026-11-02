@@ -70,7 +70,7 @@ public class MLGBucketTask extends Task {
     private static boolean canTravelToInAir(BlockPos pos) {
         Entity player = MinecraftClient.getInstance().player;
         assert player != null;
-        double verticalDist = player.getPos().getY() - pos.getY() - 1;
+        double verticalDist = player.getEntityPos().getY() - pos.getY() - 1;
         double verticalVelocity = -1 * player.getVelocity().y;
         double grav = EntityHelper.ENTITY_GRAVITY;
         double movementSpeedPerTick = _config.averageHorizontalMovementSpeedPerTick; // Calculated, but also somewhat conservative
@@ -78,7 +78,7 @@ public class MLGBucketTask extends Task {
         double ticksToTravelSq = (-verticalVelocity + Math.sqrt(verticalVelocity * verticalVelocity + 2 * grav * verticalDist)) / grav;
         double maxMoveDistanceSq = movementSpeedPerTick * movementSpeedPerTick * ticksToTravelSq * ticksToTravelSq;
         // We need to get within 1 block, so subtract a "radius" or something idk
-        double horizontalDistance = WorldHelper.distanceXZ(player.getPos(), WorldHelper.toVec3d(pos)) - 0.8;
+        double horizontalDistance = WorldHelper.distanceXZ(player.getEntityPos(), WorldHelper.toVec3d(pos)) - 0.8;
         if (horizontalDistance < 0)
             horizontalDistance = 0;
         return maxMoveDistanceSq > horizontalDistance * horizontalDistance;
@@ -186,7 +186,7 @@ public class MLGBucketTask extends Task {
             setDebugState("Performing MLG");
             LookHelper.lookAt(mod, reachable.get());
             // Try water by default
-            boolean hasClutch = (!mod.getWorld().getDimension().ultrawarm() && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+            boolean hasClutch = (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
             if (!hasClutch) {
                 // Go through our "clutch" items and see if any fit
                 if (!_config.clutchItems.isEmpty()) {
@@ -236,7 +236,7 @@ public class MLGBucketTask extends Task {
         Rotation look = LookHelper.getLookRotation();
         look = new Rotation(look.getYaw(), 0);
         Vec3d forwardFacing = LookHelper.toVec3d(look).multiply(1, 0, 1).normalize();
-        Vec3d delta = WorldHelper.toVec3d(_movingTorwards).subtract(mod.getPlayer().getPos()).multiply(1, 0, 1);
+        Vec3d delta = WorldHelper.toVec3d(_movingTorwards).subtract(mod.getPlayer().getEntityPos()).multiply(1, 0, 1);
         Vec3d velocity = mod.getPlayer().getVelocity().multiply(1, 0, 1);
         Vec3d pd = delta.subtract(velocity.multiply(3f));
         double forwardStrength = pd.dotProduct(forwardFacing);
@@ -327,7 +327,7 @@ public class MLGBucketTask extends Task {
         }
         // Cancel our left/right velocity with respect to block
         Vec3d velocity = mod.getPlayer().getVelocity();
-        Vec3d deltaTarget = WorldHelper.toVec3d(_movingTorwards).subtract(mod.getPlayer().getPos());
+        Vec3d deltaTarget = WorldHelper.toVec3d(_movingTorwards).subtract(mod.getPlayer().getEntityPos());
         // "right" velocity relative to delta
         Rotation look = LookHelper.getLookRotation();
         Vec3d forwardFacing = LookHelper.toVec3d(look).multiply(1, 0, 1).normalize();
@@ -374,7 +374,7 @@ public class MLGBucketTask extends Task {
 
         // Perform NEARBY sweep
         //int nearbySweepSize =
-        Vec3d center = mod.getPlayer().getPos();
+        Vec3d center = mod.getPlayer().getEntityPos();
         for (int dx = -2; dx <= 2; ++dx) {
             for (int dz = -2; dz <= 2; ++dz) {
                 RaycastContext ctx = castDown(center.add(dx, 0, dz));
@@ -394,7 +394,7 @@ public class MLGBucketTask extends Task {
     private RaycastContext castCone(double yaw, double pitch) {
         Entity player = MinecraftClient.getInstance().player;
         assert player != null;
-        Vec3d origin = player.getPos();
+        Vec3d origin = player.getEntityPos();
         double dy = _config.epicClutchConeCastHeight;
         double dH = dy * Math.sin(Math.toRadians(pitch)); // horizontal distance
         double yawRad = Math.toRadians(yaw);
@@ -416,7 +416,7 @@ public class MLGBucketTask extends Task {
     }
 
     private boolean hasClutchItem(AltoClef mod) {
-        if (!mod.getWorld().getDimension().ultrawarm() && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+        if (!mod.getWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
             return true;
         }
         return _config.clutchItems.stream().anyMatch(item -> mod.getItemStorage().hasItem(item));
@@ -489,7 +489,7 @@ public class MLGBucketTask extends Task {
             if (bestBlockIsSafe && !water)
                 return;
             double height = check.getY();
-            double distSqXZ = WorldHelper.distanceXZSquared(WorldHelper.toVec3d(check), mod.getPlayer().getPos());
+            double distSqXZ = WorldHelper.distanceXZSquared(WorldHelper.toVec3d(check), mod.getPlayer().getEntityPos());
             boolean highestSoFar = height > highestY;
             boolean closestSoFar = distSqXZ < closestXZ;
             // We found a new contender

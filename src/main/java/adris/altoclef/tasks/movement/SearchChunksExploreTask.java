@@ -37,7 +37,7 @@ public abstract class SearchChunksExploreTask extends Task {
         _mod = mod;
 
         // Listen for chunk loading
-        _chunkLoadedSubscription = EventBus.subscribe(ChunkLoadEvent.class, evt -> onChunkLoad(evt.chunk.getPos()));
+        _chunkLoadedSubscription = EventBus.subscribe(ChunkLoadEvent.class, evt -> onChunkLoad(evt.chunk.getEntityPos()));
 
         resetSearch(mod);
     }

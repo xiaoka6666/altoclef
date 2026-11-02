@@ -1,5 +1,5 @@
 plugins {
-    id "fabric-loom" version "1.7-SNAPSHOT"
+    id "fabric-loom" version "1.13.3"
     id "maven-publish"
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
@@ -33,7 +33,9 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${project.loader_version}")
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}") {
+        exclude group: 'net.fabricmc.fabric-api', module: 'fabric-content-registries-v0'
+    }
 
     // Jackson JSON
     implementation 'com.fasterxml.jackson.core:jackson-core:2.17.2'
@@ -51,9 +53,7 @@ dependencies {
 
     // Thank you georgeagostino for fixing my garbage
     if (getProject().hasProperty("altoclef.development")) {
-        // Must run build from baritone-plus once
-        modImplementation 'baritone-api-fabric:baritone-unoptimized-fabric-1.21-beta1'
-        include "baritone-api-fabric:baritone-unoptimized-fabric-1.21-beta1"
+        modImplementation files("D:/MC/maven/cabaletta/baritone-unoptimized-fabric/1.21.11/baritone-unoptimized-fabric-1.21.11.jar")
     } else {
         modImplementation "cabaletta:baritone-unoptimized-fabric:1.21.11"
         include "cabaletta:baritone-unoptimized-fabric:1.21.11"

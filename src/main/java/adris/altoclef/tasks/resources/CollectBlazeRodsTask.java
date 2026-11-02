@@ -74,13 +74,13 @@ public class CollectBlazeRodsTask extends ResourceTask {
             }
             if (_foundBlazeSpawner != null) {
                 Entity kill = toKill.get();
-                Vec3d nearest = kill.getPos();
-                double sqDistanceToPlayer = nearest.squaredDistanceTo(mod.getPlayer().getPos());//_foundBlazeSpawner.getX(), _foundBlazeSpawner.getY(), _foundBlazeSpawner.getZ());
+                Vec3d nearest = kill.getEntityPos();
+                double sqDistanceToPlayer = nearest.squaredDistanceTo(mod.getPlayer().getEntityPos());//_foundBlazeSpawner.getX(), _foundBlazeSpawner.getY(), _foundBlazeSpawner.getZ());
                 // Ignore if the blaze is too far away.
                 if (sqDistanceToPlayer > SPAWNER_BLAZE_RADIUS * SPAWNER_BLAZE_RADIUS) {
                     // If the blaze can see us it needs to go lol
                     BlockHitResult hit = mod.getWorld().raycast(new RaycastContext(mod.getPlayer().getCameraPosVec(1.0F), kill.getCameraPosVec(1.0F), RaycastContext.ShapeType.OUTLINE, RaycastContext.FluidHandling.NONE, mod.getPlayer()));
-                    if (hit != null && hit.getBlockPos().getSquaredDistance(mod.getPlayer().getPos()) < sqDistanceToPlayer) {
+                    if (hit != null && hit.getBlockPos().getSquaredDistance(mod.getPlayer().getEntityPos()) < sqDistanceToPlayer) {
                         toKill = Optional.empty();
                     }
                 }
@@ -100,7 +100,7 @@ public class CollectBlazeRodsTask extends ResourceTask {
 
         // If we have a blaze spawner, go near it.
         if (_foundBlazeSpawner != null) {
-            if (!_foundBlazeSpawner.isWithinDistance(mod.getPlayer().getPos(), 4)) {
+            if (!_foundBlazeSpawner.isWithinDistance(mod.getPlayer().getEntityPos(), 4)) {
                 setDebugState("Going to blaze spawner");
                 return new GetToBlockTask(_foundBlazeSpawner.up(), false);
             }
@@ -129,7 +129,7 @@ public class CollectBlazeRodsTask extends ResourceTask {
         if (!mod.getChunkTracker().isChunkLoaded(pos)) {
             // If unloaded, go to it. Unless it's super far away.
             return false;
-            //return pos.isWithinDistance(mod.getPlayer().getPos(),3000);
+            //return pos.isWithinDistance(mod.getPlayer().getEntityPos(),3000);
         }
         return WorldHelper.getSpawnerEntity(mod, pos) instanceof BlazeEntity;
     }

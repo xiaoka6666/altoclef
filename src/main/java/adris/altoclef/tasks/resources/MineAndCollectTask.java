@@ -172,7 +172,7 @@ public class MineAndCollectTask extends ResourceTask {
                 return WorldHelper.toVec3d(b);
             }
             if (obj instanceof ItemEntity item) {
-                return item.getPos();
+                return item.getEntityPos();
             }
             throw new UnsupportedOperationException("Shouldn't try to get the position of object " + obj + " of type " + (obj != null ? obj.getClass().toString() : "(null object)"));
         }
@@ -207,7 +207,7 @@ public class MineAndCollectTask extends ResourceTask {
 
         @Override
         protected Vec3d getOriginPos(AltoClef mod) {
-            return mod.getPlayer().getPos();
+            return mod.getPlayer().getEntityPos();
         }
 
         @Override

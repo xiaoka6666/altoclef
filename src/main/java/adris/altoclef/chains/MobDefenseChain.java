@@ -432,7 +432,7 @@ public class MobDefenseChain extends SingleTaskChain {
                 if (!(creeperEntity.getClientFuseTime(1) < 0.001)) {
                     // We want to pick the closest creeper, but FIRST pick creepers about to blow
                     // At max fuse, the cost goes to basically zero.
-                    double safety = getCreeperSafety(mod.getPlayer().getPos(), creeperEntity);
+                    double safety = getCreeperSafety(mod.getPlayer().getEntityPos(), creeperEntity);
                     if (safety < worstSafety) {
                         target = creeperEntity;
                     }
@@ -453,7 +453,7 @@ public class MobDefenseChain extends SingleTaskChain {
         try {
             if (!projectiles.isEmpty()) {
                 for (CachedProjectile projectile : projectiles) {
-                    if (projectile.position.squaredDistanceTo(mod.getPlayer().getPos()) < 150) {
+                    if (projectile.position.squaredDistanceTo(mod.getPlayer().getEntityPos()) < 150) {
                         boolean isGhastBall = projectile.projectileType == FireballEntity.class;
                         if (isGhastBall) {
                             Optional<Entity> ghastBall = mod.getEntityTracker().getClosestEntity(FireballEntity.class);
@@ -474,7 +474,7 @@ public class MobDefenseChain extends SingleTaskChain {
                             // check if the velocity of the projectile is going away from us
                             // oh no fancy math
                             Vec3d velocity = projectile.velocity;
-                            Vec3d delta = mod.getPlayer().getPos().subtract(projectile.position);
+                            Vec3d delta = mod.getPlayer().getEntityPos().subtract(projectile.position);
                             double epsilon = 0.25;
                             if (abs(velocity.dotProduct(delta)) <= epsilon) {
                                 // Arrow is going away from us, ignore it.
@@ -484,7 +484,7 @@ public class MobDefenseChain extends SingleTaskChain {
 
                         Vec3d expectedHit = ProjectileHelper.calculateArrowClosestApproach(projectile, mod.getPlayer());
 
-                        Vec3d delta = mod.getPlayer().getPos().subtract(expectedHit);
+                        Vec3d delta = mod.getPlayer().getEntityPos().subtract(expectedHit);
 
                         //Debug.logMessage("EXPECTED HIT OFFSET: " + delta + " ( " + projectile.gravity + ")");
 

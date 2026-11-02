@@ -77,13 +77,13 @@ public class StorageHelper {
             if (slot.equals(PlayerSlot.OFFHAND_SLOT))
                 return inv.offHand.stream().findFirst().orElse(ItemStack.EMPTY);
             if (slot.equals(PlayerSlot.ARMOR_HELMET_SLOT))
-                return inv.getArmorStack(3);
+                return inv.getStack(3 + 5);
             if (slot.equals(PlayerSlot.ARMOR_CHESTPLATE_SLOT))
-                return inv.getArmorStack(2);
+                return inv.getStack(2 + 5);
             if (slot.equals(PlayerSlot.ARMOR_LEGGINGS_SLOT))
-                return inv.getArmorStack(1);
+                return inv.getStack(1 + 5);
             if (slot.equals(PlayerSlot.ARMOR_BOOTS_SLOT))
-                return inv.getArmorStack(0);
+                return inv.getStack(0 + 5);
         }
         try {
             // We might have messed up and opened the wrong slot.
@@ -351,7 +351,7 @@ public class StorageHelper {
                 // via the item's EQUIPPABLE component slot, not the translation-key suffix.
                 int armorSlotIndex = armorItemToArmorIndex(item);
                 if (armorSlotIndex >= 0) {
-                    ItemStack equippedStack = mod.getPlayer().getInventory().getArmorStack(armorSlotIndex);
+                    ItemStack equippedStack = mod.getPlayer().getInventory().getStack(armorSlotIndex + 5);
                     if (equippedStack.getItem().equals(item))
                         return true;
                 }
@@ -366,7 +366,7 @@ public class StorageHelper {
     }
 
     /**
-     * Maps an armor {@code Item} to the index used by {@code PlayerInventory.getArmorStack(int)}.
+     * Maps an armor {@code Item} to the index used by {@code PlayerInventory.getStack(int + 5)}.
      * 1.21.4: read the item's {@code EQUIPPABLE} data component and use its slot instead of
      * matching translation-key suffixes (vanilla keys end in {@code _helmet}, not {@code .helmet},
      * so suffix matching returned -1 for ordinary armor). The armor list order is

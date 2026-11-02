@@ -107,7 +107,7 @@ public class ShootArrowSimpleProjectileTask extends Task {
             for (ArrowEntity arrow : arrows) {
                 if (arrow.getOwner() == mod.getPlayer()) {
                     Vec3d velocity = arrow.getVelocity();
-                    Vec3d delta = target.getPos().subtract(arrow.getPos());
+                    Vec3d delta = target.getEntityPos().subtract(arrow.getEntityPos());
                     boolean isMovingTowardsTarget = velocity.dotProduct(delta) > 0;
                     if (isMovingTowardsTarget) {
                         return null;

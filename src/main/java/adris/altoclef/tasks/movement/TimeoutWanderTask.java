@@ -132,7 +132,7 @@ public class TimeoutWanderTask extends Task implements ITaskRequiresGrounded {
     protected void onStart(AltoClef mod) {
         _timer.reset();
         mod.getClientBaritone().getPathingBehavior().forceCancel();
-        _origin = mod.getPlayer().getPos();
+        _origin = mod.getPlayer().getEntityPos();
         _progressChecker.reset();
         stuckCheck.reset();
         _failCounter = 0;
@@ -185,7 +185,7 @@ public class TimeoutWanderTask extends Task implements ITaskRequiresGrounded {
         }
         if (!_progressChecker.check(mod) || !stuckCheck.check(mod)) {
             Optional<Entity> mob = mod.getEntityTracker().getClosestEntity(MobEntity.class);
-            if (mob.isPresent() && mob.get().getPos().isInRange(mod.getPlayer().getPos(), 1)) {
+            if (mob.isPresent() && mob.get().getEntityPos().isInRange(mod.getPlayer().getEntityPos(), 1)) {
                 setDebugState("Killing annoying entity.");
                 Predicate<Entity> valid = entity -> entity == mob.get();
                 return new KillEntitiesTask(valid, mob.get().getClass());
@@ -261,9 +261,9 @@ public class TimeoutWanderTask extends Task implements ITaskRequiresGrounded {
             return true;
         }
 
-        if (mod.getPlayer() != null && mod.getPlayer().getPos() != null && (mod.getPlayer().isOnGround() ||
+        if (mod.getPlayer() != null && mod.getPlayer().getEntityPos() != null && (mod.getPlayer().isOnGround() ||
                 mod.getPlayer().isTouchingWater())) {
-            double sqDist = mod.getPlayer().getPos().squaredDistanceTo(_origin);
+            double sqDist = mod.getPlayer().getEntityPos().squaredDistanceTo(_origin);
             double toWander = _distanceToWander + _wanderDistanceExtension;
             return sqDist > toWander * toWander;
         } else {

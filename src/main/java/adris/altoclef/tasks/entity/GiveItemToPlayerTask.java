@@ -85,7 +85,7 @@ public class GiveItemToPlayerTask extends Task {
                 }
             }
 
-            if (!targetPos.isInRange(mod.getPlayer().getPos(), 4)) {
+            if (!targetPos.isInRange(mod.getPlayer().getEntityPos(), 4)) {
                 mod.log("Finished giving items.");
                 stop(mod);
                 return null;
@@ -98,7 +98,7 @@ public class GiveItemToPlayerTask extends Task {
             return _resourceTask;
         }
 
-        if (targetPos.isInRange(mod.getPlayer().getPos(), 1.5)) {
+        if (targetPos.isInRange(mod.getPlayer().getEntityPos(), 1.5)) {
             if (!mod.getEntityTracker().isPlayerLoaded(_playerName)) {
                 mod.logWarning("Failed to get to player \"" + _playerName + "\". We moved to where we last saw them but now have no idea where they are.");
                 stop(mod);

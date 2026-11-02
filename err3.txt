@@ -1,0 +1,1081 @@
+﻿To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.14/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+
+> Configure project :
+Fabric Loom: 1.13.3
+Build file 'D:\MC\altoclef\build.gradle': line 7
+The org.gradle.api.plugins.JavaPluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#java_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:7)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 8
+The org.gradle.api.plugins.JavaPluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#java_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:8)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 10
+The org.gradle.api.plugins.BasePluginConvention type has been deprecated. This is scheduled to be removed in Gradle 9.0. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#base_convention_deprecation
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 10
+The BasePluginExtension.archivesBaseName property has been deprecated. This is scheduled to be removed in Gradle 9.0. Please use the archivesName property instead. For more information, please refer to https://docs.gradle.org/8.14/dsl/org.gradle.api.plugins.BasePluginExtension.html#org.gradle.api.plugins.BasePluginExtension:archivesName in the Gradle documentation.
+	at build_9bwichar731yly33aul2i4xc1.run(D:\MC\altoclef\build.gradle:10)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 79
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('duplicatesStrategy = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5$_closure14.doCall$original(D:\MC\altoclef\build.gradle:79)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5.doCall$original(D:\MC\altoclef\build.gradle:76)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'D:\MC\altoclef\build.gradle': line 83
+Properties should be assigned using the 'propName = value' syntax. Setting a property via the Gradle-generated 'propName value' or 'propName(value)' syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('duplicatesStrategy = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.14/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5$_closure15.doCall$original(D:\MC\altoclef\build.gradle:83)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_9bwichar731yly33aul2i4xc1$_run_closure5.doCall$original(D:\MC\altoclef\build.gradle:82)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Not publishing sources jar as it was not created by the java plugin. Use java.withSourcesJar() to fix.
+
+> Task :compileJava
+.\gradlew : D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:34: 閿欒: 鎵句笉鍒扮鍙?import net.minecra
+ft.item.SwordItem;
+所在位置 行:1 字符: 104
++ ... \altoclef"; .\gradlew compileJava "-Pmod_version=1.21.11" --no-daemon ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (D:\MC\altoclef\...item.SwordItem;:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:21: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:13: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Pic
+kaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:16: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Swo
+rdItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.ArmorI
+tem;
+                         ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:18: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.Swo
+rdItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:12: 閿欒: 鎵句笉鍒扮鍙?import net.minecr
+aft.item.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:26: 閿欒: 鎵句笉鍒扮鍙?import net.minecra
+ft.item.MiningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:5: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.M
+iningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.P
+ickaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:10: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:7: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+MiningToolItem;
+                         ^
+  绗﹀彿:   绫?MiningToolItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:9: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item.
+PickaxeItem;
+                         ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:12: 閿欒: 鎵句笉鍒扮鍙?import net.minecraft.item
+.SwordItem;
+                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:69: 閿欒: 鎵句笉鍒扮鍙?        float fuse = creeper.g
+etClientFuseTime(1);
+                            ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeper
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:207: 閿欒: 鎵句笉鍒扮鍙?                return 50 + b
+lowingUp.getClientFuseTime(1) * 50;
+                                     ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?blowingUp
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:256: 閿欒: 鎵句笉鍒扮鍙?            SwordItem bestSwo
+rd = null;
+            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?MobDefenseChain
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:261: 閿欒: 鎵句笉鍒扮鍙?                    bestSword
+ = (SwordItem) item;
+                                 ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?MobDefenseChain
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:361: 閿欒: 鎵句笉鍒扮鍙?            Block b = mod.get
+EntityWorld().getBlockState(check).getBlock();
+                         ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:432: 閿欒: 鎵句笉鍒扮鍙?                if (!(creeper
+Entity.getClientFuseTime(1) < 0.001)) {
+                                   ^
+  绗﹀彿:   鏂规硶 getClientFuseTime(int)
+  浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeperEntity
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\MLGBucketFallChain.java:55: 閿欒: 鎵句笉鍒扮鍙?                        isP
+lacedWater = mod.getEntityWorld().getBlockState(placed).getBlock() == Blocks.WATER;
+                                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:46: 閿欒: 鎵句笉鍒扮鍙?            Bloc
+kState bs = _mod.getEntityWorld().getBlockState(blockPos);
+                                ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:96: 閿欒: 鎵句笉鍒扮鍙?                
+_lastBlockInteraction = _mod.getEntityWorld().getBlockState(_lastBlockPosInteraction).getBlock();
+                                            ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:142: 閿欒: 鎵句笉鍒扮鍙?            Con
+tainerType actualType = ContainerType.getFromBlock(_mod.getEntityWorld().getBlockState(pos).getBlock());
+                                                                      ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:33: 閿欒: 鎵句笉鍒扮鍙?        EventBus.subscrib
+e(ChunkLoadEvent.class, evt -> onLoad(evt.chunk.getEntityPos()));
+                                                                        ^
+  绗﹀彿:   鏂规硶 getEntityPos()
+  浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:48: 閿欒: 鎵句笉鍒扮鍙?        return !(_mod.get
+EntityWorld().getChunk(pos.x, pos.z) instanceof EmptyChunk);
+                     ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\MiscBlockTracker.java:40: 閿欒: 鎵句笉鍒扮鍙?                Block curre
+ntBlock = _mod.getEntityWorld().getBlockState(check).getBlock();
+                                         ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\MiscBlockTracker.java:44: 閿欒: 鎵句笉鍒扮鍙?                        if 
+(_mod.getEntityWorld().getBlockState(check.down()).getBlock() == Blocks.NETHER_PORTAL) {
+                                ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:110: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 priva
+te 璁块棶鎺у埗
+        _mod.getPlayer().getInventory().selectedSlot = 1;
+                                       ^
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:156: 閿欒: 鎵句笉鍒扮鍙?                            || i
+tem instanceof ArmorItem
+                                               ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?SlotHandler
+D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:244: 閿欒: main 鍦?PlayerInventory 涓槸 private 璁块棶鎺у
+埗
+        for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().main.size(); ++i) {
+                                                                               ^
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:44: 閿欒: 鎵句笉鍒扮鍙?                if (invStack.getItem
+() instanceof SwordItem item) {
+                                                  ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?KillAura
+D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:47: 閿欒: 鎵句笉鍒扮鍙?                    if (handItem ins
+tanceof SwordItem handToolItem) {
+                                            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?KillAura
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:113: 閿欒: main 鍦?PlayerInventory 
+涓槸 private 璁块棶鎺у埗
+        result.addAll(inv.main);
+                         ^
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:114: 閿欒: 鎵句笉鍒扮鍙?        result.
+addAll(inv.armor);
+                         ^
+  绗﹀彿:   鍙橀噺 armor
+  浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:115: 閿欒: 鎵句笉鍒扮鍙?        result.
+addAll(inv.offHand);
+                         ^
+  绗﹀彿:   鍙橀噺 offHand
+  浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:175: 閿欒: 鎵句笉鍒扮鍙?        BlockState will
+LandInState = mod.getEntityWorld().getBlockState(willLandIn);
+                                        ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 鎵句笉鍒扮鍙?            boolean has
+Clutch = (!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").o
+rElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                     ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?            
+boolean hasClutch = (!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the
+_nether").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                                                                      ^
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:266: 閿欒: 鎵句笉鍒扮鍙?        BlockState s = 
+mod.getEntityWorld().getBlockState(willLandIn);
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:274: 閿欒: 鎵句笉鍒扮鍙?            blockBounds
+ = s.getCollisionShape(mod.getEntityWorld(), willLandIn).getBoundingBox();
+                                                 ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:300: 閿欒: 鎵句笉鍒扮鍙?            BlockHitRes
+ult hit = mod.getEntityWorld().raycast(rctx);
+                                    ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 鎵句笉鍒扮鍙?        if (!mod.getEnt
+ityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && mod.g
+etItemStorage().hasItem(Items.WATER_BUCKET)) {
+                ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?        if (
+!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null
+)) && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+                                                                                 ^
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:518: 閿欒: 鎵句笉鍒扮鍙?            BlockHitRes
+ult hit = mod.getEntityWorld().raycast(rctx);
+                                    ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:66: 閿欒: 鎵句笉鍒扮鍙?            ret
+urn mod.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                      ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:67: 閿欒: 鎵句笉鍒扮鍙?               
+     mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:68: 閿欒: 鎵句笉鍒扮鍙?               
+     mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:69: 閿欒: 鎵句笉鍒扮鍙?               
+     mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:70: 閿欒: 鎵句笉鍒扮鍙?               
+     mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 鎵句笉鍒扮鍙?            if (!(_mainTask
+ instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer().hasStatusE
+ffect(StatusEffects.FIRE_RESISTANCE) && !mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION
+_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?            if (
+!(_mainTask instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer()
+.hasStatusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getEntityWorld().getDimension().getRegistryEntry().is(Registrie
+s.DIMENSION_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                                       
+                 ^
+D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:148: 閿欒: 鎵句笉鍒扮鍙?                Block b = 
+mod.getEntityWorld().getBlockState(pos).getBlock();
+                             ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:33: 閿欒: 鎵句笉鍒扮鍙?                return !(item
+ instanceof SwordItem)
+                                         ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?DepositCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:34: 閿欒: 鎵句笉鍒扮鍙?                        && !(
+item instanceof PickaxeItem)
+                                             ^
+  绗﹀彿:   绫?PickaxeItem
+  浣嶇疆: 绫?DepositCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:52: 閿欒: 鎵句笉鍒扮鍙?                if (!(i instanc
+eof ArmorItem)) {
+                                   ^
+  绗﹀彿:   绫?ArmorItem
+  浣嶇疆: 绫?EquipCommand
+D:\MC\altoclef\src\main\java\adris\altoclef\eventbus\events\ChatMessageEvent.java:25: 閿欒: 鎵句笉鍒扮鍙?        return sende
+r.getName();
+                     ^
+  绗﹀彿:   鏂规硶 getName()
+  浣嶇疆: 绫诲瀷涓篏ameProfile鐨勫彉閲?sender
+D:\MC\altoclef\src\main\java\adris\altoclef\mixins\ClientUIMixin.java:20: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: Matrix3x2fStack鏃犳硶杞崲涓篗atrixS
+tack
+        EventBus.publish(new ClientRenderEvent(context.getMatrices(), tickDelta));
+                                                                  ^
+D:\MC\altoclef\src\main\java\adris\altoclef\Playground.java:143: 閿欒: 鎵句笉鍒扮鍙?                Debug.logMessage("LOADED?
+ " + (!(mod.getEntityWorld().getChunk(p) instanceof EmptyChunk)));
+                                                    ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\TaskCatalogue.java:531: 閿欒: 鎵句笉鍒扮鍙?                shapedRecipe3x3("chain
+", Items.CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
+                                              ^
+  绗﹀彿:   鍙橀噺 CHAIN
+  浣嶇疆: 绫?Items
+D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:45: 閿欒: 鎵句笉鍒扮鍙?        if (item instanceof S
+wordItem) return 3f;
+                            ^
+  绗﹀彿:   绫?SwordItem
+  浣嶇疆: 绫?ItemHelper
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:97: 閿欒: 鎵句笉鍒扮鍙?                
+return mod.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:98: 閿欒: 鎵句笉鍒扮鍙?                
+        mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:99: 閿欒: 鎵句笉鍒扮鍙?                
+        mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:100: 閿欒: 鎵句笉鍒扮鍙?               
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:101: 閿欒: 鎵句笉鍒扮鍙?               
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:94: 閿欒: 鎵句笉鍒扮鍙?            return m
+od.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                      ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:95: 閿欒: 鎵句笉鍒扮鍙?                    
+mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:96: 閿欒: 鎵句笉鍒扮鍙?                    
+mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:97: 閿欒: 鎵句笉鍒扮鍙?                    
+mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:98: 閿欒: 鎵句笉鍒扮鍙?                    
+mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\ClearLiquidTask.java:45: 閿欒: 鎵句笉鍒扮鍙?            return
+ mod.getEntityWorld().getBlockState(_liquidPos).getFluidState().isEmpty();
+                      ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:49: 閿欒: 鎵句笉鍒扮鍙?  
+              if (mod.getEntityWorld().getBlockState(pos).getBlock() == Blocks.AIR) {
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:136: 閿欒: 鎵句笉鍒扮鍙? 
+       if (mod.getEntityWorld().getBlockState(_position).getBlock() != Blocks.IRON_BLOCK)
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:138: 閿欒: 鎵句笉鍒扮鍙? 
+       if (mod.getEntityWorld().getBlockState(_position.up().west()).getBlock() != Blocks.IRON_BLOCK)
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:140: 閿欒: 鎵句笉鍒扮鍙? 
+       if (mod.getEntityWorld().getBlockState(_position.up().east()).getBlock() != Blocks.IRON_BLOCK)
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:142: 閿欒: 鎵句笉鍒扮鍙? 
+       if (mod.getEntityWorld().getBlockState(_position.up()).getBlock() != Blocks.IRON_BLOCK)
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:148: 閿欒: 鎵句笉鍒扮鍙? 
+       if (_position == null || mod.getEntityWorld().getBlockState(_position.up(2)).getBlock() != Blocks.CARVED_PUMPKIN
+)
+                                    ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:114: 閿欒: 
+鎵句笉鍒扮鍙?                        return mod.getEntityWorld().getBlockState(framePos).getBlock() == Blocks.OBSIDIAN;
+                                  ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:135: 閿欒: 
+鎵句笉鍒扮鍙?            if (mod.getEntityWorld().getBlockState(_portalOrigin.up()).getBlock() == Blocks.NETHER_PORTAL) {
+                   ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:244: 閿欒: 
+鎵句笉鍒扮鍙?            Block frameBlock = mod.getEntityWorld().getBlockState(framePos).getBlock();
+                                  ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:248: 閿欒: 
+鎵句笉鍒扮鍙?                if (mod.getEntityWorld().getBlockState(waterCheck).getBlock() == Blocks.WATER && WorldHelper.is
+SourceBlock(mod, waterCheck, true)) {
+                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalObsidianTask.java:108: 閿欒
+: 鎵句笉鍒扮鍙?                        return mod.getEntityWorld().getBlockState(framePos).getBlock() == Blocks.OBSIDIAN;
+                                  ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalObsidianTask.java:120: 閿欒
+: 鎵句笉鍒扮鍙?            if (mod.getEntityWorld().getBlockState(_origin.up()).getBlock() == Blocks.NETHER_PORTAL) {
+                   ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithBlocksTask.java:89: 閿欒: 鎵句笉鍒扮鍙?              
+  mod.getEntityWorld().getBlockState(blockPos).getFluidState().isStill() &&
+                   ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithBlocksTask.java:110: 閿欒: 鎵句笉鍒扮鍙?             
+       !mod.getEntityWorld().getBlockState(lavaPos).getFluidState().isStill()) {
+                        ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithSandTask.java:66: 閿欒: 鎵句笉鍒扮鍙?                
+mod.getEntityWorld().getBlockState(blockPos).getFluidState().isStill() &&
+                   ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithSandTask.java:88: 閿欒: 鎵句笉鍒扮鍙?                
+    !mod.getEntityWorld().getBlockState(lavaPos).getFluidState().isStill()) {
+                        ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:93: 閿欒: 鎵句笉鍒扮鍙?            boole
+an isAnnoying = mod.getEntityWorld().getBlockState(pos).getBlock() == annoyingBlock
+                                    ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:94: 閿欒: 鎵句笉鍒扮鍙?                 
+   || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:95: 閿欒: 鎵句笉鍒扮鍙?                 
+   || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:96: 閿欒: 鎵句笉鍒扮鍙?                 
+   || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:97: 閿欒: 鎵句笉鍒扮鍙?                 
+   || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                          ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:221: 閿欒: 鎵句笉鍒扮鍙?        if (mod.
+getEntityWorld().getBlockState(_pos).getBlock() == Blocks.WHITE_WOOL) {
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:223: 閿欒: 鎵句笉鍒扮鍙?            Iter
+able<Entity> entities = mod.getEntityWorld().getEntities();
+                                           ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:308: 閿欒: 鎵句笉鍒扮鍙?            Bloc
+kState state = mod.getEntityWorld().getBlockState(_pos);
+                                  ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:349: 閿欒: 鎵句笉鍒扮鍙?                
+mod.getClientBaritone().getCustomGoalProcess().setGoalAndPath(mod.getEntityWorld().getBlockState(_pos.up()).getBlock() 
+==
+                                                                                 ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:389: 閿欒: 鎵句笉鍒扮鍙?        if (mod.
+getEntityWorld() == null || _pos == null) {
+               ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:393: 閿欒: 鎵句笉鍒扮鍙?        BlockSta
+te blockState = mod.getEntityWorld().getBlockState(_pos);
+                                   ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceBlockNearbyTask.java:182: 閿欒: 鎵句笉鍒扮鍙?        retu
+rn _justPlaced != null && ArrayUtils.contains(_toPlace, mod.getEntityWorld().getBlockState(_justPlaced).getBlock());
+                                                                       ^
+  绗﹀彿:   鏂规硶 getEntityWorld()
+  浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤浜嗘湭缁忔鏌ユ垨涓嶅畨鍏ㄧ殑鎿嶄綔銆?
+娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:unchecked 閲嶆柊缂栬瘧銆?
+娉? 鏌愪簺娑堟伅宸茬粡杩囩畝鍖? 璇蜂娇鐢?-Xdiags:verbose 閲嶆柊缂栬瘧浠ヨ幏寰楀畬鏁磋緭鍑?
+100 涓敊璇?
+
+> Task :compileJava FAILED
+
+[Incubating] Problems report is available at: file:///D:/MC/altoclef/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> Compilation failed; see the compiler output below.
+  娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:deprecation 閲嶆柊缂栬瘧銆?
+  D:\MC\altoclef\src\main\java\adris\altoclef\mixins\ClientUIMixin.java:20: 閿欒: 涓嶅吋瀹圭殑绫诲瀷: Matrix3x2fStack鏃犳硶杞崲涓篗atri
+xStack
+          EventBus.publish(new ClientRenderEvent(context.getMatrices(), tickDelta));
+                                                                    ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:34: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.
+SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:21: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.SwordI
+tem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:13: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:16: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item.Ar
+morItem;
+                           ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:18: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.item
+.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\entity\AbstractKillEntityTask.java:12: 閿欒: 鎵句笉鍒扮鍙?  import net.mi
+necraft.item.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\resources\MineAndCollectTask.java:26: 閿欒: 鎵句笉鍒扮鍙?  import net.min
+ecraft.item.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:5: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.it
+em.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.it
+em.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\StorageHelper.java:10: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:7: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.MiningToolItem;
+                           ^
+    绗﹀彿:   绫?MiningToolItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:9: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.i
+tem.PickaxeItem;
+                           ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ToolItemDetect.java:12: 閿欒: 鎵句笉鍒扮鍙?  import net.minecraft.
+item.SwordItem;
+                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绋嬪簭鍖?net.minecraft.item
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:256: 閿欒: 鎵句笉鍒扮鍙?              SwordItem bes
+tSword = null;
+              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?MobDefenseChain
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:261: 閿欒: 鎵句笉鍒扮鍙?                      bestS
+word = (SwordItem) item;
+                                   ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?MobDefenseChain
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:156: 閿欒: 鎵句笉鍒扮鍙?                              
+|| item instanceof ArmorItem
+                                                 ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?SlotHandler
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:44: 閿欒: 鎵句笉鍒扮鍙?                  if (invStack.get
+Item() instanceof SwordItem item) {
+                                                    ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?KillAura
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\KillAura.java:47: 閿欒: 鎵句笉鍒扮鍙?                      if (handItem
+ instanceof SwordItem handToolItem) {
+                                              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?KillAura
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:114: 閿欒: 鎵句笉鍒扮鍙?          res
+ult.addAll(inv.armor);
+                           ^
+    绗﹀彿:   鍙橀噺 armor
+    浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:115: 閿欒: 鎵句笉鍒扮鍙?          res
+ult.addAll(inv.offHand);
+                           ^
+    绗﹀彿:   鍙橀噺 offHand
+    浣嶇疆: 绫诲瀷涓篜layerInventory鐨勫彉閲?inv
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:33: 閿欒: 鎵句笉鍒扮鍙?                  return !(
+item instanceof SwordItem)
+                                           ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?DepositCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\DepositCommand.java:34: 閿欒: 鎵句笉鍒扮鍙?                          &
+& !(item instanceof PickaxeItem)
+                                               ^
+    绗﹀彿:   绫?PickaxeItem
+    浣嶇疆: 绫?DepositCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\commands\EquipCommand.java:52: 閿欒: 鎵句笉鍒扮鍙?                  if (!(i ins
+tanceof ArmorItem)) {
+                                     ^
+    绗﹀彿:   绫?ArmorItem
+    浣嶇疆: 绫?EquipCommand
+  D:\MC\altoclef\src\main\java\adris\altoclef\TaskCatalogue.java:531: 閿欒: 鎵句笉鍒扮鍙?                  shapedRecipe3x3("c
+hain", Items.CHAIN, 1, o, i, o, o, "iron_ingot", o, o, i, o);
+                                                ^
+    绗﹀彿:   鍙橀噺 CHAIN
+    浣嶇疆: 绫?Items
+  D:\MC\altoclef\src\main\java\adris\altoclef\util\helpers\ItemHelper.java:45: 閿欒: 鎵句笉鍒扮鍙?          if (item instance
+of SwordItem) return 3f;
+                              ^
+    绗﹀彿:   绫?SwordItem
+    浣嶇疆: 绫?ItemHelper
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:110: 閿欒: selectedSlot 鍦?PlayerInventory 涓槸 pri
+vate 璁块棶鎺у埗
+          _mod.getPlayer().getInventory().selectedSlot = 1;
+                                         ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\control\SlotHandler.java:244: 閿欒: main 鍦?PlayerInventory 涓槸 private 璁块棶
+鎺у埗
+          for (int i = 0; i < MinecraftClient.getInstance().player.getInventory().main.size(); ++i) {
+                                                                                 ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\InventorySubTracker.java:113: 閿欒: main 鍦?PlayerInventor
+y 涓槸 private 璁块棶鎺у埗
+          result.addAll(inv.main);
+                           ^
+  娉? 鏈夊叧璇︾粏淇℃伅, 璇蜂娇鐢?-Xlint:unchecked 閲嶆柊缂栬瘧銆?
+  娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤鎴栬鐩栦簡宸茶繃鏃剁殑 API銆?
+  娉? 鏌愪簺娑堟伅宸茬粡杩囩畝鍖? 璇蜂娇鐢?-Xdiags:verbose 閲嶆柊缂栬瘧浠ヨ幏寰楀畬鏁磋緭鍑?
+  娉? 鏌愪簺杈撳叆鏂囦欢浣跨敤浜嗘湭缁忔鏌ユ垨涓嶅畨鍏ㄧ殑鎿嶄綔銆?
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?          
+    boolean hasClutch = (!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry(
+"the_nether").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                                                                                        ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?          
+if (!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(
+null)) && mod.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+                                                                                   ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 绋嬪簭鍖匯egistries涓嶅瓨鍦?              
+if (!(_mainTask instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlay
+er().hasStatusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getEntityWorld().getDimension().getRegistryEntry().is(Regis
+tries.DIMENSION_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                                                                       
+                   ^
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:69: 閿欒: 鎵句笉鍒扮鍙?          float fuse = creep
+er.getClientFuseTime(1);
+                              ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeper
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:207: 閿欒: 鎵句笉鍒扮鍙?                  return 50
+ + blowingUp.getClientFuseTime(1) * 50;
+                                       ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?blowingUp
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:361: 閿欒: 鎵句笉鍒扮鍙?              Block b = mod
+.getEntityWorld().getBlockState(check).getBlock();
+                           ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MobDefenseChain.java:432: 閿欒: 鎵句笉鍒扮鍙?                  if (!(cre
+eperEntity.getClientFuseTime(1) < 0.001)) {
+                                     ^
+    绗﹀彿:   鏂规硶 getClientFuseTime(int)
+    浣嶇疆: 绫诲瀷涓篊reeperEntity鐨勫彉閲?creeperEntity
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\MLGBucketFallChain.java:55: 閿欒: 鎵句笉鍒扮鍙?                         
+ isPlacedWater = mod.getEntityWorld().getBlockState(placed).getBlock() == Blocks.WATER;
+                                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:46: 閿欒: 鎵句笉鍒扮鍙?              
+BlockState bs = _mod.getEntityWorld().getBlockState(blockPos);
+                                  ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:96: 閿欒: 鎵句笉鍒扮鍙?              
+    _lastBlockInteraction = _mod.getEntityWorld().getBlockState(_lastBlockPosInteraction).getBlock();
+                                              ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\storage\ContainerSubTracker.java:142: 閿欒: 鎵句笉鍒扮鍙?             
+ ContainerType actualType = ContainerType.getFromBlock(_mod.getEntityWorld().getBlockState(pos).getBlock());
+                                                                        ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:33: 閿欒: 鎵句笉鍒扮鍙?          EventBus.subs
+cribe(ChunkLoadEvent.class, evt -> onLoad(evt.chunk.getEntityPos()));
+                                                                          ^
+    绗﹀彿:   鏂规硶 getEntityPos()
+    浣嶇疆: 绫诲瀷涓篧orldChunk鐨勫彉閲?chunk
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\SimpleChunkTracker.java:48: 閿欒: 鎵句笉鍒扮鍙?          return !(_mod
+.getEntityWorld().getChunk(pos.x, pos.z) instanceof EmptyChunk);
+                       ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\MiscBlockTracker.java:40: 閿欒: 鎵句笉鍒扮鍙?                  Block c
+urrentBlock = _mod.getEntityWorld().getBlockState(check).getBlock();
+                                           ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\trackers\MiscBlockTracker.java:44: 閿欒: 鎵句笉鍒扮鍙?                         
+ if (_mod.getEntityWorld().getBlockState(check.down()).getBlock() == Blocks.NETHER_PORTAL) {
+                                  ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?_mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:175: 閿欒: 鎵句笉鍒扮鍙?          BlockState 
+willLandInState = mod.getEntityWorld().getBlockState(willLandIn);
+                                          ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:189: 閿欒: 鎵句笉鍒扮鍙?              boolean
+ hasClutch = (!mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether
+").orElse(null)) && mod.getSlotHandler().forceEquipItem(Items.WATER_BUCKET));
+                                       ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:266: 閿欒: 鎵句笉鍒扮鍙?          BlockState 
+s = mod.getEntityWorld().getBlockState(willLandIn);
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:274: 閿欒: 鎵句笉鍒扮鍙?              blockBo
+unds = s.getCollisionShape(mod.getEntityWorld(), willLandIn).getBoundingBox();
+                                                   ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:300: 閿欒: 鎵句笉鍒扮鍙?              BlockHi
+tResult hit = mod.getEntityWorld().raycast(rctx);
+                                      ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:419: 閿欒: 鎵句笉鍒扮鍙?          if (!mod.ge
+tEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMENSION_TYPE.getEntry("the_nether").orElse(null)) && m
+od.getItemStorage().hasItem(Items.WATER_BUCKET)) {
+                  ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\MLGBucketTask.java:518: 閿欒: 鎵句笉鍒扮鍙?              BlockHi
+tResult hit = mod.getEntityWorld().raycast(rctx);
+                                      ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:66: 閿欒: 鎵句笉鍒扮鍙?             
+ return mod.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                        ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:67: 閿欒: 鎵句笉鍒扮鍙?             
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:68: 閿欒: 鎵句笉鍒扮鍙?             
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:69: 閿欒: 鎵句笉鍒扮鍙?             
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\CustomBaritoneGoalTask.java:70: 閿欒: 鎵句笉鍒扮鍙?             
+         mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:66: 閿欒: 鎵句笉鍒扮鍙?              if (!(_main
+Task instanceof EscapeFromLavaTask && isCurrentlyRunning(mod)) && mod.getPlayer().isOnFire() && !mod.getPlayer().hasSta
+tusEffect(StatusEffects.FIRE_RESISTANCE) && !mod.getEntityWorld().getDimension().getRegistryEntry().is(Registries.DIMEN
+SION_TYPE.getEntry("the_nether").orElse(null))) {
+                                                                                                                       
+                                                                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\chains\WorldSurvivalChain.java:148: 閿欒: 鎵句笉鍒扮鍙?                  Block 
+b = mod.getEntityWorld().getBlockState(pos).getBlock();
+                               ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\eventbus\events\ChatMessageEvent.java:25: 閿欒: 鎵句笉鍒扮鍙?          return s
+ender.getName();
+                       ^
+    绗﹀彿:   鏂规硶 getName()
+    浣嶇疆: 绫诲瀷涓篏ameProfile鐨勫彉閲?sender
+  D:\MC\altoclef\src\main\java\adris\altoclef\Playground.java:143: 閿欒: 鎵句笉鍒扮鍙?                  Debug.logMessage("LOA
+DED? " + (!(mod.getEntityWorld().getChunk(p) instanceof EmptyChunk)));
+                                                      ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:97: 閿欒: 鎵句笉鍒扮鍙?              
+    return mod.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:98: 閿欒: 鎵句笉鍒扮鍙?              
+            mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:99: 閿欒: 鎵句笉鍒扮鍙?              
+            mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:100: 閿欒: 鎵句笉鍒扮鍙?             
+             mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\PickupDroppedItemTask.java:101: 閿欒: 鎵句笉鍒扮鍙?             
+             mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:94: 閿欒: 鎵句笉鍒扮鍙?              retu
+rn mod.getEntityWorld().getBlockState(pos).getBlock() == AnnoyingBlocks ||
+                        ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:95: 閿欒: 鎵句笉鍒扮鍙?                  
+    mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:96: 閿欒: 鎵句笉鍒扮鍙?                  
+    mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:97: 閿欒: 鎵句笉鍒扮鍙?                  
+    mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock ||
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\movement\TimeoutWanderTask.java:98: 閿欒: 鎵句笉鍒扮鍙?                  
+    mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\ClearLiquidTask.java:45: 閿欒: 鎵句笉鍒扮鍙?              re
+turn mod.getEntityWorld().getBlockState(_liquidPos).getFluidState().isEmpty();
+                        ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:49: 閿欒: 鎵句笉鍒扮鍙?
+                  if (mod.getEntityWorld().getBlockState(pos).getBlock() == Blocks.AIR) {
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:136: 閿欒: 鎵句笉鍒扮鍙
+?          if (mod.getEntityWorld().getBlockState(_position).getBlock() != Blocks.IRON_BLOCK)
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:138: 閿欒: 鎵句笉鍒扮鍙
+?          if (mod.getEntityWorld().getBlockState(_position.up().west()).getBlock() != Blocks.IRON_BLOCK)
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:140: 閿欒: 鎵句笉鍒扮鍙
+?          if (mod.getEntityWorld().getBlockState(_position.up().east()).getBlock() != Blocks.IRON_BLOCK)
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:142: 閿欒: 鎵句笉鍒扮鍙
+?          if (mod.getEntityWorld().getBlockState(_position.up()).getBlock() != Blocks.IRON_BLOCK)
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructIronGolemTask.java:148: 閿欒: 鎵句笉鍒扮鍙
+?          if (_position == null || mod.getEntityWorld().getBlockState(_position.up(2)).getBlock() != Blocks.CARVED_PUM
+PKIN)
+                                      ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:114: 閿欒
+: 鎵句笉鍒扮鍙?                          return mod.getEntityWorld().getBlockState(framePos).getBlock() == Blocks.OBSIDIAN;
+                                    ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:135: 閿欒
+: 鎵句笉鍒扮鍙?              if (mod.getEntityWorld().getBlockState(_portalOrigin.up()).getBlock() == Blocks.NETHER_PORTAL) 
+{
+                     ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:244: 閿欒
+: 鎵句笉鍒扮鍙?              Block frameBlock = mod.getEntityWorld().getBlockState(framePos).getBlock();
+                                    ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalBucketTask.java:248: 閿欒
+: 鎵句笉鍒扮鍙?                  if (mod.getEntityWorld().getBlockState(waterCheck).getBlock() == Blocks.WATER && WorldHelpe
+r.isSourceBlock(mod, waterCheck, true)) {
+                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalObsidianTask.java:108: 閿
+欒: 鎵句笉鍒扮鍙?                          return mod.getEntityWorld().getBlockState(framePos).getBlock() == Blocks.OBSIDIAN
+;
+                                    ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\compound\ConstructNetherPortalObsidianTask.java:120: 閿
+欒: 鎵句笉鍒扮鍙?              if (mod.getEntityWorld().getBlockState(_origin.up()).getBlock() == Blocks.NETHER_PORTAL) {
+                     ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithBlocksTask.java:89: 閿欒: 鎵句笉鍒扮鍙?            
+      mod.getEntityWorld().getBlockState(blockPos).getFluidState().isStill() &&
+                     ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithBlocksTask.java:110: 閿欒: 鎵句笉鍒扮鍙?           
+           !mod.getEntityWorld().getBlockState(lavaPos).getFluidState().isStill()) {
+                          ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithSandTask.java:66: 閿欒: 鎵句笉鍒扮鍙?              
+    mod.getEntityWorld().getBlockState(blockPos).getFluidState().isStill() &&
+                     ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\CoverWithSandTask.java:88: 閿欒: 鎵句笉鍒扮鍙?              
+        !mod.getEntityWorld().getBlockState(lavaPos).getFluidState().isStill()) {
+                          ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:93: 閿欒: 鎵句笉鍒扮鍙?              b
+oolean isAnnoying = mod.getEntityWorld().getBlockState(pos).getBlock() == annoyingBlock
+                                      ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:94: 閿欒: 鎵句笉鍒扮鍙?               
+       || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof DoorBlock
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:95: 閿欒: 鎵句笉鍒扮鍙?               
+       || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceBlock
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:96: 閿欒: 鎵句笉鍒扮鍙?               
+       || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FenceGateBlock
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:97: 閿欒: 鎵句笉鍒扮鍙?               
+       || mod.getEntityWorld().getBlockState(pos).getBlock() instanceof FlowerBlock;
+                            ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:221: 閿欒: 鎵句笉鍒扮鍙?          if (
+mod.getEntityWorld().getBlockState(_pos).getBlock() == Blocks.WHITE_WOOL) {
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:223: 閿欒: 鎵句笉鍒扮鍙?              
+Iterable<Entity> entities = mod.getEntityWorld().getEntities();
+                                             ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:308: 閿欒: 鎵句笉鍒扮鍙?              
+BlockState state = mod.getEntityWorld().getBlockState(_pos);
+                                    ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:349: 閿欒: 鎵句笉鍒扮鍙?              
+    mod.getClientBaritone().getCustomGoalProcess().setGoalAndPath(mod.getEntityWorld().getBlockState(_pos.up()).getBloc
+k() ==
+                                                                                   ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+1 actionable task: 1 executed
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:389: 閿欒: 鎵句笉鍒扮鍙?          if (
+mod.getEntityWorld() == null || _pos == null) {
+                 ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\DestroyBlockTask.java:393: 閿欒: 鎵句笉鍒扮鍙?          Bloc
+kState blockState = mod.getEntityWorld().getBlockState(_pos);
+                                     ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  D:\MC\altoclef\src\main\java\adris\altoclef\tasks\construction\PlaceBlockNearbyTask.java:182: 閿欒: 鎵句笉鍒扮鍙?          
+return _justPlaced != null && ArrayUtils.contains(_toPlace, mod.getEntityWorld().getBlockState(_justPlaced).getBlock())
+;
+                                                                         ^
+    绗﹀彿:   鏂规硶 getEntityWorld()
+    浣嶇疆: 绫诲瀷涓篈ltoClef鐨勫彉閲?mod
+  100 涓敊璇?
+
+* Try:
+> Check your code and dependencies to fix the compilation error(s)
+> Run with --scan to get full insights.
+
+BUILD FAILED in 10s

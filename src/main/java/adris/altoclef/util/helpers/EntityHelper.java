@@ -96,7 +96,7 @@ public class EntityHelper {
                 // lookup can't run here. Skip it rather than NPE — the caller only needs an estimate.
                 net.minecraft.server.MinecraftServer server = player.getServer();
                 if (server != null) {
-                    ServerWorld serverWorld = server.getWorld(player.getWorld().getRegistryKey());
+                    ServerWorld serverWorld = server.getWorld(player.getEntityWorld().getRegistryKey());
                     k = EnchantmentHelper.getProtectionAmount(serverWorld, player, source);
                     if (k > 0) {
                         damageAmount = DamageUtil.getInflictedDamage((float) damageAmount, k);

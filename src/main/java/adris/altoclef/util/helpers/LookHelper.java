@@ -264,7 +264,7 @@ public interface LookHelper {
         }
 
         // Get the world of the entity
-        World world = entity.getWorld();
+        World world = entity.getEntityWorld();
 
         // Create a raycast context with the start and end points, shape type, fluid handling, and entity performing the raycast
         RaycastContext context = new RaycastContext(start, end, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, entity);

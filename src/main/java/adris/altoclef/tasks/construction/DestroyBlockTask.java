@@ -223,7 +223,7 @@ public class DestroyBlockTask extends Task implements ITaskRequiresGrounded {
             Iterable<Entity> entities = mod.getWorld().getEntities();
             for (Entity entity : entities) {
                 // Check if the entity is a PillagerEntity and is within a distance of 144 blocks from the position
-                if (entity instanceof PillagerEntity && _pos.isWithinDistance(entity.getPos(), 144)) {
+                if (entity instanceof PillagerEntity && _pos.isWithinDistance(entity.getEntityPos(), 144)) {
                     // Request the block at the position to be marked as unreachable
                     mod.getBlockTracker().requestBlockUnreachable(_pos, 0);
                 }
@@ -283,7 +283,7 @@ public class DestroyBlockTask extends Task implements ITaskRequiresGrounded {
 
         // Check if the block above the position is not solid, the player is above the position,
         // and the player is within a distance of 0.89 blocks from the position
-        if (!WorldHelper.isSolid(mod, _pos.up()) && mod.getPlayer().getPos().y > _pos.getY() && _pos.isWithinDistance(mod.getPlayer().isOnGround() ? mod.getPlayer().getPos() : mod.getPlayer().getPos().add(0, -1, 0), 0.89)) {
+        if (!WorldHelper.isSolid(mod, _pos.up()) && mod.getPlayer().getEntityPos().y > _pos.getY() && _pos.isWithinDistance(mod.getPlayer().isOnGround() ? mod.getPlayer().getEntityPos() : mod.getPlayer().getEntityPos().add(0, -1, 0), 0.89)) {
             if (WorldHelper.dangerousToBreakIfRightAbove(mod, _pos)) {
                 setDebugState("It's dangerous to break as we're right above it, moving away and trying again.");
                 return new RunAwayFromPositionTask(3, _pos.getY(), _pos);
@@ -333,7 +333,7 @@ public class DestroyBlockTask extends Task implements ITaskRequiresGrounded {
             } else {
                 isMining = false;
             }
-            boolean isCloseToMoveBack = _pos.isWithinDistance(mod.getPlayer().getPos(), 2);
+            boolean isCloseToMoveBack = _pos.isWithinDistance(mod.getPlayer().getEntityPos(), 2);
             if (isCloseToMoveBack) {
                 if (!mod.getClientBaritone().getPathingBehavior().isPathing() && !mod.getPlayer().isTouchingWater() &&
                         !mod.getFoodChain().needsToEat()) {

@@ -116,7 +116,7 @@ public class WaitForDragonAndPearlTask extends Task implements IDragonWaiter {
         }
         if (mod.getPlayer().getBlockPos().getY() < minHeight) {
             if (mod.getEntityTracker().entityFound(entity ->
-                    mod.getPlayer().getPos().isInRange(entity.getPos(), 4), AreaEffectCloudEntity.class)) {
+                    mod.getPlayer().getEntityPos().isInRange(entity.getEntityPos(), 4), AreaEffectCloudEntity.class)) {
                 if (mod.getEntityTracker().getClosestEntity(EnderDragonEntity.class).isPresent() &&
                         !mod.getClientBaritone().getPathingBehavior().isPathing()) {
                     LookHelper.lookAt(mod, mod.getEntityTracker().getClosestEntity(EnderDragonEntity.class).get().getEyePos());
@@ -151,7 +151,7 @@ public class WaitForDragonAndPearlTask extends Task implements IDragonWaiter {
             setDebugState("We're high enough.");
             // If a fireball is too close, run UP
             Optional<Entity> dragonFireball = mod.getEntityTracker().getClosestEntity(DragonFireballEntity.class);
-            if (dragonFireball.isPresent() && dragonFireball.get().isInRange(mod.getPlayer(), DRAGON_FIREBALL_TOO_CLOSE_RANGE) && LookHelper.cleanLineOfSight(mod.getPlayer(), dragonFireball.get().getPos(), DRAGON_FIREBALL_TOO_CLOSE_RANGE)) {
+            if (dragonFireball.isPresent() && dragonFireball.get().isInRange(mod.getPlayer(), DRAGON_FIREBALL_TOO_CLOSE_RANGE) && LookHelper.cleanLineOfSight(mod.getPlayer(), dragonFireball.get().getEntityPos(), DRAGON_FIREBALL_TOO_CLOSE_RANGE)) {
                 _pillarUpFurther = new GetToYTask(mod.getPlayer().getBlockY() + 5);
                 Debug.logMessage("HOLDUP");
                 return _pillarUpFurther;
@@ -181,9 +181,9 @@ public class WaitForDragonAndPearlTask extends Task implements IDragonWaiter {
             }
             return null;
         }
-        if (!WorldHelper.inRangeXZ(mod.getPlayer(), _targetToPearl, XZ_RADIUS_TOO_FAR) && mod.getPlayer().getPos().getY() < minHeight && !_hasPillar) {
+        if (!WorldHelper.inRangeXZ(mod.getPlayer(), _targetToPearl, XZ_RADIUS_TOO_FAR) && mod.getPlayer().getEntityPos().getY() < minHeight && !_hasPillar) {
             if (mod.getEntityTracker().entityFound(entity ->
-                    mod.getPlayer().getPos().isInRange(entity.getPos(), 4), AreaEffectCloudEntity.class)) {
+                    mod.getPlayer().getEntityPos().isInRange(entity.getEntityPos(), 4), AreaEffectCloudEntity.class)) {
                 if (mod.getEntityTracker().getClosestEntity(EnderDragonEntity.class).isPresent() &&
                         !mod.getClientBaritone().getPathingBehavior().isPathing()) {
                     LookHelper.lookAt(mod, mod.getEntityTracker().getClosestEntity(EnderDragonEntity.class).get().getEyePos());
@@ -206,7 +206,7 @@ public class WaitForDragonAndPearlTask extends Task implements IDragonWaiter {
             return false;
 
         boolean fireballTooClose = fireball.get().isInRange(mod.getPlayer(), DRAGON_FIREBALL_TOO_CLOSE_RANGE);
-        boolean fireballInSight = LookHelper.cleanLineOfSight(mod.getPlayer(), fireball.get().getPos(), DRAGON_FIREBALL_TOO_CLOSE_RANGE);
+        boolean fireballInSight = LookHelper.cleanLineOfSight(mod.getPlayer(), fireball.get().getEntityPos(), DRAGON_FIREBALL_TOO_CLOSE_RANGE);
 
         return fireballTooClose && fireballInSight;
     }

@@ -254,7 +254,7 @@ public class PlaceBedAndSetSpawnTask extends Task {
                     return null;
                 }
             }
-            if (nearestBed.get().isWithinDistance(mod.getPlayer().getPos(), 40)) {
+            if (nearestBed.get().isWithinDistance(mod.getPlayer().getEntityPos(), 40)) {
                 // Check if there are monsters nearby
                 Vec3d vec3d = Vec3d.ofBottomCenter(nearestBed.get());
                 List<HostileEntity> list = mod.getWorld().getEntitiesByType(net.minecraft.util.TypeFilter.instanceOf(HostileEntity.class), new Box(vec3d.getX() - 8.0, vec3d.getY() - 5.0, vec3d.getZ() - 8.0, vec3d.getX() + 8.0, vec3d.getY() + 5.0, vec3d.getZ() + 8.0), (entity) -> {
@@ -277,7 +277,7 @@ public class PlaceBedAndSetSpawnTask extends Task {
                 // Sleep in the nearest bed
                 setDebugState("Going to bed to sleep...");
                 return new DoToClosestBlockTask(toSleepIn -> {
-                    boolean closeEnough = toSleepIn.isWithinDistance(mod.getPlayer().getPos(), 3);
+                    boolean closeEnough = toSleepIn.isWithinDistance(mod.getPlayer().getEntityPos(), 3);
                     if (closeEnough) {
                         // why 0.2? I'm tired.
                         Vec3d centerBed = new Vec3d(toSleepIn.getX() + 0.5, toSleepIn.getY() + 0.2, toSleepIn.getZ() + 0.5);
@@ -544,7 +544,7 @@ public class PlaceBedAndSetSpawnTask extends Task {
             for (int z = origin.getZ() - SCAN_RANGE; z < origin.getZ() + SCAN_RANGE; ++z) {
                 for (int y = origin.getY() - SCAN_RANGE; y < origin.getY() + SCAN_RANGE; ++y) {
                     BlockPos attemptPos = new BlockPos(x, y, z);
-                    double distance = attemptPos.getSquaredDistance(mod.getPlayer().getPos());
+                    double distance = attemptPos.getSquaredDistance(mod.getPlayer().getEntityPos());
 
                     if (distance > closestDist) {
                         continue; // Skip if the distance is greater than the closest distance found so far
