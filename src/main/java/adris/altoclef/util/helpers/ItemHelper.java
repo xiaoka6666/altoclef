@@ -11,11 +11,16 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BlockItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.FuelRegistry;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.item.SwordItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.TagKey;
@@ -28,7 +33,7 @@ import java.util.*;
  */
 public class ItemHelper {
     /**
-     * 1.21.4 中 SwordItem 不再暴露 {@code ToolMaterial}，无法调用
+     * 1.21.4 中 Item 不再暴露 {@code ToolMaterial}，无法调用
      * {@code getMaterial().getAttackDamage()}。这里按具体物品常量映射 1.21
      * 时代的 material 攻击伤害值（不含基础 1 的那部分）。
      */
@@ -42,12 +47,12 @@ public class ItemHelper {
         // over an equipped stone sword. (Vanilla base attack: wood/stone 2, iron 3, gold 2, diamond 4, netherite 5.)
         if (item == Items.STONE_SWORD) return 2.5f;
         if (item == Items.WOODEN_SWORD) return 2f;
-        if (item instanceof SwordItem) return 3f;
+        if (ItemHelper.isSword(item)) return 3f;
         return 0f;
     }
 
     /**
-     * 1.21.4: MiningToolItem no longer exposes ToolMaterial, so we can't call
+     * 1.21.4: Item no longer exposes ToolMaterial, so we can't call
      * {@code getMaterial().getMiningSpeedMultiplier()}. Use {@link Item#getMiningSpeed}
      * against the target block state instead, which ranks any suitable tool
      * (pickaxe, axe, shovel, sword, ...) correctly for the current block.
@@ -581,4 +586,45 @@ public class ItemHelper {
         }
     }
 
+
+    public static boolean isSword(Item item) {
+        return item == Items.STONE_SWORD || item == Items.IRON_SWORD ||
+               item == Items.GOLDEN_SWORD || item == Items.DIAMOND_SWORD ||
+               item == Items.NETHERITE_SWORD;
+    }
+
+    public static boolean isPickaxe(Item item) {
+        return item == Items.STONE_PICKAXE || item == Items.IRON_PICKAXE ||
+               item == Items.GOLDEN_PICKAXE || item == Items.DIAMOND_PICKAXE ||
+               item == Items.NETHERITE_PICKAXE;
+    }
+
+    public static boolean isShovel(Item item) {
+        return item == Items.STONE_SHOVEL || item == Items.IRON_SHOVEL ||
+               item == Items.GOLDEN_SHOVEL || item == Items.DIAMOND_SHOVEL ||
+               item == Items.NETHERITE_SHOVEL;
+    }
+
+    public static boolean isAxe(Item item) {
+        return item instanceof AxeItem;
+    }
+
+    public static boolean isMiningTool(Item item) {
+        return isPickaxe(item) || isShovel(item) || isAxe(item);
+    }
+
+    public static boolean isArmor(Item item) {
+        return item == Items.LEATHER_HELMET || item == Items.IRON_HELMET ||
+               item == Items.GOLDEN_HELMET || item == Items.DIAMOND_HELMET ||
+               item == Items.NETHERITE_HELMET ||
+               item == Items.LEATHER_CHESTPLATE || item == Items.IRON_CHESTPLATE ||
+               item == Items.GOLDEN_CHESTPLATE || item == Items.DIAMOND_CHESTPLATE ||
+               item == Items.NETHERITE_CHESTPLATE ||
+               item == Items.LEATHER_LEGGINGS || item == Items.IRON_LEGGINGS ||
+               item == Items.GOLDEN_LEGGINGS || item == Items.DIAMOND_LEGGINGS ||
+               item == Items.NETHERITE_LEGGINGS ||
+               item == Items.LEATHER_BOOTS || item == Items.IRON_BOOTS ||
+               item == Items.GOLDEN_BOOTS || item == Items.DIAMOND_BOOTS ||
+               item == Items.NETHERITE_BOOTS;
+    }
 }

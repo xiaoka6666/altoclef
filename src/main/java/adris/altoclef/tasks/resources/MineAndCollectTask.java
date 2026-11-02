@@ -17,13 +17,20 @@ import adris.altoclef.util.slots.CursorSlot;
 import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.block.Block;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.item.MiningToolItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -133,9 +140,9 @@ public class MineAndCollectTask extends ResourceTask {
                 // We have something in our cursor stack
                 if (cursorStack.isSuitableFor(mod.getWorld().getBlockState(_subtask.miningPos()))) {
                     // Our cursor stack would help us mine our current block
-                    if (cursorStack.getItem() instanceof MiningToolItem) {
+                    if (cursorStack.getItem() .is(ItemTags.PICKAXES)) {
                         // 1.21.4: rank tools by their actual mining speed for the target block
-                        // (any suitable MiningToolItem, not just pickaxes).
+                        // (any suitable Item, not just pickaxes).
                         BlockState targetBlockState = mod.getWorld().getBlockState(_subtask.miningPos());
                         float cursorSpeed = ItemHelper.getMiningSpeed(cursorStack, targetBlockState);
                         ItemStack equipStack = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot());

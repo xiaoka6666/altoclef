@@ -10,15 +10,20 @@ import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import baritone.api.utils.input.Input;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.item.SwordItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.ArrayList;
@@ -41,10 +46,10 @@ public class KillAura {
         if (!invStacks.isEmpty()) {
             float handDamage = Float.NEGATIVE_INFINITY;
             for (ItemStack invStack : invStacks) {
-                if (invStack.getItem() instanceof SwordItem item) {
+                if (invStack.getItem().is(ItemTags.SWORDS)) {
                     float itemDamage = ItemHelper.getMaterialAttackDamage(item);
                     Item handItem = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
-                    if (handItem instanceof SwordItem handToolItem) {
+                    if (ItemHelper.isSword(handItem)) {
                         handDamage = ItemHelper.getMaterialAttackDamage(handToolItem);
                     }
                     if (itemDamage > handDamage) {

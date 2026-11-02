@@ -10,10 +10,12 @@ import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.network.ClientPlayerEntity;
 import adris.altoclef.util.helpers.ToolItemDetect;
 import net.minecraft.item.*;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.List;
@@ -153,7 +155,7 @@ public class SlotHandler {
                             // 1.21.4: also catch non-armor equippables (elytra, ...) so we don't
                             // leave one equipped and miss a right-click interaction.
                             || stack.getComponents().contains(DataComponentTypes.EQUIPPABLE)
-                            || item instanceof ArmorItem
+                            || ItemHelper.isArmor(item) || ItemHelper.isArmor(item) || ItemHelper.isArmor(item) || ItemHelper.isArmor(item)
                             || item == Items.LEAD
                             || item == Items.SHIELD;
                 }

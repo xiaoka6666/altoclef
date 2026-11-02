@@ -1,14 +1,21 @@
 package adris.altoclef.util.helpers;
 import net.minecraft.item.AxeItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.HoeItem;
-import net.minecraft.item.MiningToolItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.item.OnAStickItem;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.item.ShearsItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.registry.tag.ItemTags;
+
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.registry.tag.ItemTags;
 
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
@@ -25,13 +32,16 @@ import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import baritone.utils.ToolSet;
 import net.minecraft.block.BlockState;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.screen.*;
@@ -212,8 +222,8 @@ public class StorageHelper {
                 if (!ItemHelper.canThrowAwayStack(mod, stack))
                     continue;
                 Item item = stack.getItem();
-                if (item instanceof SwordItem sword) {
-                    // 1.21.4: SwordItem no longer exposes ToolMaterial, rank by class only
+                if (ItemHelper.isSword(item)) {
+                    // 1.21.4: Item no longer exposes ToolMaterial, rank by class only
                     Class c = sword.getClass();
                     int prevBest = bestMaterials.getOrDefault(c, 0);
                     if (prevBest < 1) {
@@ -221,9 +231,9 @@ public class StorageHelper {
                         bestTool.put(c, slot);
                         return Optional.of(slot);
                     }
-                } else if (item instanceof MiningToolItem mining) {
-                    // 1.21.4: MiningToolItem also lacks ToolMaterial, rank by class
-                    Class c = mining.getClass();
+                } else if (ItemHelper.isMiningTool(item)) {
+                    // 1.21.11: rank by class
+                    Class c = item.getClass();
                     int prevBest = bestMaterials.getOrDefault(c, 0);
                     if (prevBest < 1) {
                         bestMaterials.put(c, 1);
@@ -346,8 +356,8 @@ public class StorageHelper {
 
     public static boolean isArmorEquipped(AltoClef mod, Item... any) {
         for (Item item : any) {
-            if (item instanceof ArmorItem) {
-                // 1.21.4: ArmorItem no longer exposes getSlotType(); derive the armor-list index
+            if (ItemHelper.isArmor(item) || ItemHelper.isArmor(item) || ItemHelper.isArmor(item) || ItemHelper.isArmor(item)) {
+                // 1.21.4: Item no longer exposes getSlotType(); derive the armor-list index
                 // via the item's EQUIPPABLE component slot, not the translation-key suffix.
                 int armorSlotIndex = armorItemToArmorIndex(item);
                 if (armorSlotIndex >= 0) {

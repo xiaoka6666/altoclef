@@ -1,15 +1,24 @@
 package adris.altoclef.util.helpers;
 
 import net.minecraft.item.AxeItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.FishingRodItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.HoeItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
-import net.minecraft.item.MiningToolItem;
+import net.minecraft.registry.tag.ItemTags;
+
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.OnAStickItem;
-import net.minecraft.item.PickaxeItem;
+import net.minecraft.registry.tag.ItemTags;
+
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShearsItem;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
+import net.minecraft.registry.tag.ItemTags;
+
 
 /**
  * 1.21.4 removed the {@code ToolItem} base class; tool detection now has to be
@@ -21,13 +30,13 @@ public final class ToolItemDetect {
     private ToolItemDetect() {}
 
     public static boolean isToolItem(Item item) {
-        return item instanceof SwordItem
-                || item instanceof MiningToolItem
+        return ItemHelper.isSword(item)
+                || ItemHelper.isMiningTool(item)
                 || item instanceof AxeItem
                 || item instanceof ShovelItem
                 || item instanceof HoeItem
                 || item instanceof ShearsItem
-                || item instanceof PickaxeItem
+                || ItemHelper.isPickaxe(item)
                 || item instanceof FishingRodItem
                 || item instanceof OnAStickItem;
     }

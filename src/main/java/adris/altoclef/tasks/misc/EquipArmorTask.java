@@ -89,7 +89,7 @@ public class EquipArmorTask extends Task {
                     }
                 }
             } else {
-                ArmorItem item = (ArmorItem) Objects.requireNonNull(targetArmor.getMatches())[0];
+                Item item = (Item) Objects.requireNonNull(targetArmor.getMatches())[0];
                 if (item == null) {
                     Debug.logWarning("Item " + targetArmor + " is not armor! Will not equip.");
                 } else {

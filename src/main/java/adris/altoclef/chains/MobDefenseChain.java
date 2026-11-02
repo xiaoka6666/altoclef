@@ -31,7 +31,7 @@ import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.SwordItem;
+
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -253,12 +253,12 @@ public class MobDefenseChain extends SingleTaskChain {
             List<Entity> hostiles = mod.getEntityTracker().getHostiles();
             // TODO: I don't think this lock is necessary at all.
 
-            SwordItem bestSword = null;
+            Item bestSword = null;
             Item[] SWORDS = new Item[]{Items.NETHERITE_SWORD, Items.DIAMOND_SWORD, Items.IRON_SWORD, Items.GOLDEN_SWORD,
                     Items.STONE_SWORD, Items.WOODEN_SWORD};
             for (Item item : SWORDS) {
                 if (mod.getItemStorage().hasItem(item)) {
-                    bestSword = (SwordItem) item;
+                    bestSword = (Item) item;
                 }
             }
 

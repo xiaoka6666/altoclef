@@ -24,13 +24,20 @@ import adris.altoclef.util.helpers.*;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.block.Block;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.block.BlockState;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.block.Blocks;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.block.EndPortalFrameBlock;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.gui.screen.CreditsScreen;
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.SilverfishEntity;
@@ -837,7 +844,7 @@ public class MarvionBeatMinecraftTask extends Task {
             List<ItemStack> itemStacks = mod.getItemStorage().getItemStacksPlayerInventory(true);
             for (ItemStack itemStack : itemStacks) {
                 Item item = itemStack.getItem();
-                if (item instanceof SwordItem) {
+                if (ItemHelper.isSword(item)) {
                     mod.getSlotHandler().forceEquipItem(item);
                 }
             }

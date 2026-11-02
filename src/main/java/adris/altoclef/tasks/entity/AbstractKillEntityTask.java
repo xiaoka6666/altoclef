@@ -7,9 +7,12 @@ import adris.altoclef.util.helpers.LookHelper;
 import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.slots.PlayerSlot;
 import net.minecraft.entity.Entity;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
+import net.minecraft.registry.tag.ItemTags;
+
 
 import java.util.List;
 
@@ -40,11 +43,11 @@ public abstract class AbstractKillEntityTask extends AbstractDoToEntityTask {
             float handDamage = Float.NEGATIVE_INFINITY;
             Item bestItem = null;
             for (ItemStack invStack : invStacks) {
-                if (invStack.getItem() instanceof SwordItem item) {
-                    float itemDamage = ItemHelper.getMaterialAttackDamage(item);
+                if (invStack.getItem().is(ItemTags.SWORDS)) {
+                    float itemDamage = ItemHelper.getMaterialAttackDamage(invStack.getItem());
                     Item handItem = StorageHelper.getItemStackInSlot(PlayerSlot.getEquipSlot()).getItem();
-                    if (handItem instanceof SwordItem handToolItem) {
-                        handDamage = ItemHelper.getMaterialAttackDamage(handToolItem);
+                    if (ItemHelper.isSword(handItem)) {
+                        handDamage = ItemHelper.getMaterialAttackDamage(handItem);
                     }
                     if (itemDamage > handDamage) {
                         bestItem = item;
