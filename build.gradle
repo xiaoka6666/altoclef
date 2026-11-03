@@ -52,11 +52,13 @@ dependencies {
     shadow('com.fasterxml.jackson.core:jackson-databind:2.17.2')
 
     // Thank you georgeagostino for fixing my garbage
-    if (getProject().hasProperty("altoclef.development")) {
+    // Baritone is compiled with Mojmap; use files() to avoid Loom remapping
+    if (getProject().hasProperty("baritone.jar")) {
+        modImplementation files(getProperty("baritone.jar"))
+    } else if (getProject().hasProperty("altoclef.development")) {
         modImplementation files("D:/MC/maven/cabaletta/baritone-unoptimized-fabric/1.21.11/baritone-unoptimized-fabric-1.21.11.jar")
     } else {
-        modImplementation "cabaletta:baritone-unoptimized-fabric:1.21.11"
-        include "cabaletta:baritone-unoptimized-fabric:1.21.11"
+        modImplementation files("${rootDir}/baritone-dist/baritone-unoptimized-fabric-1.21.11.jar")
     }
     //modImplementation 'baritone-api-fabric:baritone-api-fabric:1.6.3'
     //implementation files('baritone-plus/build/libs/baritone-unoptimized-fabric-1.6.3.jar')
