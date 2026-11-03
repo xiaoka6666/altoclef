@@ -22,11 +22,6 @@ jobs:
           distribution: 'temurin'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Download baritone JAR
-        run: |
-          mkdir -p baritone-dist
-          curl -sLo baritone-dist/baritone-unoptimized-fabric-1.21.11.jar \
-            "https://xiaoka6666.github.io/maven/cabaletta/baritone-unoptimized-fabric/1.21.11/baritone-unoptimized-fabric-1.21.11.jar"
       - name: Build with Gradle
         run: ./gradlew build
 
