@@ -19,17 +19,11 @@ import adris.altoclef.util.time.TimerGame;
 import net.minecraft.block.Block;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.block.BlockState;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;

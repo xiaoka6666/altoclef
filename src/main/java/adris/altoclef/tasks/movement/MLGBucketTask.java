@@ -13,7 +13,6 @@ import baritone.api.utils.input.Input;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import net.minecraft.block.Block;
-import net.minecraft.registry.Registries;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;

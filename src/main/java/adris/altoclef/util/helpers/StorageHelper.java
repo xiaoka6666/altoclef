@@ -1,21 +1,8 @@
 package adris.altoclef.util.helpers;
-import net.minecraft.item.AxeItem;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.item.HoeItem;
-import net.minecraft.registry.tag.ItemTags;
 
-import net.minecraft.item.OnAStickItem;
-import net.minecraft.registry.tag.ItemTags;
 
-import net.minecraft.item.ShearsItem;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.registry.tag.ItemTags;
 
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.registry.tag.ItemTags;
 
 import adris.altoclef.AltoClef;
 import adris.altoclef.Debug;
@@ -32,16 +19,13 @@ import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import baritone.utils.ToolSet;
 import net.minecraft.block.BlockState;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.GameMenuScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.option.GameOptionsScreen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.*;
 import net.minecraft.screen.*;

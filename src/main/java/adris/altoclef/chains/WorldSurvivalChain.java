@@ -16,7 +16,6 @@ import adris.altoclef.util.time.TimerGame;
 import baritone.api.utils.Rotation;
 import baritone.api.utils.input.Input;
 import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.registry.Registries;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.effect.StatusEffects;

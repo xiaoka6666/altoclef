@@ -12,17 +12,13 @@ import baritone.api.utils.input.Input;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.Entity;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 
 import net.minecraft.screen.slot.SlotActionType;
 

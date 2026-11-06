@@ -10,12 +10,10 @@ import adris.altoclef.util.slots.PlayerSlot;
 import adris.altoclef.util.slots.Slot;
 import adris.altoclef.util.time.TimerGame;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.client.network.ClientPlayerEntity;
 import adris.altoclef.util.helpers.ToolItemDetect;
 import net.minecraft.item.*;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.screen.slot.SlotActionType;
 
 import java.util.List;

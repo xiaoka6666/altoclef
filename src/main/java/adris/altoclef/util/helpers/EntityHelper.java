@@ -19,7 +19,6 @@ import net.minecraft.server.world.ServerWorld;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Helper functions to interpret entity state
@@ -96,7 +95,7 @@ public class EntityHelper {
                 damageAmount = 0.0;
             } else {
                 // 1.21.4 client-side: player.getServer() is null (client entity), so this protection
-                // lookup can't run here. Skip it rather than NPE â€” the caller only needs an estimate.
+                // lookup can't run here. Skip it rather than NPE â€?the caller only needs an estimate.
                 var server = net.minecraft.client.MinecraftClient.getInstance().getServer();
                 if (server != null) {
                     ServerWorld serverWorld = server.getWorld(player.getEntityWorld().getRegistryKey());

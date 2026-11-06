@@ -11,15 +11,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.BlockItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.FuelRegistry;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
@@ -33,9 +28,9 @@ import java.util.*;
  */
 public class ItemHelper {
     /**
-     * 1.21.4 中 Item 不再暴露 {@code ToolMaterial}，无法调用
+     * 1.21.4 �?Item 不再暴露 {@code ToolMaterial}，无法调�?
      * {@code getMaterial().getAttackDamage()}。这里按具体物品常量映射 1.21
-     * 时代的 material 攻击伤害值（不含基础 1 的那部分）。
+     * 时代�?material 攻击伤害值（不含基础 1 的那部分）�?
      */
     public static float getMaterialAttackDamage(Item item) {
         if (item == Items.NETHERITE_SWORD) return 5f;

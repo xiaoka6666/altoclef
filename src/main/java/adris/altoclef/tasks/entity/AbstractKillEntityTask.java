@@ -9,9 +9,7 @@ import adris.altoclef.util.slots.PlayerSlot;
 import net.minecraft.entity.Entity;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 
 
 import java.util.List;

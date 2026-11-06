@@ -7,9 +7,7 @@ import adris.altoclef.util.ItemTarget;
 import adris.altoclef.util.helpers.ItemHelper;
 
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Items;
-import net.minecraft.registry.tag.ItemTags;
 
 public class EquipCommand extends Command {
     public EquipCommand() throws CommandException {

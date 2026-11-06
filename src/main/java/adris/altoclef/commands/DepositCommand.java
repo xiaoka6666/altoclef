@@ -8,19 +8,12 @@ import adris.altoclef.util.helpers.ItemHelper;
 import adris.altoclef.util.helpers.StorageHelper;
 import adris.altoclef.util.slots.PlayerSlot;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ItemStack;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.AxeItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.HoeItem;
-import net.minecraft.registry.tag.ItemTags;
 
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShearsItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.registry.tag.ItemTags;
 
 import org.apache.commons.lang3.ArrayUtils;
 

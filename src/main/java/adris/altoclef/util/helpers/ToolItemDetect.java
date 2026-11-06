@@ -1,23 +1,14 @@
 package adris.altoclef.util.helpers;
 
 import net.minecraft.item.AxeItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.FishingRodItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.HoeItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.Item;
-import net.minecraft.registry.tag.ItemTags;
 
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.OnAStickItem;
-import net.minecraft.registry.tag.ItemTags;
 
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShearsItem;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.item.ShovelItem;
-import net.minecraft.registry.tag.ItemTags;
 
 
 /**
